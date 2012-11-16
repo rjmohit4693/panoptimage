@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/browser_fragment"
         android:name="org.fereor.panoptimage.activity.image.ImageBrowserFragment"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="false"
         android:layout_alignParentRight="true"

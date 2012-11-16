@@ -40,19 +40,20 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 
 	public ImagePagerAdapter(RepositoryService<?> repo, FragmentManager fm) throws PanoptesException {
 		super(fm);
-		this.repo = repo;
-		if (this.repo != null) {
-			imageList = this.repo.dir(PanoptesHelper.REGEXP_ALLIMAGES);
-		}
+		setData(repo);
 	}
 
 	/**
 	 * Setter to update data
 	 * 
 	 * @param data
+	 * @throws PanoptesException
 	 */
-	public void setData(RepositoryService<?> data) {
+	public void setData(RepositoryService<?> data) throws PanoptesException {
 		this.repo = data;
+		if (this.repo != null) {
+			imageList = this.repo.dir(PanoptesHelper.REGEXP_ALLIMAGES);
+		}
 	}
 
 	@Override
