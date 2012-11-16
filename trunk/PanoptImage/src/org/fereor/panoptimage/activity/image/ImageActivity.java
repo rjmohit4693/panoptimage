@@ -132,6 +132,16 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		}
 	}
 
+	/**
+	 * Back button clicked
+	 * 
+	 * @param view
+	 */
+	public void doHidePanel(View view) {
+		// hide panel
+		hideBrowserPanel();
+	}
+
 	@Override
 	public void onItemClick(AdapterView<?> aView, View v, int position, long id) {
 		// TODO do something
@@ -143,6 +153,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		try {
 			repoBrowser.cd(directories.get(position));
 			myAdapter.setData(repoBrowser);
+			myPager.setAdapter(myAdapter);
 			// hide panel
 			hideBrowserPanel();
 		} catch (PanoptesException e) {
