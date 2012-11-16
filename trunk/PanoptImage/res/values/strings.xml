@@ -1,0 +1,63 @@
+<resources>
+
+    <!-- Application commons -->
+    <string name="app_name">PanoptImage</string>
+    <string name="message">Welcome to PanoptImage</string>
+    <string name="menu_settings">Settings</string>
+
+    <!-- Application titles -->
+    <string name="title_activity_home">PanoptImage</string>
+    <string name="title_activity_config">ConfigActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_zoom">ZoomActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+
+    <!-- Configuration activity -->
+    <string name="param_title">Parameters</string>
+    <string name="param_proxy_ip">Proxy address</string>
+    <string name="param_proxy_ip_hint">Ex: 192.168.0.1</string>
+    <string name="param_proxy_port">Proxy port</string>
+    <string name="param_proxy_port_hint">Ex: 8080</string>
+    <string name="param_showtip">Show Tips</string>
+
+    <!-- Create activity -->
+    <string name="create_title">Edit shortcuts</string>
+    <string name="create_new_default">Select&#8230;</string>
+    <string name="create_new_webdav">New WebDAV&#8230;</string>
+    <string name="create_new_local">New Local&#8230;</string>
+
+    <!-- Create Empty fragment -->
+    <string name="create_empty_text1">Choose a shortcut in the list.</string>
+    <string name="create_empty_text2">Choose New&#8230; to create a new one.</string>
+
+    <!-- Create Local fragment -->
+    <string name="create_local_name">Name</string>
+    <string name="create_local_name_hint">Shortcut name</string>
+    <string name="create_local_path">Local path</string>
+    <string name="create_local_path_hint">Ex: /mnt/mypath</string>
+    <string name="create_local_save">Save</string>
+    
+    <!-- Create Webdav fragment -->
+    <string name="create_webdav_name">Name</string>
+    <string name="create_webdav_name_hint">Shortcut name</string>
+    <string name="create_webdav_protocol">Protocol</string>
+    <string name="create_webdav_protocol_hint">Ex: http</string>
+    <string name="create_webdav_ip">Server</string>
+    <string name="create_webdav_ip_hint">Ex: 192.168.0.1</string>
+    <string name="create_webdav_port">Port</string>
+    <string name="create_webdav_port_hint">Ex: 8080</string>
+    <string name="create_webdav_base">Repository</string>
+    <string name="create_webdav_base_hint">Ex: /WebDAV/Myroot</string>
+    <string name="create_webdav_path">Path</string>
+    <string name="create_webdav_path_hint">Ex: /mypath</string>
+    <string name="create_webdav_save">Save</string>
+    
+    <!-- Error messages -->
+    <string name="error_title">Error&#8230;</string>
+    <string name="error_load">Cannot load content</string>
+    <string name="error_save">Cannot save content</string>
+    <string name="error_unknown_param">Parameter unknown : %s</string>
+        
+</resources>

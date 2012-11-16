@@ -1,0 +1,5 @@
+TheGIMP
+- icone 100x100
+- noir, epaisseur 4px
+- Couleur vers alpha (blanc)
+- Alpha vers logo -> Chaud rougeoyant -> blanc + 10px

@@ -1,0 +1,75 @@
+#
+# generated on 2012/11/08 11:14:58
+#
+# --table-start--
+dataClass=org.fereor.panoptimage.model.Config
+tableName=config
+# --table-fields-start--
+# --field-start--
+fieldName=key
+columnName=key
+id=true
+# --field-end--
+# --field-start--
+fieldName=proxyIp
+columnName=proxy_ip
+# --field-end--
+# --field-start--
+fieldName=proxyPort
+columnName=proxy_port
+# --field-end--
+# --field-start--
+fieldName=showtip
+columnName=showtip
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=org.fereor.panoptimage.model.WebdavParam
+tableName=webdavparam
+# --table-fields-start--
+# --field-start--
+fieldName=key
+columnName=key
+id=true
+# --field-end--
+# --field-start--
+fieldName=protocol
+columnName=protocol
+# --field-end--
+# --field-start--
+fieldName=server
+columnName=server
+# --field-end--
+# --field-start--
+fieldName=port
+columnName=port
+# --field-end--
+# --field-start--
+fieldName=base
+columnName=base
+# --field-end--
+# --field-start--
+fieldName=path
+columnName=path
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=org.fereor.panoptimage.model.LocalParam
+tableName=localparam
+# --table-fields-start--
+# --field-start--
+fieldName=key
+columnName=key
+id=true
+# --field-end--
+# --field-start--
+fieldName=path
+columnName=path
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
