@@ -69,9 +69,11 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 		if (content != null) {
 			nameField.setText(content.getKey());
 			pathField.setText(content.getPath());
+			setKeyEditable(false);
 		} else {
 			nameField.setText("");
 			pathField.setText("");
+			setKeyEditable(true);
 		}
 	}
 
@@ -108,6 +110,7 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 			nameField.setCursorVisible(status);
 			nameField.setFocusable(status);
 			nameField.setFocusableInTouchMode(status);
+			nameField.setEnabled(status);
 		}
 	}
 }

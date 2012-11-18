@@ -203,7 +203,6 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 			displayFragment.setParam(displayParam);
 			getSupportFragmentManager().beginTransaction().replace(R.id.create_fragment, displayFragment).commit();
 			displayFragment.onRefresh();
-			displayFragment.setKeyEditable(editable);
 		} catch (InstantiationException e) {
 			showErrorMsg(e);
 		} catch (IllegalAccessException e) {
