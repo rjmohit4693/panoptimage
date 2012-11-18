@@ -42,6 +42,11 @@ public class LocalParam extends CreateParam {
 		this.key = key;
 	}
 
+	@Override
+	public boolean hasData(){
+		return true;
+	}
+
 	public String getPath() {
 		return path;
 	}

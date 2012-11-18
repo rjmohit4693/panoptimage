@@ -16,6 +16,7 @@
 package org.fereor.panoptimage.service;
 
 import org.fereor.panoptimage.exception.PanoptesException;
+import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
 import org.fereor.panoptimage.model.WebdavParam;
 
 /**
@@ -35,7 +36,7 @@ public class WebdavService extends RepositoryService<WebdavParam> {
 	}
 
 	@Override
-	public String[] dir(String regexp) throws PanoptesException {
+	public String[] dir(String regexp) throws PanoptesFileNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}

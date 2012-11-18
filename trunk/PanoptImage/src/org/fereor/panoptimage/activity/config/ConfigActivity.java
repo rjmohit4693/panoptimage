@@ -19,11 +19,11 @@ import java.sql.SQLException;
 import java.util.concurrent.Callable;
 
 import org.fereor.panoptimage.R;
+import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.dao.DatabaseHelper;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.util.PanoptesConstants;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +32,8 @@ import android.widget.EditText;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
-public class ConfigActivity extends Activity {
+public class ConfigActivity extends PanoptesActivity {
+	private static final String DEFAULT_KEY = "default";
 	/** Database helper to access DB through ORMLite */
 	private DatabaseHelper databaseHelper = null;
 	/** Config information */
@@ -44,14 +45,16 @@ public class ConfigActivity extends Activity {
 		Log.d(PanoptesConstants.TAGNAME, "ConfigActivity:onCreate");
 		// set Content view
 		setContentView(R.layout.activity_config);
-		// update config data
+
 		try {
+			// update config data
 			loadConfig();
+			fillFields();
 		} catch (SQLException e) {
 			Log.e(PanoptesConstants.TAGNAME, "Cannot load config : " + e.toString());
+			showErrorMsg(R.string.error_load_cfg, e.toString());
 		}
-		// put data in fields
-		fillFields();
+
 	}
 
 	/**
@@ -61,13 +64,25 @@ public class ConfigActivity extends Activity {
 	 */
 	public void doBack(View view) {
 		Log.d(PanoptesConstants.TAGNAME, "ConfigActivity:doBack");
+		finish();
+	}
+
+	/**
+	 * Called when the 'save' button is clicked
+	 * 
+	 * @param view
+	 */
+	public void doSave(View view) {
+		Log.d(PanoptesConstants.TAGNAME, "ConfigActivity:doSave");
 		try {
+			// save data from fields
 			readFields();
 			saveConfig(data);
 		} catch (Exception e) {
-			Log.e(PanoptesConstants.TAGNAME, "Cannot update config : " + e.toString());
+			showErrorMsg(R.string.error_save_cfg, e.toString());
+			return;
 		}
-		finish();
+		showInfoMsg(R.string.param_message_saved);
 	}
 
 	@Override
@@ -79,18 +94,6 @@ public class ConfigActivity extends Activity {
 			OpenHelperManager.releaseHelper();
 			databaseHelper = null;
 		}
-	}
-
-	/**
-	 * get the current helper
-	 * 
-	 * @return
-	 */
-	private DatabaseHelper getHelper() {
-		if (databaseHelper == null) {
-			databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
-		}
-		return databaseHelper;
 	}
 
 	/**
@@ -123,11 +126,11 @@ public class ConfigActivity extends Activity {
 	 * @throws SQLException
 	 */
 	private void loadConfig() throws SQLException {
-		data = getHelper().getConfigDao().queryForId("default");
+		data = getHelper().getConfigDao().queryForId(DEFAULT_KEY);
 		if (data == null) {
 			data = new Config();
+			data.setKey(DEFAULT_KEY);
 		}
-
 	}
 
 	/**

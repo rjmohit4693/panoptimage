@@ -16,6 +16,7 @@
 package org.fereor.panoptimage.activity.image;
 
 import org.fereor.panoptimage.exception.PanoptesException;
+import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
 import org.fereor.panoptimage.service.RepositoryService;
 import org.fereor.panoptimage.util.PanoptesHelper;
 
@@ -38,7 +39,7 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 	/** current visible item */
 	private ImageListFragment currentItem;
 
-	public ImagePagerAdapter(RepositoryService<?> repo, FragmentManager fm) throws PanoptesException {
+	public ImagePagerAdapter(RepositoryService<?> repo, FragmentManager fm) throws PanoptesFileNotFoundException {
 		super(fm);
 		setData(repo);
 	}
@@ -49,10 +50,10 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 	 * @param data
 	 * @throws PanoptesException
 	 */
-	public void setData(RepositoryService<?> data) throws PanoptesException {
+	public void setData(RepositoryService<?> data) throws PanoptesFileNotFoundException {
 		this.repo = data;
-		if (this.repo != null) {
-			imageList = this.repo.dir(PanoptesHelper.REGEXP_ALLIMAGES);
+		if (repo != null) {
+			imageList = repo.dir(PanoptesHelper.REGEXP_ALLIMAGES);
 		}
 	}
 

@@ -101,6 +101,10 @@ public class HomeActivity extends PanoptesActivity {
 
 		// get data corresponding to item clicked
 		HomePagerParam curparam = content.get(location);
+		if (!curparam.getParam().hasData()) {
+			// This parameter has no data to display : return
+			return;
+		}
 
 		// pass information to the image page
 		Intent intent = new Intent(this, ImageActivity.class);
@@ -135,7 +139,7 @@ public class HomeActivity extends PanoptesActivity {
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
-	
+
 	// -------------------------------------------------------------------------
 	// private Methods
 	// -------------------------------------------------------------------------
