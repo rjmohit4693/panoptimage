@@ -25,12 +25,12 @@ public enum PanoptesTypeEnum {
 	/**
 	 * List of available fragments for the Create activity
 	 */
-	EMPTY(0, R.string.create_new_default, R.layout.fragment_empty, R.drawable.ic_empty_storage,
-			new EmptyCreateFragment()), LOCAL(1, R.string.create_new_local, R.layout.fragment_local,
-			R.drawable.ic_local_storage, new LocalCreateFragment());
+	EMPTY(0, R.string.create_new_default, R.layout.fragment_create_empty, R.drawable.ic_empty_storage,
+			EmptyCreateFragment.class), LOCAL(1, R.string.create_new_local, R.layout.fragment_create_local,
+			R.drawable.ic_local_storage, LocalCreateFragment.class);
 	/*
-	 * WEBDAV (2, R.string.create_new_webdav, R.layout.fragment_webdav, R.drawable.ic_webdav_storage , new
-	 * WebdavCreateFragment());
+	 * WEBDAV (2, R.string.create_new_webdav, R.layout.fragment_create_webdav, R.drawable.ic_webdav_storage , 
+	 * WebdavCreateFragment.class);
 	 */
 
 	/** ID (used internally for DB) */
@@ -42,10 +42,11 @@ public enum PanoptesTypeEnum {
 	/** ID of icon */
 	private int icon;
 	/** class of fragment to instantiate */
-	private CreateFragment<? extends CreateParam> fragmentInstance;
+	private Class<? extends CreateFragment<? extends CreateParam>> fragmentClass;
 
 	/**
 	 * Private constructor for the fragments of the Create activity
+	 * @param <T>
 	 * 
 	 * @param id id of fragment (used to store internally in DB)
 	 * @param spinnerText ID for the spinner
@@ -53,12 +54,12 @@ public enum PanoptesTypeEnum {
 	 * @param fragmentClass Class for the fragment to create it
 	 */
 	private PanoptesTypeEnum(int id, int spinnerText, int layout, int icon,
-			CreateFragment<? extends CreateParam> fragmentInstance) {
+			Class<? extends CreateFragment<? extends CreateParam>> fragmentClass) {
 		this.id = id;
 		this.key = spinnerText;
 		this.layout = layout;
 		this.icon = icon;
-		this.fragmentInstance = fragmentInstance;
+		this.fragmentClass = fragmentClass;
 	}
 
 	/**
@@ -101,8 +102,10 @@ public enum PanoptesTypeEnum {
 	 * Creates a new fragment of given type
 	 * 
 	 * @return new instance of the fragment
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public CreateFragment<? extends CreateParam> instance() {
-		return fragmentInstance;
+	public CreateFragment<?> instance() throws InstantiationException, IllegalAccessException {
+		return fragmentClass.newInstance();
 	}
 }

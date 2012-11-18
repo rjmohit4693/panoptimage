@@ -15,15 +15,12 @@
 
 package org.fereor.panoptimage.activity;
 
-import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.dao.DatabaseHelper;
-import org.fereor.panoptimage.util.PanoptesConstants;
-
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.widget.Toast;
+
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 public abstract class PanoptesActivity extends FragmentActivity {
 	/** Database helper to access DB through ORMLite */
@@ -55,24 +52,32 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	}
 
 	// -------------------------------------------------------------------------
-	// Methods for Error messages
+	// Methods for Messages
 	// -------------------------------------------------------------------------
 	/**
 	 * Display an error message
 	 * 
 	 * @param e
 	 */
-	protected void showErrorMsg(Exception e) {
-		showErrorMsg(getString(R.string.error_title), e.getMessage());
+	protected void showErrorMsg(String msg) {
+		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
 
 	/**
 	 * Display an error message
 	 * 
-	 * @param msg
+	 * @param e
 	 */
-	protected void showErrorMsg(String title, String msg) {
-		Log.d(PanoptesConstants.TAGNAME, title + ":" + msg);
-		Toast.makeText(this, title + ":" + msg, Toast.LENGTH_LONG).show();
+	protected void showErrorMsg(Exception e) {
+		Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+	}
+
+	/**
+	 * Display a message
+	 * 
+	 * @param msg message to display
+	 */
+	protected void showInfoMsg(String msg) {
+		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
 }

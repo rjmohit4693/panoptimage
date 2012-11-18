@@ -50,23 +50,27 @@ public class HomeActivity extends PanoptesActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		// populate content
 		try {
-			content = populatePagerView();
+			// load content
+			content = loadPagerContent();
+			// set adapter
+			myAdapter = new HomePagerAdapter(content, getSupportFragmentManager());
+			mPager = (ViewPager) findViewById(R.id.pager);
+			mPager.setAdapter(myAdapter);
 		} catch (SQLException e) {
 			showErrorMsg(e);
 		}
-		// set adapter
-		myAdapter = new HomePagerAdapter(content, getSupportFragmentManager());
-		mPager = (ViewPager) findViewById(R.id.pager);
-		mPager.setAdapter(myAdapter);
 	}
 
 	@Override
 	protected void onResume() {
 		try {
-			content = populatePagerView();
+			// load content
+			content = loadPagerContent();
+			// refresh adapter
 			myAdapter.setData(content);
+			mPager.setAdapter(myAdapter);
+			myAdapter.notifyDataSetChanged();
 		} catch (SQLException e) {
 			showErrorMsg(e);
 		}
@@ -77,31 +81,6 @@ public class HomeActivity extends PanoptesActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_home, menu);
 		return true;
-	}
-
-	/**
-	 * Fill the scroll view with the default strings and the list of already defined content
-	 * 
-	 * @throws SQLException
-	 */
-	private List<HomePagerParam> populatePagerView() throws SQLException {
-		// populate the spinner with default values
-		List<HomePagerParam> data = new ArrayList<HomePagerParam>();
-		// Add the default view (home page)
-		data.add(new HomePagerParam(new EmptyParam(), getString(R.string.message), PanoptesTypeEnum.EMPTY.icon()));
-
-		// populate the scroll with local values
-		for (LocalParam local : getHelper().getLocalParamDao().queryForAll()) {
-			if (local.getKey() != null) {
-				data.add(new HomePagerParam(local, local.getKey(), PanoptesTypeEnum.LOCAL.icon()));
-			}
-		}
-		// populate the scroll with webdav values
-		// for (WebdavParam webdav : getHelper().getWebdavParamDao().queryForAll()) {
-		// data.add(new HomePagerParam(webdav, webdav.getKey(),
-		// PanoptesTypeEnum.WEBDAV.icon()));
-		// }
-		return data;
 	}
 
 	// -------------------------------------------------------------------------
@@ -115,6 +94,11 @@ public class HomeActivity extends PanoptesActivity {
 	 */
 	public void onImageClicked(View view) {
 		int location = mPager.getCurrentItem();
+		if (location >= content.size()) {
+			showErrorMsg(getString(R.string.error_unknown));
+			return;
+		}
+
 		// get data corresponding to item clicked
 		HomePagerParam curparam = content.get(location);
 
@@ -151,4 +135,33 @@ public class HomeActivity extends PanoptesActivity {
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
+	
+	// -------------------------------------------------------------------------
+	// private Methods
+	// -------------------------------------------------------------------------
+	/**
+	 * Fill the scroll view with the default strings and the list of already defined content
+	 * 
+	 * @throws SQLException
+	 */
+	private List<HomePagerParam> loadPagerContent() throws SQLException {
+		// populate the spinner with default values
+		List<HomePagerParam> data = new ArrayList<HomePagerParam>();
+		// Add the default view (home page)
+		data.add(new HomePagerParam(new EmptyParam(), getString(R.string.message), PanoptesTypeEnum.EMPTY.icon()));
+
+		// populate the scroll with local values
+		for (LocalParam local : getHelper().getLocalParamDao().queryForAll()) {
+			if (local.getKey() != null) {
+				data.add(new HomePagerParam(local, local.getKey(), PanoptesTypeEnum.LOCAL.icon()));
+			}
+		}
+		// populate the scroll with webdav values
+		// for (WebdavParam webdav : getHelper().getWebdavParamDao().queryForAll()) {
+		// data.add(new HomePagerParam(webdav, webdav.getKey(),
+		// PanoptesTypeEnum.WEBDAV.icon()));
+		// }
+		return data;
+	}
+
 }
