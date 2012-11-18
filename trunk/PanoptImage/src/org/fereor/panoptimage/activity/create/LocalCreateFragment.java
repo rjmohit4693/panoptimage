@@ -100,4 +100,14 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 	public Class<LocalParam> getParamClass() {
 		return LocalParam.class;
 	}
+
+	@Override
+	public void setKeyEditable(boolean status) {
+		if (nameField != null) {
+			nameField.setClickable(status);
+			nameField.setCursorVisible(status);
+			nameField.setFocusable(status);
+			nameField.setFocusableInTouchMode(status);
+		}
+	}
 }
