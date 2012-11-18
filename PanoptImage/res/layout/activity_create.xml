@@ -13,6 +13,16 @@
         android:onClick="doBack" />
 
     <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="false"
+        android:background="@drawable/save"
+        android:onClick="doSave" />
+
+    <Button
         android:id="@+id/recycle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

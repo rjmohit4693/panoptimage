@@ -135,12 +135,4 @@
             android:hint="@string/create_webdav_path_hint" />
     </TableRow>
 
-    <Button
-        android:id="@+id/create_webdav_save"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="doSave"
-        android:text="@string/create_webdav_save" />
-
 </TableLayout>
