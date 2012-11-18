@@ -16,6 +16,8 @@
 
     <!-- Configuration activity -->
     <string name="param_title">Parameters</string>
+    <string name="param_message_saved">Changes saved</string>
+    <string name="param_message_notsaved">Changes discarded</string>
     <string name="param_proxy_ip">Proxy address</string>
     <string name="param_proxy_ip_hint">Ex: 192.168.0.1</string>
     <string name="param_proxy_port">Proxy port</string>
@@ -60,8 +62,11 @@
     <string name="error_title">Error&#8230;</string>
     <string name="error_load">Cannot load content</string>
     <string name="error_save">Cannot save content</string>
+    <string name="error_load_cfg">Cannot load configuration data</string>
+    <string name="error_save_cfg">Cannot save configuration data</string>
     <string name="error_unknown">Link unknown</string>
     <string name="error_unknown_param">Parameter unknown : %s</string>
     <string name="error_loading_file">Error accessing file : %s</string>
+    <string name="error_filenotfound">Path not found : %s</string>
 
 </resources>

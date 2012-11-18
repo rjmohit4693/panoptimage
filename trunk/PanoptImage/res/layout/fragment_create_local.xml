@@ -50,12 +50,4 @@
             android:hint="@string/create_local_path_hint" />
     </TableRow>
 
-    <Button
-        android:id="@+id/create_local_save"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="doSave"
-        android:text="@string/create_local_save" />
-
 </TableLayout>
