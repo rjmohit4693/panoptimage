@@ -22,6 +22,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 
 import org.fereor.panoptimage.exception.PanoptesException;
+import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.RegexpFilenameFilter;
@@ -43,11 +44,17 @@ public class LocalService extends RepositoryService<LocalParam> {
 	}
 
 	@Override
-	public String[] dir(String regexp) throws PanoptesException {
+	public String[] dir(String regexp) throws PanoptesFileNotFoundException {
 		// browse directory location
-		File locationFile = new File(root + PanoptesHelper.formatPath(currentPath));
+		String location = root + PanoptesHelper.formatPath(currentPath);
+		File locationFile = new File(location);
 		FilenameFilter filter = new RegexpFilenameFilter(regexp);
-		return locationFile.list(filter);
+		String[] result = locationFile.list(filter);
+		// if result is empty : throw error
+		if (result == null) {
+			throw new PanoptesFileNotFoundException(location);
+		}
+		return result;
 	}
 
 	@Override

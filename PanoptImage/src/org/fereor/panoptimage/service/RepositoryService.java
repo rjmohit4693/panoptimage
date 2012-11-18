@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fereor.panoptimage.exception.PanoptesException;
+import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
@@ -94,7 +95,7 @@ public abstract class RepositoryService<T> {
 	 * @param regexp regular expression to match to search for files
 	 * @return list of child locations
 	 */
-	public abstract String[] dir(String regexp) throws PanoptesException;
+	public abstract String[] dir(String regexp) throws PanoptesFileNotFoundException;
 
 	/**
 	 * Get the content of a repository location

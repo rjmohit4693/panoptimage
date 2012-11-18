@@ -68,6 +68,16 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * 
 	 * @param e
 	 */
+	protected void showErrorMsg(int stringRes, Object... args) {
+		String msg = String.format(getString(stringRes), args);
+		showErrorMsg(msg);
+	}
+
+	/**
+	 * Display an error message
+	 * 
+	 * @param e
+	 */
 	protected void showErrorMsg(Exception e) {
 		Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 	}
@@ -80,4 +90,15 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	protected void showInfoMsg(String msg) {
 		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
+	
+	/**
+	 * Display an error message
+	 * 
+	 * @param e
+	 */
+	protected void showInfoMsg(int stringRes, Object... args) {
+		String msg = String.format(getString(stringRes), args);
+		showInfoMsg(msg);
+	}
+
 }

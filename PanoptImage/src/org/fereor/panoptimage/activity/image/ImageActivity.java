@@ -21,6 +21,7 @@ import java.util.List;
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.exception.PanoptesException;
+import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.service.HomePagerParam;
 import org.fereor.panoptimage.service.RepositoryService;
@@ -53,6 +54,8 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		// Get the message from the intent
 		Intent intent = getIntent();
 		HomePagerParam param = (HomePagerParam) intent.getParcelableExtra(PanoptesConstants.MSG_HOME);
+		// hide panel
+		hideBrowserPanel();
 		try {
 			// Retrieve content
 			repoBrowser = RepositoryService.createInstance(param);
@@ -60,11 +63,9 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			myAdapter = new ImagePagerAdapter(repoBrowser, getSupportFragmentManager());
 			myPager = (ViewPager) findViewById(R.id.imagepager);
 			myPager.setAdapter(myAdapter);
-			// hide panel
-			hideBrowserPanel();
+		} catch (PanoptesFileNotFoundException e) {
+			showErrorMsg(R.string.error_filenotfound, e.getLocation());
 		} catch (PanoptesUnknownParamException e) {
-			showErrorMsg(getString(R.string.error_unknown_param));
-		} catch (PanoptesException e) {
 			showErrorMsg(getString(R.string.error_unknown_param));
 		}
 	}
@@ -72,6 +73,8 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	@Override
 	protected void onResume() {
 		super.onResume();
+		// hide panel
+		hideBrowserPanel();
 	}
 
 	@Override
@@ -90,6 +93,8 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	 * @return
 	 */
 	public void onImageClicked(View view) {
+		// hide panel
+		hideBrowserPanel();
 		// TODO : go to the zoomed image
 	}
 
@@ -108,6 +113,9 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	 * @param view
 	 */
 	public void doBrowse(View view) {
+		if (repoBrowser == null) {
+			return;
+		}
 		try {
 			// scan content of current directory (include ..)
 			String[] rawdir = repoBrowser.dir(PanoptesHelper.REGEXP_DIRECTORY);
@@ -127,13 +135,13 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			// show panel
 			showBrowserPanel();
 
-		} catch (PanoptesException e) {
-			showErrorMsg(e);
+		} catch (PanoptesFileNotFoundException e) {
+			showErrorMsg(R.string.error_filenotfound, e.getLocation());
 		}
 	}
 
 	/**
-	 * Back button clicked
+	 * hide button clicked
 	 * 
 	 * @param view
 	 */
@@ -144,7 +152,6 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 
 	@Override
 	public void onItemClick(AdapterView<?> aView, View v, int position, long id) {
-		// TODO do something
 		if (directories == null) {
 			return;
 		}
@@ -168,9 +175,11 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	 */
 	public void doRotateClockwise(View view) {
 		// get current fragment displayed
-		ImageListFragment fmt = myAdapter.getCurrentItem();
-		if (fmt != null)
-			fmt.rotateClockwise();
+		if (myAdapter != null) {
+			ImageListFragment fmt = myAdapter.getCurrentItem();
+			if (fmt != null)
+				fmt.rotateClockwise();
+		}
 	}
 
 	/**
@@ -180,9 +189,11 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	 */
 	public void doRotateCounterClockwise(View view) {
 		// get current fragment displayed
-		ImageListFragment fmt = myAdapter.getCurrentItem();
-		if (fmt != null)
-			fmt.rotateCounterClockwise();
+		if (myAdapter != null) {
+			ImageListFragment fmt = myAdapter.getCurrentItem();
+			if (fmt != null)
+				fmt.rotateCounterClockwise();
+		}
 	}
 
 	/**

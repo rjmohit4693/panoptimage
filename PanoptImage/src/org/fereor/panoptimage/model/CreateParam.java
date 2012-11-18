@@ -23,5 +23,15 @@ import android.os.Parcelable;
  * @author "arnaud.p.fereor"
  */
 public abstract class CreateParam implements Parcelable {
+	/**
+	 * Return key value of this parameter
+	 * @return key
+	 */
 	public abstract String getKey();
+	
+	/**
+	 * Return if this parameter has data
+	 * @return true if the parameter has data to display, false else
+	 */
+	public abstract boolean hasData();
 }

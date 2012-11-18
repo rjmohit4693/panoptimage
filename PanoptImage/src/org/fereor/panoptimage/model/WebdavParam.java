@@ -84,6 +84,11 @@ public class WebdavParam extends CreateParam {
 		this.path = path;
 	}
 
+	@Override
+	public boolean hasData(){
+		return true;
+	}
+
 	public WebdavParam() {
 	}
 
