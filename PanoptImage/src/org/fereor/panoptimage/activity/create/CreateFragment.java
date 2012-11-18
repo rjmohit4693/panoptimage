@@ -52,4 +52,10 @@ public abstract class CreateFragment<T extends CreateParam> extends Fragment {
 	 * Called to refresh the fragment content
 	 */
 	public abstract void onRefresh();
+
+	/**
+	 * Set the status of the key field
+	 * @param status
+	 */
+	public abstract void setKeyEditable(boolean status);
 }

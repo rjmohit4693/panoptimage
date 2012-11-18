@@ -165,7 +165,8 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		// Refresh the spinner
 		populateSpinner();
 		// show message
-		showInfoMsg(String.format(getString(R.string.create_message_deleted), param.getKey()));	}
+		showInfoMsg(String.format(getString(R.string.create_message_deleted), param.getKey()));
+	}
 
 	// -------------------------------------------------------------------------
 	// Methods of interface OnItemSelectedListener
@@ -181,23 +182,28 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		// An item was selected.
 		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:onItemSelected");
+		boolean editable = true;
 		try {
 			displayFragment = PanoptesTypeEnum.EMPTY.instance();
 			if (pos < PanoptesTypeEnum.values().length) {
 				// case New... is chosen
 				displayFragment = PanoptesTypeEnum.values()[pos].instance();
+				editable = true;
 				displayParam = null;
 			} else if ((displayParam = findLocalParamAt(pos)) != null) {
 				// case local param is chosen
 				displayFragment = PanoptesTypeEnum.LOCAL.instance();
+				editable = false;
 			}
 			// else if ((displayParam = findWebdavParamAt(pos)) != null) {
 			// // case webdav param is chosen
 			// displayFragment = PanoptesTypeEnum.WEBDAV.instance();
+			// displayFragment.setKeyEditable(false);
 			// }
 			displayFragment.setParam(displayParam);
 			getSupportFragmentManager().beginTransaction().replace(R.id.create_fragment, displayFragment).commit();
 			displayFragment.onRefresh();
+			displayFragment.setKeyEditable(editable);
 		} catch (InstantiationException e) {
 			showErrorMsg(e);
 		} catch (IllegalAccessException e) {

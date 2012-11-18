@@ -123,4 +123,14 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		return WebdavParam.class;
 	}
 
+	@Override
+	public void setKeyEditable(boolean status) {
+		if (nameField != null) {
+			nameField.setClickable(status);
+			nameField.setCursorVisible(status);
+			nameField.setFocusable(status);
+			nameField.setFocusableInTouchMode(status);
+		}
+	}
+
 }

@@ -58,6 +58,11 @@ public class EmptyCreateFragment extends CreateFragment<EmptyParam> {
 	public void setParam(CreateParam displayParam) {
 		// do nothing
 		return;
+	}
 
+	@Override
+	public void setKeyEditable(boolean status) {
+		// do nothing
+		return;
 	}
 }
