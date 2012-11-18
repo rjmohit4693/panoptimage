@@ -16,7 +16,7 @@
         android:id="@+id/param_proxy_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
         android:layout_below="@+id/back"
         android:layout_marginTop="24dp"
         android:layout_toLeftOf="@+id/param_center"
@@ -29,19 +29,18 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/param_proxy_ip"
         android:layout_alignBottom="@+id/param_proxy_ip"
-        android:layout_toRightOf="@+id/param_proxy_ip"
+        android:layout_toRightOf="@+id/param_center"
         android:ems="10"
         android:hint="@string/param_proxy_ip_hint" >
-        <requestFocus />
     </EditText>
 
     <TextView
         android:id="@+id/param_proxy_port"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/param_proxy_ip"
         android:layout_below="@+id/param_proxy_ip_value"
         android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/param_center"
         android:text="@string/param_proxy_port"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -51,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/param_proxy_port"
         android:layout_alignBottom="@+id/param_proxy_port"
-        android:layout_toRightOf="@id/param_proxy_port"
+        android:layout_toRightOf="@+id/param_center"
         android:ems="5"
         android:hint="@string/param_proxy_port_hint"
         android:inputType="number" >
@@ -71,9 +70,9 @@
         android:id="@+id/param_showtip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@id/param_proxy_ip"
         android:layout_below="@+id/param_proxy_port_value"
         android:layout_marginTop="60dp"
+        android:layout_toLeftOf="@+id/param_center"
         android:text="@string/param_showtip"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -81,10 +80,10 @@
         android:id="@+id/param_showtip_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/param_showtip"
         android:layout_alignBottom="@+id/param_showtip"
-        android:layout_marginLeft="22dp"
-        android:layout_toRightOf="@id/param_showtip" />
+        android:layout_marginBottom="-10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/param_center" />
 
     <TextView
         android:id="@+id/param_center"
