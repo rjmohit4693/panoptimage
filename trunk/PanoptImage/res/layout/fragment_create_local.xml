@@ -24,8 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/create_local_name_hint" >
-        </EditText>
+            android:hint="@string/create_local_name_hint" />
     </TableRow>
 
     <TableRow
