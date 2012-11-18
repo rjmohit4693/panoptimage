@@ -44,11 +44,11 @@ public class ImageListFragment extends Fragment {
 	private byte[] data;
 	/** image to be displayed */
 	private Bitmap image;
-	/** image dimentions */
+	/** image dimensions */
 	private RectF iRect;
 	/** screen dimensions */
 	private RectF ivRect;
-	/** image view to use during the fragment lifecycle */
+	/** image view to use during the fragment life cycle */
 	private ImageView imageView;
 	/** current matrix */
 	private Matrix rotate = new Matrix();
@@ -121,7 +121,6 @@ public class ImageListFragment extends Fragment {
 	 * @param view
 	 */
 	public void rotateCounterClockwise() {
-		// get matrix and rotate it
 		rotateImage(-90.0f);
 	}
 
