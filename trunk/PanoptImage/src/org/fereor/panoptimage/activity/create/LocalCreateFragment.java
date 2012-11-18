@@ -35,7 +35,7 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_local, container, false);
+		return inflater.inflate(R.layout.fragment_create_local, container, false);
 	}
 
 	@Override
@@ -80,6 +80,7 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 		if (content == null) {
 			content = new LocalParam();
 		}
+		// read content
 		if (nameField.getText().toString().equals(content.getKey())) {
 			content.setPath(pathField.getText().toString());
 		} else {

@@ -63,9 +63,9 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			// hide panel
 			hideBrowserPanel();
 		} catch (PanoptesUnknownParamException e) {
-			showErrorMsg(getString(R.string.error_title), getString(R.string.error_unknown_param));
+			showErrorMsg(getString(R.string.error_unknown_param));
 		} catch (PanoptesException e) {
-			showErrorMsg(getString(R.string.error_title), getString(R.string.error_unknown_param));
+			showErrorMsg(getString(R.string.error_unknown_param));
 		}
 	}
 
