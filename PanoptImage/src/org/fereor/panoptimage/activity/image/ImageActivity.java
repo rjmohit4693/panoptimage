@@ -162,7 +162,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			myAdapter.setData(repoBrowser);
 			myPager.setAdapter(myAdapter);
 			// hide panel
-			hideBrowserPanel();
+			// hideBrowserPanel();
 		} catch (PanoptesException e) {
 			showErrorMsg(e);
 		}
