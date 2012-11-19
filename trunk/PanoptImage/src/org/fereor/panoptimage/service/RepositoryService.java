@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,14 +72,19 @@ public abstract class RepositoryService<T> {
 	 * @return list of child locations
 	 */
 	public void cd(String path) throws PanoptesException {
+		String location = PanoptesHelper.formatPath(root, currentPath, path);
+		File locationFile = new File(location);
 		if (path == null) {
 			// test param values
 			return;
+		} else if (!locationFile.exists() || locationFile.list() == null) {
+			// try to access to current path
+			throw new PanoptesFileNotFoundException(locationFile.getAbsolutePath());
 		} else if (PanoptesHelper.DOT.equals(path.trim())) {
 			// test param values
 			return;
 		} else if (PanoptesHelper.DDOT.equals(path.trim()) && currentPath.size() != 0) {
-			// if currentpath is not empty an .. is required
+			// if currentpath is not empty and .. is required
 			currentPath.remove(currentPath.size() - 1);
 		} else if (!path.trim().contains(PanoptesHelper.SLASH)) {
 			// if currentpath does not contain a /, add it
@@ -86,7 +92,6 @@ public abstract class RepositoryService<T> {
 		} else {
 			// TODO : implement recursive cd
 		}
-
 	}
 
 	/**

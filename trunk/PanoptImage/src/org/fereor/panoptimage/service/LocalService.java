@@ -46,13 +46,13 @@ public class LocalService extends RepositoryService<LocalParam> {
 	@Override
 	public String[] dir(String regexp) throws PanoptesFileNotFoundException {
 		// browse directory location
-		String location = root + PanoptesHelper.formatPath(currentPath);
+		String location = PanoptesHelper.formatPath(root, currentPath);
 		File locationFile = new File(location);
 		FilenameFilter filter = new RegexpFilenameFilter(regexp);
 		String[] result = locationFile.list(filter);
 		// if result is empty : throw error
 		if (result == null) {
-			throw new PanoptesFileNotFoundException(location);
+			throw new PanoptesFileNotFoundException(locationFile.getAbsolutePath());
 		}
 		return result;
 	}
@@ -61,7 +61,7 @@ public class LocalService extends RepositoryService<LocalParam> {
 	public byte[] get(String filename) throws PanoptesException {
 		try {
 			// read content file
-			File currentDir = new File(root + PanoptesHelper.formatPath(currentPath));
+			File currentDir = new File(PanoptesHelper.formatPath(root, currentPath));
 			File locationFile = new File(currentDir, filename);
 			FileInputStream fis = new FileInputStream(locationFile);
 			// put content in a byte array

@@ -64,6 +64,7 @@ public class HomeActivity extends PanoptesActivity {
 
 	@Override
 	protected void onResume() {
+		Log.i(PanoptesConstants.TAGNAME, "onResume");
 		try {
 			// load content
 			content = loadPagerContent();
