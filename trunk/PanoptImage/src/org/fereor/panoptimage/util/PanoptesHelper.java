@@ -17,6 +17,9 @@ package org.fereor.panoptimage.util;
 
 import java.util.List;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 /**
  * Utility class to keep several static methods
  * 
@@ -43,4 +46,47 @@ public class PanoptesHelper {
 		return str.toString();
 	}
 
+	/**
+	 * Calculates the sample size of image
+	 * 
+	 * @param options
+	 * @param reqWidth
+	 * @param reqHeight
+	 * @return
+	 */
+	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+		// Raw height and width of image
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+			if (width > height) {
+				inSampleSize = Math.round((float) height / (float) reqHeight);
+			} else {
+				inSampleSize = Math.round((float) width / (float) reqWidth);
+			}
+		}
+		return inSampleSize;
+	}
+
+	/**
+	 * Extract bitmap at the given size
+	 * @param data binary data
+	 * @param reqWidth target height
+	 * @param reqHeight target width
+	 * @return bitmap at the target size
+	 */
+	public static Bitmap decodeSampledBitmap(byte[] data, int reqWidth, int reqHeight) {
+		// get image size
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+
+		// Calculate inSampleSize
+		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeByteArray(data, 0, data.length, options);
+	}
 }

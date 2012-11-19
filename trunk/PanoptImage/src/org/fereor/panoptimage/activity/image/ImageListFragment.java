@@ -17,9 +17,9 @@ package org.fereor.panoptimage.activity.image;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptesHelper;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -45,9 +45,9 @@ public class ImageListFragment extends Fragment {
 	/** image to be displayed */
 	private Bitmap image;
 	/** image dimensions */
-	private RectF iRect;
+	private RectF imgRect;
 	/** screen dimensions */
-	private RectF ivRect;
+	private RectF scrRect;
 	/** image view to use during the fragment life cycle */
 	private ImageView imageView;
 	/** current matrix */
@@ -77,13 +77,16 @@ public class ImageListFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
+			// get image data
 			data = getArguments().getByteArray(BUNDLE_IMGDATA);
-			image = BitmapFactory.decodeByteArray(data, 0, data.length);
-			// Compute matrix
+			// get screen size
 			Display display = getActivity().getWindowManager().getDefaultDisplay();
-			iRect = new RectF(0, 0, image.getWidth(), image.getHeight());
-			ivRect = new RectF(0, 0, display.getWidth(), display.getHeight());
-			scale.setRectToRect(iRect, ivRect, Matrix.ScaleToFit.CENTER);
+			scrRect = new RectF(0, 0, display.getWidth(), display.getHeight());
+			// get image at correct size
+			image = PanoptesHelper.decodeSampledBitmap(data, (int)scrRect.width(), (int)scrRect.height());
+			imgRect = new RectF(0, 0, image.getWidth(), image.getHeight());
+			// Compute matrix
+			scale.setRectToRect(imgRect, scrRect, Matrix.ScaleToFit.CENTER);
 		}
 	}
 
@@ -130,8 +133,8 @@ public class ImageListFragment extends Fragment {
 	 * @param angle angle to rotate
 	 */
 	private void rotateMatrix(float angle) {
-		int pivX = (int) (iRect.width() / 2);
-		int pivY = (int) (iRect.height() / 2);
+		int pivX = (int) (imgRect.width() / 2);
+		int pivY = (int) (imgRect.height() / 2);
 		rotate.postRotate(angle, pivX, pivY);
 	}
 
@@ -145,12 +148,12 @@ public class ImageListFragment extends Fragment {
 		rotateMatrix(angle);
 		// compute the new image rectangle
 		RectF iDst = new RectF();
-		rotate.mapRect(iDst, iRect);
+		rotate.mapRect(iDst, imgRect);
 
 		if (imageView != null) {
 			// create a matrix for the imageview
 			Matrix newTransform = new Matrix();
-			newTransform.setRectToRect(iDst, iRect, Matrix.ScaleToFit.CENTER);
+			newTransform.setRectToRect(iDst, imgRect, Matrix.ScaleToFit.CENTER);
 			newTransform.postConcat(rotate);
 			newTransform.postConcat(scale);
 			// rotate the image
