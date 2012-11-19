@@ -108,7 +108,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	}
 
 	/**
-	 * Back button clicked
+	 * Browse button clicked
 	 * 
 	 * @param view
 	 */
@@ -155,14 +155,18 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		if (directories == null) {
 			return;
 		}
-		Toast.makeText(this, directories.get(position), Toast.LENGTH_LONG).show();
-		// change to directory selected
+		// hide panel
+		hideBrowserPanel();
 		try {
+			// change to directory selected
 			repoBrowser.cd(directories.get(position));
 			myAdapter.setData(repoBrowser);
 			myPager.setAdapter(myAdapter);
-			// hide panel
-			// hideBrowserPanel();
+			// notify change
+			myAdapter.notifyDataSetChanged();
+			Toast.makeText(this, directories.get(position), Toast.LENGTH_LONG).show();
+		} catch (PanoptesFileNotFoundException e) {
+			showErrorMsg(R.string.error_filenotfound, e.getLocation());
 		} catch (PanoptesException e) {
 			showErrorMsg(e);
 		}

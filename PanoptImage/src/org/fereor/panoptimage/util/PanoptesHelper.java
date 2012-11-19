@@ -38,9 +38,26 @@ public class PanoptesHelper {
 	 * @param path
 	 * @return
 	 */
-	public static final String formatPath(List<String> path) {
+	public static final String formatPath(List<String> path, String... others) {
+		return formatPath(null, path, others);
+	}
+
+	/**
+	 * Format a string to a path using SLASH
+	 * @param root root path
+	 * @param path current path
+	 * @param others others as list
+	 * @return
+	 */
+	public static final String formatPath(String root, List<String> path, String... others) {
 		StringBuilder str = new StringBuilder(SLASH);
+		if (root != null) {
+			str.append(root);
+		}
 		for (String cur : path) {
+			str.append(cur).append(SLASH);
+		}
+		for (String cur : others) {
 			str.append(cur).append(SLASH);
 		}
 		return str.toString();
@@ -72,6 +89,7 @@ public class PanoptesHelper {
 
 	/**
 	 * Extract bitmap at the given size
+	 * 
 	 * @param data binary data
 	 * @param reqWidth target height
 	 * @param reqHeight target width

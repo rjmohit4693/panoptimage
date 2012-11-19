@@ -16,8 +16,10 @@
 package org.fereor.panoptimage.activity;
 
 import org.fereor.panoptimage.dao.DatabaseHelper;
+import org.fereor.panoptimage.util.PanoptesConstants;
 
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -59,15 +61,6 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * 
 	 * @param e
 	 */
-	protected void showErrorMsg(String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-	}
-
-	/**
-	 * Display an error message
-	 * 
-	 * @param e
-	 */
 	protected void showErrorMsg(int stringRes, Object... args) {
 		String msg = String.format(getString(stringRes), args);
 		showErrorMsg(msg);
@@ -79,18 +72,9 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * @param e
 	 */
 	protected void showErrorMsg(Exception e) {
-		Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+		showErrorMsg(e.toString());
 	}
 
-	/**
-	 * Display a message
-	 * 
-	 * @param msg message to display
-	 */
-	protected void showInfoMsg(String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-	}
-	
 	/**
 	 * Display an error message
 	 * 
@@ -99,6 +83,26 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	protected void showInfoMsg(int stringRes, Object... args) {
 		String msg = String.format(getString(stringRes), args);
 		showInfoMsg(msg);
+	}
+
+	/**
+	 * Display a message
+	 * 
+	 * @param msg message to display
+	 */
+	protected void showInfoMsg(String msg) {
+		Log.d(PanoptesConstants.TAGNAME, "Info:" + msg);
+		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+	}
+
+	/**
+	 * Display an error message
+	 * 
+	 * @param e
+	 */
+	protected void showErrorMsg(String msg) {
+		Log.d(PanoptesConstants.TAGNAME, "Error:" + msg);
+		Toast.makeText(this, "Error:" + msg, Toast.LENGTH_LONG).show();
 	}
 
 }
