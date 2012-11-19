@@ -1,10 +1,28 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-<color name="custom_theme_color">#000000</color>
-<color name="custom_text_color">#dddddd</color>
-<color name="bright_foreground_dark">#000000</color>
-<style name="CustomTheme" parent="android:Theme.Light.NoTitleBar.Fullscreen">
-    <item name="android:windowBackground">@color/custom_theme_color</item>
-    <item name="android:colorBackground">@color/custom_theme_color</item>
-    <item name="android:textColor">@color/custom_text_color</item>
-</style>
+
+    <color name="custom_theme_color">#000000</color>
+    <color name="custom_text_color">#dddddd</color>
+    <color name="bright_foreground_dark">#000000</color>
+
+    <style name="CustomTheme" parent="android:Theme.Light.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@color/custom_theme_color</item>
+        <item name="android:colorBackground">@color/custom_theme_color</item>
+        <item name="android:textColor">@color/custom_text_color</item>
+        <item name="android:spinnerItemStyle">@style/CustomSpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/CustomSpinnerItem.DropDownItem</item>
+    </style>
+
+    <style name="CustomSpinnerItem" parent="android:Widget.TextView.SpinnerItem">
+        <item name="android:textAppearance">@style/CustomTextAppearanceSpinnerItem</item>
+        <item name="android:textColor">@color/custom_theme_color</item>
+    </style>
+
+    <style name="CustomSpinnerItem.DropDownItem" parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:textColor">@color/custom_theme_color</item>
+    </style>
+
+    <style name="CustomTextAppearanceSpinnerItem" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/custom_theme_color</item>
+    </style>
+
 </resources>
