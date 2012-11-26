@@ -25,12 +25,12 @@ import android.os.Parcelable;
  * 
  * @author "arnaud.p.fereor"
  */
-public class HomePagerParam implements Parcelable {
+public class HomePagerParamService implements Parcelable {
 	private CreateParam param;
 	private String message;
 	private int imgid;
 
-	public HomePagerParam(CreateParam param, String message, int imgid) {
+	public HomePagerParamService(CreateParam param, String message, int imgid) {
 		this.param = param;
 		this.message = message;
 		this.imgid = imgid;
@@ -71,13 +71,13 @@ public class HomePagerParam implements Parcelable {
 	/**
 	 * Creator of the parcelable
 	 */
-	public static final Parcelable.Creator<HomePagerParam> CREATOR = new Parcelable.Creator<HomePagerParam>() {
-		public HomePagerParam createFromParcel(Parcel in) {
-			return new HomePagerParam(in);
+	public static final Parcelable.Creator<HomePagerParamService> CREATOR = new Parcelable.Creator<HomePagerParamService>() {
+		public HomePagerParamService createFromParcel(Parcel in) {
+			return new HomePagerParamService(in);
 		}
 
-		public HomePagerParam[] newArray(int size) {
-			return new HomePagerParam[size];
+		public HomePagerParamService[] newArray(int size) {
+			return new HomePagerParamService[size];
 		}
 	};
 
@@ -86,7 +86,7 @@ public class HomePagerParam implements Parcelable {
 	 * 
 	 * @param in parcel to read from
 	 */
-	private HomePagerParam(Parcel in) {
+	private HomePagerParamService(Parcel in) {
 		imgid = in.readInt();
 		message = in.readString();
 		param = in.readParcelable(getClass().getClassLoader());

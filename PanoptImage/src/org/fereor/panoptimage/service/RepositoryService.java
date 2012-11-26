@@ -15,13 +15,14 @@
 
 package org.fereor.panoptimage.service;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fereor.panoptimage.exception.PanoptesException;
-import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
+import org.fereor.panoptimage.exception.PanoptimageException;
+import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
+import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
 import org.fereor.panoptimage.util.PanoptesHelper;
@@ -44,8 +45,11 @@ public abstract class RepositoryService<T> {
 	 * 
 	 * @return
 	 * @throws PanoptesUnknownParamException
+	 * @throws PanoptimageNoNetworkException 
+	 * @throws  
 	 */
-	public static RepositoryService<?> createInstance(HomePagerParam content) throws PanoptesUnknownParamException {
+	public static RepositoryService<?> createInstance(HomePagerParamService content)
+			throws PanoptesUnknownParamException, PanoptimageNoNetworkException {
 		// case of type LocalParam
 		if (content.getParam() instanceof LocalParam)
 			return new LocalService((LocalParam) content.getParam());
@@ -71,16 +75,15 @@ public abstract class RepositoryService<T> {
 	 * @param path path to navigate to
 	 * @return list of child locations
 	 */
-	public void cd(String path) throws PanoptesException {
-		String location = PanoptesHelper.formatPath(root, currentPath, path);
-		File locationFile = new File(location);
-		if (path == null) {
-			// test param values
+	public void cd(String path) {
+		// test param values
+		if (path == null || path.length() == 0) {
 			return;
-		} else if (!locationFile.exists() || locationFile.list() == null) {
+		} // else if (!isDirectory(path)) {
 			// try to access to current path
-			throw new PanoptesFileNotFoundException(locationFile.getAbsolutePath());
-		} else if (PanoptesHelper.DOT.equals(path.trim())) {
+			// throw new PanoptimageFileNotFoundException(path);
+		// }
+		else if (PanoptesHelper.DOT.equals(path.trim())) {
 			// test param values
 			return;
 		} else if (PanoptesHelper.DDOT.equals(path.trim()) && currentPath.size() != 0) {
@@ -90,8 +93,19 @@ public abstract class RepositoryService<T> {
 			// if currentpath does not contain a /, add it
 			currentPath.add(path.trim());
 		} else {
-			// TODO : implement recursive cd
+			// recursive cd
+			String subpath = path.substring(0, path.indexOf(PanoptesHelper.SLASH));
+			cd(subpath);
 		}
+	}
+
+	/**
+	 * Returns the formatted value of the path
+	 * 
+	 * @return path formatted
+	 */
+	public String getformatedPath() {
+		return PanoptesHelper.formatPath(currentPath);
 	}
 
 	/**
@@ -100,7 +114,7 @@ public abstract class RepositoryService<T> {
 	 * @param regexp regular expression to match to search for files
 	 * @return list of child locations
 	 */
-	public abstract String[] dir(String regexp) throws PanoptesFileNotFoundException;
+	public abstract List<String> dir(String regexp) throws PanoptimageFileNotFoundException;
 
 	/**
 	 * Get the content of a repository location
@@ -108,7 +122,24 @@ public abstract class RepositoryService<T> {
 	 * @param location location to get
 	 * @return byte content of location
 	 */
-	public abstract byte[] get(String location) throws PanoptesException;
+	public abstract InputStream get(String location) throws PanoptimageException;
+
+	/**
+	 * Tests if a path exists (absolute or relative)
+	 * 
+	 * @param path path to test
+	 * @return true if the path exists
+	 * @throws PanoptimageFileNotFoundException
+	 */
+	public abstract boolean exists(String path);
+
+	/**
+	 * Tests if the path is a directory
+	 * 
+	 * @param path path to test
+	 * @return true if the path is a directory
+	 */
+	public abstract boolean isDirectory(String path);
 
 	/**
 	 * Determines if we should dispaly a splash screen while loading

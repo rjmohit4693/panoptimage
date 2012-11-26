@@ -15,16 +15,17 @@
 
 package org.fereor.panoptimage.activity.image;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
-import org.fereor.panoptimage.exception.PanoptesException;
-import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
-import org.fereor.panoptimage.service.HomePagerParam;
+import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
+import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
+import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.service.RepositoryService;
+import org.fereor.panoptimage.service.async.RepositoryDirAsync;
+import org.fereor.panoptimage.service.async.RepositoryDirListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
 
@@ -32,19 +33,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
-public class ImageActivity extends PanoptesActivity implements OnItemClickListener {
+public class ImageActivity extends PanoptesActivity implements OnItemClickListener,
+		RepositoryDirListener<Integer, List<String>> {
+	private static final String SAVESTATE_CURRENTITEM = "org.fereor.panoptimage.activity.image.ImageActivity.currentItem";
+	private static final String SAVESTATE_CURRENTPATH = "org.fereor.panoptimage.activity.image.ImageActivity.currentPath";
 	private RepositoryService<?> repoBrowser;
-	private List<String> directories;
-	private ImagePagerAdapter myAdapter;
-	private ViewPager myPager;
+	private ImagePagerAdapter adapter;
+	private ViewPager pager;
+	private Bundle savedState;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,34 +56,88 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		setContentView(R.layout.activity_image);
 		// Get the message from the intent
 		Intent intent = getIntent();
-		HomePagerParam param = (HomePagerParam) intent.getParcelableExtra(PanoptesConstants.MSG_HOME);
+		HomePagerParamService param = (HomePagerParamService) intent.getParcelableExtra(PanoptesConstants.MSG_HOME);
 		// hide panel
 		hideBrowserPanel();
 		try {
 			// Retrieve content
 			repoBrowser = RepositoryService.createInstance(param);
-			// set adapter
-			myAdapter = new ImagePagerAdapter(repoBrowser, getSupportFragmentManager());
-			myPager = (ViewPager) findViewById(R.id.imagepager);
-			myPager.setAdapter(myAdapter);
-		} catch (PanoptesFileNotFoundException e) {
+			// set temporary adapter
+			adapter = new LoadingPagerAdapter(getSupportFragmentManager());
+			pager = (ViewPager) findViewById(R.id.imagepager);
+			pager.setAdapter(adapter);
+			pager.setOffscreenPageLimit(0);
+			// if (savedInstanceState != null) {
+			// repoBrowser.cd(savedInstanceState.getString(SAVESTATE_CURRENTPATH));
+			// adapter.setData(repoBrowser);
+			// pager.setAdapter(adapter);
+			// pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
+			// }
+			// Launch loading task
+			RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
+			task.execute(repoBrowser);
+		} catch (PanoptimageFileNotFoundException e) {
 			showErrorMsg(R.string.error_filenotfound, e.getLocation());
 		} catch (PanoptesUnknownParamException e) {
 			showErrorMsg(getString(R.string.error_unknown_param));
+		} catch (PanoptimageNoNetworkException e) {
+			showErrorMsg(getString(R.string.error_nonetwork));
 		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		Log.d(PanoptesConstants.TAGNAME, "onSaveInstanceState");
+		outState.putString(SAVESTATE_CURRENTPATH, repoBrowser.getformatedPath());
+		outState.putInt(SAVESTATE_CURRENTITEM, pager.getCurrentItem());
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		// hide panel
-		hideBrowserPanel();
+		// hideBrowserPanel();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_image, menu);
 		return true;
+	}
+
+	// -------------------------------------------------------------------------
+	// Methods for Dir listener
+	// -------------------------------------------------------------------------
+
+	@Override
+	public void onPreDir() {
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public void onPostDir(List<String> result) {
+		// set adapter
+		adapter = new ImagePagerAdapter(repoBrowser, getSupportFragmentManager());
+		adapter.setImageList(result);
+		pager = (ViewPager) findViewById(R.id.imagepager);
+		pager.setAdapter(adapter);
+		pager.setOffscreenPageLimit(0);
+		adapter.notifyDataSetChanged();
+		// restore state if needed
+		// if (savedInstanceState != null) {
+		// repoBrowser.cd(savedInstanceState.getString(SAVESTATE_CURRENTPATH));
+		// adapter.setData(repoBrowser);
+		// pager.setAdapter(adapter);
+		// pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
+		// adapter.notifyDataSetChanged();
+		// }
+	}
+
+	@Override
+	public void onDirProgressUpdate(Integer... values) {
+		// TODO Auto-generated method stub
+
 	}
 
 	// -------------------------------------------------------------------------
@@ -116,28 +173,11 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		if (repoBrowser == null) {
 			return;
 		}
-		try {
-			// scan content of current directory (include ..)
-			String[] rawdir = repoBrowser.dir(PanoptesHelper.REGEXP_DIRECTORY);
-			directories = new ArrayList<String>(rawdir.length + 1);
-			directories.add(PanoptesHelper.DDOT);
-			for (String it : rawdir) {
-				directories.add(it);
-			}
-
-			// get content for the list
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-					directories);
-
-			ListView lv = (ListView) findViewById(R.id.image_browse_list);
-			lv.setAdapter(adapter);
-			lv.setOnItemClickListener(this);
-			// show panel
-			showBrowserPanel();
-
-		} catch (PanoptesFileNotFoundException e) {
-			showErrorMsg(R.string.error_filenotfound, e.getLocation());
-		}
+		// start async task to load content
+		ImageBrowserFragment browseFragment = (ImageBrowserFragment)getSupportFragmentManager().findFragmentById(R.id.browser_fragment);
+		RepositoryDirAsync task = new RepositoryDirAsync(browseFragment, PanoptesHelper.REGEXP_DIRECTORY);
+		task.execute(repoBrowser);		
+		showBrowserPanel();
 	}
 
 	/**
@@ -151,25 +191,25 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> aView, View v, int position, long id) {
-		if (directories == null) {
-			return;
-		}
+	public void onItemClick(AdapterView<?> lView, View v, int position, long id) {
 		// hide panel
 		hideBrowserPanel();
+		Object item = lView.getAdapter().getItem(position);
+		
+		// set temporary adapter
 		try {
-			// change to directory selected
-			repoBrowser.cd(directories.get(position));
-			myAdapter.setData(repoBrowser);
-			myPager.setAdapter(myAdapter);
-			// notify change
-			myAdapter.notifyDataSetChanged();
-			Toast.makeText(this, directories.get(position), Toast.LENGTH_LONG).show();
-		} catch (PanoptesFileNotFoundException e) {
-			showErrorMsg(R.string.error_filenotfound, e.getLocation());
-		} catch (PanoptesException e) {
-			showErrorMsg(e);
+			adapter = new LoadingPagerAdapter(getSupportFragmentManager());
+		} catch (PanoptimageFileNotFoundException e) {
+			// cannot happen on LoadingPagerAdapter
 		}
+		pager = (ViewPager) findViewById(R.id.imagepager);
+		pager.setAdapter(adapter);
+		pager.setOffscreenPageLimit(0);
+		Toast.makeText(this, item.toString(), Toast.LENGTH_LONG).show();
+		// change to directory selected
+		repoBrowser.cd(item.toString());
+		RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
+		task.execute(repoBrowser);
 	}
 
 	/**
@@ -179,8 +219,8 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	 */
 	public void doRotateClockwise(View view) {
 		// get current fragment displayed
-		if (myAdapter != null) {
-			ImageListFragment fmt = myAdapter.getCurrentItem();
+		if (adapter != null) {
+			ImageListFragment fmt = adapter.getCurrentItem();
 			if (fmt != null)
 				fmt.rotateClockwise();
 		}
@@ -193,8 +233,8 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	 */
 	public void doRotateCounterClockwise(View view) {
 		// get current fragment displayed
-		if (myAdapter != null) {
-			ImageListFragment fmt = myAdapter.getCurrentItem();
+		if (adapter != null) {
+			ImageListFragment fmt = adapter.getCurrentItem();
 			if (fmt != null)
 				fmt.rotateCounterClockwise();
 		}

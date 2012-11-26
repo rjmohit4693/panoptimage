@@ -15,14 +15,16 @@
 
 package org.fereor.panoptimage.service;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
-import org.fereor.panoptimage.exception.PanoptesException;
-import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
+import org.fereor.panoptimage.exception.PanoptimageException;
+import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.RegexpFilenameFilter;
@@ -40,44 +42,51 @@ public class LocalService extends RepositoryService<LocalParam> {
 	 */
 	public LocalService(LocalParam param) {
 		super(param);
-		this.root = param.getPath();
+		if (!param.getPath().endsWith(PanoptesHelper.SLASH)) {
+			this.root = param.getPath() + PanoptesHelper.SLASH;
+		} else {
+			this.root = param.getPath();
+		}
 	}
 
 	@Override
-	public String[] dir(String regexp) throws PanoptesFileNotFoundException {
+	public List<String> dir(String regexp) throws PanoptimageFileNotFoundException {
 		// browse directory location
 		String location = PanoptesHelper.formatPath(root, currentPath);
 		File locationFile = new File(location);
 		FilenameFilter filter = new RegexpFilenameFilter(regexp);
 		String[] result = locationFile.list(filter);
+
 		// if result is empty : throw error
 		if (result == null) {
-			throw new PanoptesFileNotFoundException(locationFile.getAbsolutePath());
+			throw new PanoptimageFileNotFoundException(locationFile.getAbsolutePath());
 		}
-		return result;
+		return Arrays.asList(result);
 	}
 
 	@Override
-	public byte[] get(String filename) throws PanoptesException {
+	public InputStream get(String filename) throws PanoptimageException {
 		try {
 			// read content file
 			File currentDir = new File(PanoptesHelper.formatPath(root, currentPath));
 			File locationFile = new File(currentDir, filename);
-			FileInputStream fis = new FileInputStream(locationFile);
-			// put content in a byte array
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			byte[] buf = new byte[1024];
-			int cnt;
-			while ((cnt = fis.read(buf)) > 0) {
-				baos.write(buf, 0, cnt);
-			}
-			fis.close();
-			baos.close();
-
-			return baos.toByteArray();
+			return new FileInputStream(locationFile);
 		} catch (IOException e) {
-			throw new PanoptesException(e.toString());
+			throw new PanoptimageException(e.toString());
 		}
+	}
+
+	@Override
+	public boolean exists(String path) {
+		// read content file
+		File currentDir = new File(PanoptesHelper.formatPath(root, currentPath, path));
+		return currentDir.exists();
+	}
+
+	@Override
+	public boolean isDirectory(String path) {
+		File currentDir = new File(PanoptesHelper.formatPath(root, currentPath, path));
+		return currentDir.isDirectory();
 	}
 
 	@Override

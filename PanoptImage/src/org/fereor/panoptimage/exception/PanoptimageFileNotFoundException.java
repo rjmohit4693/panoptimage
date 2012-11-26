@@ -1,6 +1,6 @@
 package org.fereor.panoptimage.exception;
 
-public class PanoptesFileNotFoundException extends PanoptesException {
+public class PanoptimageFileNotFoundException extends PanoptimageException {
 
 	/** location of error */
 	private String location;
@@ -10,7 +10,7 @@ public class PanoptesFileNotFoundException extends PanoptesException {
 	 * 
 	 * @param location
 	 */
-	public PanoptesFileNotFoundException(String location) {
+	public PanoptimageFileNotFoundException(String location) {
 		this.setLocation(location);
 	}
 

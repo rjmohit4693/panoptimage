@@ -19,19 +19,31 @@ import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.create.CreateFragment;
 import org.fereor.panoptimage.activity.create.EmptyCreateFragment;
 import org.fereor.panoptimage.activity.create.LocalCreateFragment;
+import org.fereor.panoptimage.activity.create.WebdavCreateFragment;
 import org.fereor.panoptimage.model.CreateParam;
 
 public enum PanoptesTypeEnum {
 	/**
 	 * List of available fragments for the Create activity
 	 */
-	EMPTY(0, R.string.create_new_default, R.layout.fragment_create_empty, R.drawable.ic_empty_storage,
-			EmptyCreateFragment.class), LOCAL(1, R.string.create_new_local, R.layout.fragment_create_local,
-			R.drawable.ic_local_storage, LocalCreateFragment.class);
-	/*
-	 * WEBDAV (2, R.string.create_new_webdav, R.layout.fragment_create_webdav, R.drawable.ic_webdav_storage , 
-	 * WebdavCreateFragment.class);
-	 */
+	EMPTY(
+			0,
+			R.string.create_new_default,
+			R.layout.fragment_create_empty,
+			R.drawable.ic_empty_storage,
+			EmptyCreateFragment.class),
+	LOCAL(
+			1,
+			R.string.create_new_local,
+			R.layout.fragment_create_local,
+			R.drawable.ic_local_storage,
+			LocalCreateFragment.class),
+	WEBDAV(
+			2,
+			R.string.create_new_webdav,
+			R.layout.fragment_create_webdav,
+			R.drawable.ic_webdav_storage,
+			WebdavCreateFragment.class);
 
 	/** ID (used internally for DB) */
 	private int id;
@@ -46,8 +58,8 @@ public enum PanoptesTypeEnum {
 
 	/**
 	 * Private constructor for the fragments of the Create activity
-	 * @param <T>
 	 * 
+	 * @param <T>
 	 * @param id id of fragment (used to store internally in DB)
 	 * @param spinnerText ID for the spinner
 	 * @param layout ID for the fragment layout
@@ -102,8 +114,8 @@ public enum PanoptesTypeEnum {
 	 * Creates a new fragment of given type
 	 * 
 	 * @return new instance of the fragment
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
 	public CreateFragment<?> instance() throws InstantiationException, IllegalAccessException {
 		return fragmentClass.newInstance();

@@ -15,7 +15,7 @@
 
 package org.fereor.panoptimage.exception;
 
-public class PanoptesUnknownParamException extends PanoptesException {
+public class PanoptesUnknownParamException extends PanoptimageException {
 	private static final long serialVersionUID = -8197389292810388971L;
 
 	public PanoptesUnknownParamException() {

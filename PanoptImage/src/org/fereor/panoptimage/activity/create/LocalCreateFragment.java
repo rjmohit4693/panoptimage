@@ -82,12 +82,13 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 		if (content == null) {
 			content = new LocalParam();
 		}
+		StringBuilder path = new StringBuilder(pathField.getText().toString());
 		// read content
 		if (nameField.getText().toString().equals(content.getKey())) {
-			content.setPath(pathField.getText().toString());
+			content.setPath(path.toString());
 		} else {
 			content.setKey(nameField.getText().toString());
-			content.setPath(pathField.getText().toString());
+			content.setPath(path.toString());
 		}
 		return content;
 	}

@@ -21,6 +21,7 @@ import java.util.concurrent.Callable;
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.dao.DatabaseHelper;
+import org.fereor.panoptimage.dao.DatabaseStatus;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.util.PanoptesConstants;
 
@@ -83,6 +84,7 @@ public class ConfigActivity extends PanoptesActivity {
 			return;
 		}
 		showInfoMsg(R.string.param_message_saved);
+		DatabaseStatus.getInstance().markConfigSaved();
 	}
 
 	@Override
