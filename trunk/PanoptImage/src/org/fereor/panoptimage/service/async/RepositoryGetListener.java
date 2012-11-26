@@ -13,34 +13,25 @@
 // You should have received a copy of the GNU General Public License
 // along with panoptimage.  If not, see <http://www.gnu.org/licenses/>
 
-package org.fereor.panoptimage.exception;
+package org.fereor.panoptimage.service.async;
 
-public class PanoptesException extends Exception {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private String msg;
+
+public interface RepositoryGetListener<Progress, Result> {
 
 	/**
-	 * Constructor as a parent exception
-	 * 
-	 * @param e parent exception
+	 * Mark progress on this listener
+	 * @param values
 	 */
-	public PanoptesException(String message) {
-		this.msg = message;
-	}
+	void onGetProgressUpdate(Progress... values);
 
 	/**
-	 * Constructor as a parent exception
+	 * Mark result finished
+	 * @param result
 	 */
-	public PanoptesException() {
-		this.msg = "";
-	}
-
-	@Override
-	public String getMessage() {
-		return msg;
-	}
-
+	void onPostGet(Result result);
+	
+	/**
+	 * Mark before get is launched
+	 */
+	void onPreGet();
 }

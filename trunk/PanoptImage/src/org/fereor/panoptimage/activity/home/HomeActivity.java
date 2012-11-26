@@ -28,7 +28,8 @@ import org.fereor.panoptimage.activity.help.HelpActivity;
 import org.fereor.panoptimage.activity.image.ImageActivity;
 import org.fereor.panoptimage.model.EmptyParam;
 import org.fereor.panoptimage.model.LocalParam;
-import org.fereor.panoptimage.service.HomePagerParam;
+import org.fereor.panoptimage.model.WebdavParam;
+import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
 
@@ -40,40 +41,60 @@ import android.view.Menu;
 import android.view.View;
 
 public class HomeActivity extends PanoptesActivity {
-	private HomePagerAdapter myAdapter;
-	private ViewPager mPager;
+	private static final String SAVESTATE_CURRENTITEM = "org.fereor.panoptimage.activity.home.HomeActivity.currentItem";
+	/** Adapter for the pager */
+	private HomePagerAdapter adapter;
+	/** Pager for the List */
+	private ViewPager pager;
 
 	/** List of available configurations */
-	private List<HomePagerParam> content;
+	private List<HomePagerParamService> content;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		try {
+			adapter = new HomePagerAdapter(getSupportFragmentManager());
 			// load content
 			content = loadPagerContent();
-			// set adapter
-			myAdapter = new HomePagerAdapter(content, getSupportFragmentManager());
-			mPager = (ViewPager) findViewById(R.id.pager);
-			mPager.setAdapter(myAdapter);
+			adapter.setData(content);
+			pager = (ViewPager) findViewById(R.id.pager);
+			pager.setAdapter(adapter);
+			// restore state if needed
+			if (savedInstanceState != null) {
+				pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
+				adapter.notifyDataSetChanged();
+			} else {
+			}
 		} catch (SQLException e) {
 			showErrorMsg(e);
 		}
 	}
 
 	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onSaveInstanceState");
+		outState.putInt(SAVESTATE_CURRENTITEM, pager.getCurrentItem());
+	}
+
+	@Override
 	protected void onResume() {
-		Log.i(PanoptesConstants.TAGNAME, "onResume");
-		try {
-			// load content
-			content = loadPagerContent();
-			// refresh adapter
-			myAdapter.setData(content);
-			mPager.setAdapter(myAdapter);
-			myAdapter.notifyDataSetChanged();
-		} catch (SQLException e) {
-			showErrorMsg(e);
+		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onResume");
+		// If database is updated, refresh content
+		if (!isLocalParamUptodate()) {
+			try {
+				// load content
+				content = loadPagerContent();
+				// refresh adapter
+				adapter.setData(content);
+				pager.setAdapter(adapter);
+				adapter.notifyDataSetChanged();
+			} catch (SQLException e) {
+				showErrorMsg(e);
+			}
 		}
 		super.onResume();
 	}
@@ -94,14 +115,14 @@ public class HomeActivity extends PanoptesActivity {
 	 * @return
 	 */
 	public void onImageClicked(View view) {
-		int location = mPager.getCurrentItem();
+		int location = pager.getCurrentItem();
 		if (location >= content.size()) {
 			showErrorMsg(getString(R.string.error_unknown));
 			return;
 		}
 
 		// get data corresponding to item clicked
-		HomePagerParam curparam = content.get(location);
+		HomePagerParamService curparam = content.get(location);
 		if (!curparam.getParam().hasData()) {
 			// This parameter has no data to display : return
 			return;
@@ -115,28 +136,28 @@ public class HomeActivity extends PanoptesActivity {
 
 	/** Called when the user clicks the Create button */
 	public void showCreate(View view) {
-		Log.i(PanoptesConstants.TAGNAME, "showCreate");
+		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showCreate");
 		Intent intent = new Intent(this, CreateActivity.class);
 		startActivity(intent);
 	}
 
 	/** Called when the user clicks the Help button */
 	public void showHelp(View view) {
-		Log.i(PanoptesConstants.TAGNAME, "showHelp");
+		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showHelp");
 		Intent intent = new Intent(this, HelpActivity.class);
 		startActivity(intent);
 	}
 
 	/** Called when the user clicks the Config button */
 	public void showConfig(View view) {
-		Log.i(PanoptesConstants.TAGNAME, "showConfig");
+		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showConfig");
 		Intent intent = new Intent(this, ConfigActivity.class);
 		startActivity(intent);
 	}
 
 	/** Called when the user clicks the About button */
 	public void showAbout(View view) {
-		Log.i(PanoptesConstants.TAGNAME, "showAbout");
+		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showAbout");
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
@@ -149,23 +170,26 @@ public class HomeActivity extends PanoptesActivity {
 	 * 
 	 * @throws SQLException
 	 */
-	private List<HomePagerParam> loadPagerContent() throws SQLException {
+	private List<HomePagerParamService> loadPagerContent() throws SQLException {
 		// populate the spinner with default values
-		List<HomePagerParam> data = new ArrayList<HomePagerParam>();
+		List<HomePagerParamService> data = new ArrayList<HomePagerParamService>();
 		// Add the default view (home page)
-		data.add(new HomePagerParam(new EmptyParam(), getString(R.string.message), PanoptesTypeEnum.EMPTY.icon()));
+		data.add(new HomePagerParamService(new EmptyParam(), getString(R.string.message), PanoptesTypeEnum.EMPTY.icon()));
 
 		// populate the scroll with local values
 		for (LocalParam local : getHelper().getLocalParamDao().queryForAll()) {
 			if (local.getKey() != null) {
-				data.add(new HomePagerParam(local, local.getKey(), PanoptesTypeEnum.LOCAL.icon()));
+				data.add(new HomePagerParamService(local, local.getKey(), PanoptesTypeEnum.LOCAL.icon()));
 			}
 		}
+		markLocalRead();
 		// populate the scroll with webdav values
-		// for (WebdavParam webdav : getHelper().getWebdavParamDao().queryForAll()) {
-		// data.add(new HomePagerParam(webdav, webdav.getKey(),
-		// PanoptesTypeEnum.WEBDAV.icon()));
-		// }
+		for (WebdavParam webdav : getHelper().getWebdavParamDao().queryForAll()) {
+			if (webdav.getKey() != null) {
+				data.add(new HomePagerParamService(webdav, webdav.getKey(), PanoptesTypeEnum.WEBDAV.icon()));
+			}
+		}
+		markWebdavRead();
 		return data;
 	}
 

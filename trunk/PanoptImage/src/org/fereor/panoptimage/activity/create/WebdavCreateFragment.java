@@ -99,7 +99,8 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		if (content == null) {
 			content = new WebdavParam();
 		}
-		// et key if not set
+		StringBuilder path = new StringBuilder(pathField.getText().toString());
+		// set key if not set
 		if (!nameField.getText().toString().equals(content.getKey())) {
 			content.setKey(nameField.getText().toString());
 		}
@@ -108,7 +109,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		content.setServer(serverField.getText().toString());
 		content.setPort(portField.getText().toString());
 		content.setBase(baseField.getText().toString());
-		content.setPath(pathField.getText().toString());
+		content.setPath(path.toString());
 		return content;
 	}
 

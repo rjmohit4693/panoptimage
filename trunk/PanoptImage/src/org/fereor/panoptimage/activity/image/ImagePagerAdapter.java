@@ -15,10 +15,11 @@
 
 package org.fereor.panoptimage.activity.image;
 
-import org.fereor.panoptimage.exception.PanoptesException;
-import org.fereor.panoptimage.exception.PanoptesFileNotFoundException;
+import java.util.List;
+
+import org.fereor.panoptimage.exception.PanoptimageException;
+import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.service.RepositoryService;
-import org.fereor.panoptimage.util.PanoptesHelper;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,11 +36,11 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 	/** data to display */
 	private RepositoryService<?> repo = null;
 	/** current directory content */
-	private String[] imageList = null;
+	private List<String> imageList = null;
 	/** current visible item */
 	private ImageListFragment currentItem;
 
-	public ImagePagerAdapter(RepositoryService<?> repo, FragmentManager fm) throws PanoptesFileNotFoundException {
+	public ImagePagerAdapter(RepositoryService<?> repo, FragmentManager fm) {
 		super(fm);
 		setData(repo);
 	}
@@ -48,34 +49,33 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 	 * Setter to update data
 	 * 
 	 * @param data
-	 * @throws PanoptesException
+	 * @throws PanoptimageException
 	 */
-	public void setData(RepositoryService<?> data) throws PanoptesFileNotFoundException {
+	public void setData(RepositoryService<?> data) {
 		this.repo = data;
-		if (repo != null) {
-			imageList = repo.dir(PanoptesHelper.REGEXP_ALLIMAGES);
-		}
+	}
+
+	/**
+	 * Refresh content of image list
+	 * @throws PanoptimageFileNotFoundException
+	 */
+	public void setImageList(List<String> list) {
+		imageList = list;
 	}
 
 	@Override
 	public int getCount() {
 		if (repo == null || imageList == null)
 			return 0;
-		return imageList.length;
+		return imageList.size();
 	}
 
 	@Override
 	public Fragment getItem(int position) {
 		if (repo == null)
 			return null;
-		// get image content
-		byte[] bindata;
-		try {
-			bindata = repo.get(imageList[position]);
-			return ImageListFragment.newInstance(bindata);
-		} catch (PanoptesException e) {
-			return null;
-		}
+		// create fragment instance
+		return ImageListFragment.newInstance(repo, imageList.get(position));
 	}
 
 	@Override

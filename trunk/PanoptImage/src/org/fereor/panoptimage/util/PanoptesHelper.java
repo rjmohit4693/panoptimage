@@ -29,8 +29,15 @@ public class PanoptesHelper {
 	public static final String DOT = ".";
 	public static final String DDOT = "..";
 	public static final String SLASH = "/";
+	public static final String HTTPBASE = "://";
+	public static final String HTTPPORT = ":";
 	public static final String REGEXP_ALLIMAGES = ".+\\.jpg|.+\\.jpeg|.+\\.png|.+\\.gif";
 	public static final String REGEXP_DIRECTORY = "^[^\\\\.]*$";
+	/** Encoder for URL */
+//	private static HashMap<String, String> encoder = new HashMap<String, String>();
+//	static {
+//		encoder.put(" ", "%20");
+//	}
 
 	/**
 	 * Format a string to a path using SLASH
@@ -44,13 +51,14 @@ public class PanoptesHelper {
 
 	/**
 	 * Format a string to a path using SLASH
+	 * 
 	 * @param root root path
 	 * @param path current path
 	 * @param others others as list
 	 * @return
 	 */
 	public static final String formatPath(String root, List<String> path, String... others) {
-		StringBuilder str = new StringBuilder(SLASH);
+		StringBuilder str = new StringBuilder();
 		if (root != null) {
 			str.append(root);
 		}
@@ -60,8 +68,59 @@ public class PanoptesHelper {
 		for (String cur : others) {
 			str.append(cur).append(SLASH);
 		}
+		if (str.length() == 0)
+			return "";
+		if (SLASH.equals(str.substring(str.length() - 1, str.length()))) {
+			return str.substring(0, str.length() - 1);
+		}
 		return str.toString();
 	}
+
+	/**
+	 * Encode a URL to allow correct URL encoding
+	 * 
+	 * @param url url to encode
+	 * @return url encoded
+	 */
+//	public static String encode(String url) {
+//		if (url == null)
+//			return null;
+//		// read each char of string
+//		StringBuilder res = new StringBuilder();
+//		for (int i = 0; i < url.length(); i++) {
+//			String next = url.substring(i, i + 1);
+//			// encode value
+//			if (encoder.containsKey(next)) {
+//				res.append(encoder.get(next));
+//			} else {
+//				res.append(next);
+//			}
+//		}
+//		return res.toString();
+//	}
+
+	/**
+	 * Encode a URL to allow correct URL encoding
+	 * 
+	 * @param url url to encode
+	 * @return url encoded
+	 */
+//	public static String decode(String url) {
+//		if (url == null)
+//			return null;
+//		// read each char of string
+//		StringBuilder res = new StringBuilder();
+//		for (int i = 0; i < url.length(); i++) {
+//			String next = url.substring(i, i + 1);
+//			// encode value
+//			if (encoder.containsValue(value)(next)) {
+//				res.append(encoder.get(next));
+//			} else {
+//				res.append(next);
+//			}
+//		}
+//		return res.toString();
+//	}
 
 	/**
 	 * Calculates the sample size of image
@@ -99,9 +158,11 @@ public class PanoptesHelper {
 		// get image size
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
 		// Calculate inSampleSize
 		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+		options.inSampleSize = 4;
 
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;

@@ -22,6 +22,7 @@ import java.util.concurrent.Callable;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
+import org.fereor.panoptimage.dao.DatabaseStatus;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
@@ -102,6 +103,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 					public Void call() throws SQLException {
 						// insert a number of accounts at once
 						getHelper().getLocalParamDao().createOrUpdate((LocalParam) param);
+						DatabaseStatus.getInstance().markLocalSaved();
 						return null;
 					}
 				});
@@ -111,6 +113,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 					public Void call() throws SQLException {
 						// insert a number of accounts at once
 						getHelper().getWebdavParamDao().createOrUpdate((WebdavParam) param);
+						DatabaseStatus.getInstance().markWebdavSaved();
 						return null;
 					}
 				});
@@ -145,6 +148,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 					public Void call() throws SQLException {
 						// insert a number of accounts at once
 						getHelper().getLocalParamDao().delete((LocalParam) param);
+						DatabaseStatus.getInstance().markLocalSaved();
 						return null;
 					}
 				});
@@ -154,6 +158,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 					public Void call() throws SQLException {
 						// insert a number of accounts at once
 						getHelper().getWebdavParamDao().delete((WebdavParam) param);
+						DatabaseStatus.getInstance().markWebdavSaved();
 						return null;
 					}
 				});
@@ -191,12 +196,10 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 			} else if ((displayParam = findLocalParamAt(pos)) != null) {
 				// case local param is chosen
 				displayFragment = PanoptesTypeEnum.LOCAL.instance();
+			} else if ((displayParam = findWebdavParamAt(pos)) != null) {
+				// case webdav param is chosen
+				displayFragment = PanoptesTypeEnum.WEBDAV.instance();
 			}
-			// else if ((displayParam = findWebdavParamAt(pos)) != null) {
-			// // case webdav param is chosen
-			// displayFragment = PanoptesTypeEnum.WEBDAV.instance();
-			// displayFragment.setKeyEditable(false);
-			// }
 			displayFragment.setParam(displayParam);
 			getSupportFragmentManager().beginTransaction().replace(R.id.create_fragment, displayFragment).commit();
 			displayFragment.onRefresh();
@@ -263,7 +266,9 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		try {
 			// extract configs
 			locals = getHelper().getLocalParamDao().queryForAll();
+			markLocalRead();
 			webdavs = getHelper().getWebdavParamDao().queryForAll();
+			markWebdavRead();
 
 			// populate the spinner with local values
 			for (CreateParam local : locals) {

@@ -17,11 +17,13 @@ package org.fereor.panoptimage.activity.home;
 
 import java.util.List;
 
-import org.fereor.panoptimage.service.HomePagerParam;
+import org.fereor.panoptimage.service.HomePagerParamService;
+import org.fereor.panoptimage.util.PanoptesConstants;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 /**
  * Adapter class to populate the Fragments
@@ -29,12 +31,18 @@ import android.support.v4.app.FragmentStatePagerAdapter;
  * @author "arnaud.p.fereor"
  */
 public class HomePagerAdapter extends FragmentStatePagerAdapter {
-	/** data to display */
-	private List<HomePagerParam> data;
 
-	public HomePagerAdapter(List<HomePagerParam> data, FragmentManager fm) {
+	/** data to display */
+	private List<HomePagerParamService> data;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param data data for this adapter
+	 * @param fm FragmentManager to use
+	 */
+	public HomePagerAdapter(FragmentManager fm) {
 		super(fm);
-		this.data = data;
 	}
 
 	/**
@@ -42,7 +50,7 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
 	 * 
 	 * @param data
 	 */
-	public void setData(List<HomePagerParam> data) {
+	public void setData(List<HomePagerParamService> data) {
 		this.data = data;
 	}
 
@@ -55,9 +63,9 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
+		Log.d(PanoptesConstants.TAGNAME, "HomePagerAdapter:getItem:" + position);
 		if (data == null)
 			return null;
 		return HomeListFragment.newInstance(data.get(position));
 	}
-
 }

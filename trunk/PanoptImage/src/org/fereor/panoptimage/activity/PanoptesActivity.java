@@ -16,6 +16,7 @@
 package org.fereor.panoptimage.activity;
 
 import org.fereor.panoptimage.dao.DatabaseHelper;
+import org.fereor.panoptimage.dao.DatabaseStatus;
 import org.fereor.panoptimage.util.PanoptesConstants;
 
 import android.support.v4.app.FragmentActivity;
@@ -27,6 +28,12 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 public abstract class PanoptesActivity extends FragmentActivity {
 	/** Database helper to access DB through ORMLite */
 	protected DatabaseHelper databaseHelper = null;
+	/** date of Config table read */
+	protected long configRead = 0;
+	/** date of WebdavParam table read */
+	protected long webdavRead = 0;
+	/** date of LocalParam table read */
+	protected long localRead = 0;
 
 	// -------------------------------------------------------------------------
 	// Methods for DB access
@@ -54,6 +61,30 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	}
 
 	// -------------------------------------------------------------------------
+	// Methods for Database status
+	// -------------------------------------------------------------------------
+	public void markConfigRead() {
+		configRead = System.currentTimeMillis();
+	}
+	protected boolean isConfigUptodate() {
+		return configRead > DatabaseStatus.getInstance().getConfigUpdated();
+	}
+
+	public void markWebdavRead() {
+		webdavRead = System.currentTimeMillis();
+	}
+	protected boolean isWebdavParamUptodate() {
+		return webdavRead > DatabaseStatus.getInstance().getWebdavUpdated();
+	}
+
+	public void markLocalRead() {
+		localRead = System.currentTimeMillis();
+	}
+	protected boolean isLocalParamUptodate() {
+		return localRead > DatabaseStatus.getInstance().getLocalUpdated();
+	}
+
+	// -------------------------------------------------------------------------
 	// Methods for Messages
 	// -------------------------------------------------------------------------
 	/**
@@ -61,7 +92,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * 
 	 * @param e
 	 */
-	protected void showErrorMsg(int stringRes, Object... args) {
+	public void showErrorMsg(int stringRes, Object... args) {
 		String msg = String.format(getString(stringRes), args);
 		showErrorMsg(msg);
 	}
@@ -71,7 +102,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * 
 	 * @param e
 	 */
-	protected void showErrorMsg(Exception e) {
+	public void showErrorMsg(Exception e) {
 		showErrorMsg(e.toString());
 	}
 
@@ -80,7 +111,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * 
 	 * @param e
 	 */
-	protected void showInfoMsg(int stringRes, Object... args) {
+	public void showInfoMsg(int stringRes, Object... args) {
 		String msg = String.format(getString(stringRes), args);
 		showInfoMsg(msg);
 	}
@@ -90,7 +121,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * 
 	 * @param msg message to display
 	 */
-	protected void showInfoMsg(String msg) {
+	public void showInfoMsg(String msg) {
 		Log.d(PanoptesConstants.TAGNAME, "Info:" + msg);
 		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
@@ -100,7 +131,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * 
 	 * @param e
 	 */
-	protected void showErrorMsg(String msg) {
+	public void showErrorMsg(String msg) {
 		Log.d(PanoptesConstants.TAGNAME, "Error:" + msg);
 		Toast.makeText(this, "Error:" + msg, Toast.LENGTH_LONG).show();
 	}

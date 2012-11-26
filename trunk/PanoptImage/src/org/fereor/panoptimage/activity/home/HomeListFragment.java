@@ -16,7 +16,7 @@
 package org.fereor.panoptimage.activity.home;
 
 import org.fereor.panoptimage.R;
-import org.fereor.panoptimage.service.HomePagerParam;
+import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
 
 import android.os.Bundle;
@@ -42,9 +42,9 @@ public class HomeListFragment extends Fragment {
 	private int imgid;
 
 	/**
-	 * Create a new instance of CountingFragment, providing "num" as an argument.
+	 * Create a new instance of HomeListFragment
 	 */
-	public static HomeListFragment newInstance(HomePagerParam homePagerParam) {
+	public static HomeListFragment newInstance(HomePagerParamService homePagerParam) {
 		HomeListFragment f = new HomeListFragment();
 
 		// Supply input arguments.
