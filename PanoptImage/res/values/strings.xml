@@ -4,6 +4,7 @@
     <string name="app_name">PanoptImage</string>
     <string name="message">Welcome to PanoptImage</string>
     <string name="menu_settings">Settings</string>
+    <string name="loading">Loading&#8230;</string>
 
     <!-- Application titles -->
     <string name="title_activity_home">PanoptImage</string>
@@ -68,5 +69,6 @@
     <string name="error_unknown_param">Parameter unknown : %s</string>
     <string name="error_loading_file">Error accessing file : %s</string>
     <string name="error_filenotfound">Path not found : %s</string>
+    <string name="error_nonetwork">Network not available</string>
 
 </resources>
