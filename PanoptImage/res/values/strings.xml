@@ -24,6 +24,12 @@
     <string name="param_proxy_port">Proxy port</string>
     <string name="param_proxy_port_hint">Ex: 8080</string>
     <string name="param_showtip">Show Tips</string>
+    <string name="param_memory_optim">Memory optimization</string>
+    <string name="param_memory_auto">Auto</string>
+    <string name="param_memory_2">Level 2</string>
+    <string name="param_memory_4">Level 4</string>
+    <string name="param_memory_8">Level 8</string>
+    <string name="param_memory_16">Maximum</string>
 
     <!-- Create activity -->
     <string name="create_title">Edit shortcuts</string>
