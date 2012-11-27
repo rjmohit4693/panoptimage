@@ -25,11 +25,11 @@ import org.fereor.panoptimage.service.RepositoryService;
 import org.fereor.panoptimage.service.async.RepositoryGetAsync;
 import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
+import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
-import android.graphics.Bitmap.CompressFormat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Display;
@@ -46,10 +46,9 @@ import android.widget.ImageView.ScaleType;
  */
 public class ImageListFragment extends Fragment implements RepositoryGetListener<Integer, InputStream> {
 	private static final String BUNDLE_IMGDATA = "imgdata";
+	private static final String BUNDLE_OPTIM = "optim";
 
-	/** data to display */
-	private byte[] data = null;
-	/** image to be displayed */
+	/** image displayed */
 	private Bitmap image;
 	/** image dimensions */
 	private RectF imgRect;
@@ -63,11 +62,13 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	private Matrix scale = new Matrix();
 	/** path of image to display */
 	private String path;
+	/** memory optimization level */
+	private int optimlvl;
 
 	/**
 	 * Create a new instance of CountingFragment, providing "num" as an argument.
 	 */
-	public static ImageListFragment newInstance(RepositoryService<?> repo, String path) {
+	public static ImageListFragment newInstance(RepositoryService<?> repo, String path, PanoptimageMemoryOptimEnum optim) {
 		// create instance
 		ImageListFragment f = new ImageListFragment();
 		// Lauch async task
@@ -77,6 +78,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 		// Supply input arguments.
 		Bundle args = new Bundle();
 		args.putString(BUNDLE_IMGDATA, path);
+		args.putInt(BUNDLE_OPTIM, optim.key());
 		f.setArguments(args);
 
 		return f;
@@ -89,6 +91,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
+			optimlvl = getArguments().getInt(BUNDLE_OPTIM);
 			path = getArguments().getString(BUNDLE_IMGDATA);
 			// get screen size
 			Display display = getActivity().getWindowManager().getDefaultDisplay();
@@ -133,7 +136,6 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 			}
 			result.close();
 			baos.close();
-			data = baos.toByteArray();
 		} catch (IOException e) {
 			((PanoptesActivity)getActivity()).showErrorMsg(R.string.error_loading_file, path);
 			return;
@@ -141,7 +143,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 		// put content in view
 		if (imageView != null) {
 			// get image at correct size
-			image = PanoptesHelper.decodeSampledBitmap(data, (int) scrRect.width(), (int) scrRect.height());
+			image = PanoptesHelper.decodeSampledBitmap(baos.toByteArray(), (int) scrRect.width(), (int) scrRect.height(), optimlvl);
 			// resize data to optimize memory
 //			ByteArrayOutputStream sbaos = new ByteArrayOutputStream();
 //			image.compress(CompressFormat.JPEG, 60, sbaos);

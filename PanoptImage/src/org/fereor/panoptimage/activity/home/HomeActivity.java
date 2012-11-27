@@ -84,7 +84,7 @@ public class HomeActivity extends PanoptesActivity {
 	protected void onResume() {
 		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onResume");
 		// If database is updated, refresh content
-		if (!isLocalParamUptodate()) {
+		if (!isLocalParamUptodate() || !isWebdavParamUptodate()) {
 			try {
 				// load content
 				content = loadPagerContent();

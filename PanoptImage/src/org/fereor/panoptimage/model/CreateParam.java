@@ -15,14 +15,17 @@
 
 package org.fereor.panoptimage.model;
 
-import android.os.Parcelable;
+import java.io.Serializable;
 
 /**
  * Common class to represent all parameters
  * 
  * @author "arnaud.p.fereor"
  */
-public abstract class CreateParam implements Parcelable {
+public abstract class CreateParam implements Serializable {
+	/** serial UID */
+	private static final long serialVersionUID = -259734728935879744L;
+
 	/**
 	 * Return key value of this parameter
 	 * @return key

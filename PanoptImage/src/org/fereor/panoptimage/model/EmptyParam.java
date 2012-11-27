@@ -15,14 +15,13 @@
 
 package org.fereor.panoptimage.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = EmptyParam.EMPTYPARAM_TABLE_NAME)
 public class EmptyParam extends CreateParam {
+	/** serial UID */
+	private static final long serialVersionUID = -2356459204231787680L;
 	public static final String EMPTYPARAM_TABLE_NAME = "";
 	public static final String EMPTYPARAM_KEY = "key";
 
@@ -44,37 +43,6 @@ public class EmptyParam extends CreateParam {
 	public boolean hasData(){
 		return false;
 	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(key);
-	}
-
-	/**
-	 * Creator of the parcelable
-	 */
-	public static final Parcelable.Creator<EmptyParam> CREATOR = new Parcelable.Creator<EmptyParam>() {
-		public EmptyParam createFromParcel(Parcel in) {
-			return new EmptyParam(in);
-		}
-
-		public EmptyParam[] newArray(int size) {
-			return new EmptyParam[size];
-		}
-	};
-
-	/**
-	 * private constructor for internal use only
-	 * 
-	 * @param in parcel to read from
-	 */
-	private EmptyParam(Parcel in) {
-		key = in.readString();
-	}
-
+	
+	
 }

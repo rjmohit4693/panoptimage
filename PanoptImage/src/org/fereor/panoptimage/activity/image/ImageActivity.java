@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.activity.image;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.fereor.panoptimage.R;
@@ -22,12 +23,14 @@ import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
+import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.service.RepositoryService;
 import org.fereor.panoptimage.service.async.RepositoryDirAsync;
 import org.fereor.panoptimage.service.async.RepositoryDirListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
+import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +51,8 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	private ImagePagerAdapter adapter;
 	private ViewPager pager;
 	private Bundle savedState;
+	private Config config;
+	private PanoptimageMemoryOptimEnum optim;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +68,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			// Retrieve content
 			repoBrowser = RepositoryService.createInstance(param);
 			// set temporary adapter
-			adapter = new LoadingPagerAdapter(getSupportFragmentManager());
+			adapter = new LoadingPagerAdapter(getSupportFragmentManager(), optim);
 			pager = (ViewPager) findViewById(R.id.imagepager);
 			pager.setAdapter(adapter);
 			pager.setOffscreenPageLimit(0);
@@ -96,6 +101,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	@Override
 	protected void onResume() {
 		super.onResume();
+		loadConfig();
 		// hide panel
 		// hideBrowserPanel();
 	}
@@ -114,11 +120,11 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	public void onPreDir() {
 		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
 	public void onPostDir(List<String> result) {
 		// set adapter
-		adapter = new ImagePagerAdapter(repoBrowser, getSupportFragmentManager());
+		adapter = new ImagePagerAdapter(repoBrowser, getSupportFragmentManager(), optim);
 		adapter.setImageList(result);
 		pager = (ViewPager) findViewById(R.id.imagepager);
 		pager.setAdapter(adapter);
@@ -174,9 +180,10 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			return;
 		}
 		// start async task to load content
-		ImageBrowserFragment browseFragment = (ImageBrowserFragment)getSupportFragmentManager().findFragmentById(R.id.browser_fragment);
+		ImageBrowserFragment browseFragment = (ImageBrowserFragment) getSupportFragmentManager().findFragmentById(
+				R.id.browser_fragment);
 		RepositoryDirAsync task = new RepositoryDirAsync(browseFragment, PanoptesHelper.REGEXP_DIRECTORY);
-		task.execute(repoBrowser);		
+		task.execute(repoBrowser);
 		showBrowserPanel();
 	}
 
@@ -195,10 +202,10 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		// hide panel
 		hideBrowserPanel();
 		Object item = lView.getAdapter().getItem(position);
-		
+
 		// set temporary adapter
 		try {
-			adapter = new LoadingPagerAdapter(getSupportFragmentManager());
+			adapter = new LoadingPagerAdapter(getSupportFragmentManager(), optim);
 		} catch (PanoptimageFileNotFoundException e) {
 			// cannot happen on LoadingPagerAdapter
 		}
@@ -256,4 +263,21 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		getSupportFragmentManager().beginTransaction().show(browseFragment).commit();
 	}
 
+	/**
+	 * Load the config data
+	 * 
+	 * @throws SQLException
+	 */
+	private void loadConfig() {
+		if (!isConfigUptodate()) {
+			try {
+				config = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
+				optim = PanoptimageMemoryOptimEnum.values()[PanoptimageMemoryOptimEnum.findPosition(config
+						.getMemoptim())];
+			} catch (SQLException e) {
+				config = null;
+				optim = PanoptimageMemoryOptimEnum.Auto;
+			}
+		}
+	}
 }

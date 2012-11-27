@@ -50,14 +50,14 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_image_browse, container, false);
 		lv = (ListView) v.findViewById(R.id.image_browse_list);
-		msg = (TextView) v.findViewById(R.id.image_browse_loading);		
+		msg = (TextView) v.findViewById(R.id.image_browse_loading);
 		return v;
 	}
 
 	@Override
 	public void onPreDir() {
 		lv.setVisibility(View.INVISIBLE);
-		msg.setVisibility(View.VISIBLE);		
+		msg.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -67,11 +67,13 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 		directories.add(PanoptesHelper.DDOT);
 		if (rawdir != null) {
 			for (String it : rawdir) {
-				directories.add(it);
+				if (!it.isEmpty()) {
+					directories.add(it);
+				}
 			}
 		}
 		// hide loading message
-		msg.setVisibility(View.INVISIBLE);	
+		msg.setVisibility(View.INVISIBLE);
 		// get content for the list
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
 				directories);

@@ -24,17 +24,18 @@ import org.fereor.panoptimage.dao.DatabaseHelper;
 import org.fereor.panoptimage.dao.DatabaseStatus;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
-public class ConfigActivity extends PanoptesActivity {
-	private static final String DEFAULT_KEY = "default";
+public class ConfigActivity extends PanoptesActivity {	
 	/** Database helper to access DB through ORMLite */
 	private DatabaseHelper databaseHelper = null;
 	/** Config information */
@@ -46,6 +47,8 @@ public class ConfigActivity extends PanoptesActivity {
 		Log.d(PanoptesConstants.TAGNAME, "ConfigActivity:onCreate");
 		// set Content view
 		setContentView(R.layout.activity_config);
+		// Fill memory optim options
+		populateSpinner();
 
 		try {
 			// update config data
@@ -99,6 +102,19 @@ public class ConfigActivity extends PanoptesActivity {
 	}
 
 	/**
+	 * Populate spinner
+	 */
+	private void populateSpinner() {
+		// Identify the spinner
+		Spinner memoptions = (Spinner) findViewById(R.id.param_memory_optim_value);
+		// populate the spinner with default values
+		MemoryOptimSpinnerAdapter adapter = new MemoryOptimSpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		memoptions.setAdapter(adapter);
+	}
+
+	/**
 	 * read content of config into screen fields
 	 */
 	private void readFields() {
@@ -108,18 +124,27 @@ public class ConfigActivity extends PanoptesActivity {
 		data.setProxyPort(Integer.parseInt(proxyPort.getText().toString()));
 		CheckBox showtip = (CheckBox) findViewById(R.id.param_showtip_value);
 		data.setShowtip(showtip.isChecked());
+		Spinner memoptims = (Spinner) findViewById(R.id.param_memory_optim_value);
+		PanoptimageMemoryOptimEnum optim = (PanoptimageMemoryOptimEnum) memoptims.getSelectedItem();
+		data.setMemoptim(optim.key());
 	}
 
 	/**
 	 * fill content of config into screen fields
 	 */
 	private void fillFields() {
+		// proxy IP
 		EditText proxyIp = (EditText) findViewById(R.id.param_proxy_ip_value);
 		proxyIp.setText(data.getProxyIp());
+		// proxy port
 		EditText proxyPort = (EditText) findViewById(R.id.param_proxy_port_value);
 		proxyPort.setText(Integer.toString(data.getProxyPort()));
+		// Show tip
 		CheckBox showtip = (CheckBox) findViewById(R.id.param_showtip_value);
 		showtip.setChecked(data.isShowtip());
+		// memory optimization
+		Spinner memoptims = (Spinner) findViewById(R.id.param_memory_optim_value);
+		memoptims.setSelection(PanoptimageMemoryOptimEnum.findPosition(data.getMemoptim()));
 	}
 
 	/**
@@ -128,10 +153,10 @@ public class ConfigActivity extends PanoptesActivity {
 	 * @throws SQLException
 	 */
 	private void loadConfig() throws SQLException {
-		data = getHelper().getConfigDao().queryForId(DEFAULT_KEY);
+		data = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
 		if (data == null) {
 			data = new Config();
-			data.setKey(DEFAULT_KEY);
+			data.setKey(Config.DEFAULT_KEY);
 		}
 	}
 

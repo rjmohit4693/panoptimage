@@ -15,14 +15,13 @@
 
 package org.fereor.panoptimage.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = WebdavParam.WEBDAVPARAM_TABLE_NAME)
 public class WebdavParam extends CreateParam {
+	/** serial UID */
+	private static final long serialVersionUID = -5094232537424280861L;
 	public static final String WEBDAVPARAM_TABLE_NAME = "webdavparam";
 	public static final String WEBDAVPARAM_KEY = "key";
 	public static final String WEBDAVPARAM_PROTOCOL = "protocol";
@@ -85,7 +84,7 @@ public class WebdavParam extends CreateParam {
 	}
 
 	@Override
-	public boolean hasData(){
+	public boolean hasData() {
 		return true;
 	}
 
@@ -98,47 +97,5 @@ public class WebdavParam extends CreateParam {
 
 	public void setKey(String key) {
 		this.key = key;
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(key);
-		dest.writeString(protocol);
-		dest.writeString(server);
-		dest.writeString(port);
-		dest.writeString(base);
-		dest.writeString(path);
-	}
-
-	/**
-	 * Creator of the parcelable
-	 */
-	public static final Parcelable.Creator<WebdavParam> CREATOR = new Parcelable.Creator<WebdavParam>() {
-		public WebdavParam createFromParcel(Parcel in) {
-			return new WebdavParam(in);
-		}
-
-		public WebdavParam[] newArray(int size) {
-			return new WebdavParam[size];
-		}
-	};
-
-	/**
-	 * private constructor for internal use only
-	 * 
-	 * @param in parcel to read from
-	 */
-	private WebdavParam(Parcel in) {
-		key = in.readString();
-		protocol = in.readString();
-		server = in.readString();
-		port = in.readString();
-		base = in.readString();
-		path = in.readString();
 	}
 }
