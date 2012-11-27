@@ -20,6 +20,7 @@ import java.util.List;
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.service.RepositoryService;
+import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,10 +40,13 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 	private List<String> imageList = null;
 	/** current visible item */
 	private ImageListFragment currentItem;
+	/** Memory optimization level */
+	PanoptimageMemoryOptimEnum optim;
 
-	public ImagePagerAdapter(RepositoryService<?> repo, FragmentManager fm) {
+	public ImagePagerAdapter(RepositoryService<?> repo, FragmentManager fm, PanoptimageMemoryOptimEnum optim) {
 		super(fm);
 		setData(repo);
+		this.optim = (optim != null) ? optim : PanoptimageMemoryOptimEnum.Auto;
 	}
 
 	/**
@@ -57,6 +61,7 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 
 	/**
 	 * Refresh content of image list
+	 * 
 	 * @throws PanoptimageFileNotFoundException
 	 */
 	public void setImageList(List<String> list) {
@@ -75,7 +80,7 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 		if (repo == null)
 			return null;
 		// create fragment instance
-		return ImageListFragment.newInstance(repo, imageList.get(position));
+		return ImageListFragment.newInstance(repo, imageList.get(position), optim);
 	}
 
 	@Override

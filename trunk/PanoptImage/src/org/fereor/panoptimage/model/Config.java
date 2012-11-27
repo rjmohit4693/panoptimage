@@ -20,12 +20,13 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = Config.CONFIG_TABLE_NAME)
 public class Config {
-
+	public static final String DEFAULT_KEY = "default";
 	public static final String CONFIG_TABLE_NAME = "config";
 	public static final String CONFIG_KEY = "key";
 	public static final String CONFIG_PROXY_IP = "proxy_ip";
 	public static final String CONFIG_PROXY_PORT = "proxy_port";
 	public static final String CONFIG_SHOWTIP = "showtip";
+	public static final String CONFIG_MEMOPTIM = "memoptim";
 	@DatabaseField(id = true, columnName = CONFIG_KEY)
 	private String key;
 	@DatabaseField(columnName = CONFIG_PROXY_IP)
@@ -34,7 +35,9 @@ public class Config {
 	private int proxyPort;
 	@DatabaseField(columnName = CONFIG_SHOWTIP)
 	private boolean showtip;
-
+	@DatabaseField(columnName = CONFIG_MEMOPTIM)
+	private int memoptim;
+	
 	/**
 	 * Empty constructor (mandatory for ORMLite)
 	 */
@@ -71,6 +74,20 @@ public class Config {
 
 	public void setKey(String key) {
 		this.key = key;
+	}
+
+	/**
+	 * @return the memoptim
+	 */
+	public int getMemoptim() {
+		return memoptim;
+	}
+
+	/**
+	 * @param memoptim the memoptim to set
+	 */
+	public void setMemoptim(int memoptim) {
+		this.memoptim = memoptim;
 	}
 
 }

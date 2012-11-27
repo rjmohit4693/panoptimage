@@ -33,11 +33,12 @@ public class PanoptesHelper {
 	public static final String HTTPPORT = ":";
 	public static final String REGEXP_ALLIMAGES = ".+\\.jpg|.+\\.jpeg|.+\\.png|.+\\.gif";
 	public static final String REGEXP_DIRECTORY = "^[^\\\\.]*$";
+
 	/** Encoder for URL */
-//	private static HashMap<String, String> encoder = new HashMap<String, String>();
-//	static {
-//		encoder.put(" ", "%20");
-//	}
+	// private static HashMap<String, String> encoder = new HashMap<String, String>();
+	// static {
+	// encoder.put(" ", "%20");
+	// }
 
 	/**
 	 * Format a string to a path using SLASH
@@ -82,22 +83,22 @@ public class PanoptesHelper {
 	 * @param url url to encode
 	 * @return url encoded
 	 */
-//	public static String encode(String url) {
-//		if (url == null)
-//			return null;
-//		// read each char of string
-//		StringBuilder res = new StringBuilder();
-//		for (int i = 0; i < url.length(); i++) {
-//			String next = url.substring(i, i + 1);
-//			// encode value
-//			if (encoder.containsKey(next)) {
-//				res.append(encoder.get(next));
-//			} else {
-//				res.append(next);
-//			}
-//		}
-//		return res.toString();
-//	}
+	// public static String encode(String url) {
+	// if (url == null)
+	// return null;
+	// // read each char of string
+	// StringBuilder res = new StringBuilder();
+	// for (int i = 0; i < url.length(); i++) {
+	// String next = url.substring(i, i + 1);
+	// // encode value
+	// if (encoder.containsKey(next)) {
+	// res.append(encoder.get(next));
+	// } else {
+	// res.append(next);
+	// }
+	// }
+	// return res.toString();
+	// }
 
 	/**
 	 * Encode a URL to allow correct URL encoding
@@ -105,22 +106,22 @@ public class PanoptesHelper {
 	 * @param url url to encode
 	 * @return url encoded
 	 */
-//	public static String decode(String url) {
-//		if (url == null)
-//			return null;
-//		// read each char of string
-//		StringBuilder res = new StringBuilder();
-//		for (int i = 0; i < url.length(); i++) {
-//			String next = url.substring(i, i + 1);
-//			// encode value
-//			if (encoder.containsValue(value)(next)) {
-//				res.append(encoder.get(next));
-//			} else {
-//				res.append(next);
-//			}
-//		}
-//		return res.toString();
-//	}
+	// public static String decode(String url) {
+	// if (url == null)
+	// return null;
+	// // read each char of string
+	// StringBuilder res = new StringBuilder();
+	// for (int i = 0; i < url.length(); i++) {
+	// String next = url.substring(i, i + 1);
+	// // encode value
+	// if (encoder.containsValue(value)(next)) {
+	// res.append(encoder.get(next));
+	// } else {
+	// res.append(next);
+	// }
+	// }
+	// return res.toString();
+	// }
 
 	/**
 	 * Calculates the sample size of image
@@ -152,17 +153,19 @@ public class PanoptesHelper {
 	 * @param data binary data
 	 * @param reqWidth target height
 	 * @param reqHeight target width
+	 * @param optimlvl
 	 * @return bitmap at the target size
 	 */
-	public static Bitmap decodeSampledBitmap(byte[] data, int reqWidth, int reqHeight) {
+	public static Bitmap decodeSampledBitmap(byte[] data, int reqWidth, int reqHeight, int optimlvl) {
 		// get image size
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
 		// Calculate inSampleSize
-		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-		options.inSampleSize = 4;
+		options.inSampleSize = optimlvl;
+		if (optimlvl <= 1)
+			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;

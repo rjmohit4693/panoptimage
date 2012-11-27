@@ -15,14 +15,13 @@
 
 package org.fereor.panoptimage.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = LocalParam.LOCALPARAM_TABLE_NAME)
 public class LocalParam extends CreateParam {
+	/** serial UID */
+	private static final long serialVersionUID = -7763624090962859328L;
 	public static final String LOCALPARAM_TABLE_NAME = "localparam";
 	public static final String LOCALPARAM_KEY = "key";
 	public static final String LOCALPARAM_PATH = "path";
@@ -54,39 +53,4 @@ public class LocalParam extends CreateParam {
 	public void setPath(String path) {
 		this.path = path;
 	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(key);
-		dest.writeString(path);
-	}
-
-	/**
-	 * Creator of the parcelable
-	 */
-	public static final Parcelable.Creator<LocalParam> CREATOR = new Parcelable.Creator<LocalParam>() {
-		public LocalParam createFromParcel(Parcel in) {
-			return new LocalParam(in);
-		}
-
-		public LocalParam[] newArray(int size) {
-			return new LocalParam[size];
-		}
-	};
-
-	/**
-	 * private constructor for internal use only
-	 * 
-	 * @param in parcel to read from
-	 */
-	private LocalParam(Parcel in) {
-		key = in.readString();
-		path = in.readString();
-	}
-
 }

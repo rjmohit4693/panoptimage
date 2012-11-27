@@ -65,7 +65,7 @@ public class HomePagerParamService implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeInt(imgid);
 		dest.writeString(message);
-		dest.writeParcelable(param, flags);
+		dest.writeSerializable(param);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class HomePagerParamService implements Parcelable {
 	private HomePagerParamService(Parcel in) {
 		imgid = in.readInt();
 		message = in.readString();
-		param = in.readParcelable(getClass().getClassLoader());
+		param = (CreateParam)in.readSerializable();
 
 	}
 }
