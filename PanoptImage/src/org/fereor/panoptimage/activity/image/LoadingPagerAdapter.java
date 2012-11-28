@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 public class LoadingPagerAdapter extends ImagePagerAdapter {
 
 	public LoadingPagerAdapter(FragmentManager fm, PanoptimageMemoryOptimEnum optim) throws PanoptimageFileNotFoundException {
-		super(null, fm, optim);
+		super(null, fm, null);
 	}
 
 	@Override

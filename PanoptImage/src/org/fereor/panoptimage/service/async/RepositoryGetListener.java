@@ -17,19 +17,20 @@ package org.fereor.panoptimage.service.async;
 
 
 public interface RepositoryGetListener<Progress, Result> {
-
 	/**
-	 * Mark progress on this listener
+	 * Mark progress update in dir
+	 * 
 	 * @param values
 	 */
 	void onGetProgressUpdate(Progress... values);
 
 	/**
 	 * Mark result finished
+	 * 
 	 * @param result
 	 */
 	void onPostGet(Result result);
-	
+
 	/**
 	 * Mark before get is launched
 	 */

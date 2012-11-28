@@ -16,7 +16,6 @@
 package org.fereor.panoptimage.service;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -32,6 +31,9 @@ import org.fereor.davdroid.http.xml.i.Prop;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.WebdavParam;
+import org.fereor.panoptimage.service.async.DavDroidGetListener;
+import org.fereor.panoptimage.service.async.RepositoryDirListener;
+import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.xmlpull.v1.XmlPullParserException;
@@ -76,14 +78,14 @@ public class WebdavService extends RepositoryService<WebdavParam> {
 		HttpHost host = new HttpHost(param.getServer(), defaultHttpPort, param.getProtocol());
 		// create Webdav link
 		try {
-			dav = DavDroidFactory.init(host);
+			dav = DavDroidFactory.init(host, param.getUser(), param.getPwd());
 		} catch (XmlPullParserException e) {
 			throw new PanoptimageNoNetworkException(param.getServer());
 		}
 	}
 
 	@Override
-	public List<String> dir(String regexp) throws PanoptimageFileNotFoundException {
+	public List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn) throws PanoptimageFileNotFoundException {
 		try {
 			// prepare request
 			String val = PanoptesHelper.formatPath(root, currentPath);
@@ -112,13 +114,15 @@ public class WebdavService extends RepositoryService<WebdavParam> {
 	}
 
 	@Override
-	public InputStream get(String location) throws PanoptimageFileNotFoundException {
+	public byte[] get(String location, RepositoryGetListener<Long, byte[]> lsn) throws PanoptimageFileNotFoundException {
 		try {
+			// construct child listener
+			DavDroidGetListener<Long, byte[]> plsn = new DavDroidGetListener<Long, byte[]>(lsn);
 			// prepare request
 			String val = PanoptesHelper.formatPath(root, currentPath);
 			URI uri = new URI(param.getProtocol(), param.getServer(), val, null);
 			String path = uri.toASCIIString() + PanoptesHelper.SLASH + location;
-			return dav.get(path, true);
+			return dav.get(path, true, plsn);
 		} catch (IOException e) {
 			throw new PanoptimageFileNotFoundException(e.toString());
 		} catch (URISyntaxException e) {

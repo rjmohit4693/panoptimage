@@ -15,7 +15,7 @@
 
 package org.fereor.panoptimage.service.async;
 
-import java.io.InputStream;
+import java.lang.ref.WeakReference;
 
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
@@ -23,21 +23,23 @@ import org.fereor.panoptimage.service.RepositoryService;
 
 import android.os.AsyncTask;
 
-public class RepositoryGetAsync extends AsyncTask<RepositoryService<?>, Integer, InputStream> {
+public class RepositoryGetAsync extends AsyncTask<RepositoryService<?>, Long, byte[]> {
 	/** path to get */
 	private String path;
 	/** listener for this task */
-	RepositoryGetListener<Integer, InputStream> listener;
+	WeakReference<RepositoryGetListener<Long, byte[]>> listener;
 
-	public RepositoryGetAsync(RepositoryGetListener<Integer, InputStream> listener, String path) {
+	public RepositoryGetAsync(RepositoryGetListener<Long, byte[]> listener, String path) {
 		this.path = path;
-		this.listener = listener;
+		this.listener = new WeakReference<RepositoryGetListener<Long, byte[]>>(listener);
 	}
 
 	@Override
-	protected InputStream doInBackground(RepositoryService<?>... repo) {
+	protected byte[] doInBackground(RepositoryService<?>... repo) {
 		try {
-			return repo[0].get(path);
+			if (listener != null && listener.get() != null)
+				return repo[0].get(path, listener.get());
+			return null;
 		} catch (PanoptimageFileNotFoundException e) {
 			return null;
 		} catch (PanoptimageException e) {
@@ -46,10 +48,11 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryService<?>, Integer,
 	}
 
 	@Override
-	protected void onProgressUpdate(Integer... values) {
+	protected void onProgressUpdate(Long... values) {
 		// TODO Auto-generated method stub
 		super.onProgressUpdate(values);
-		listener.onGetProgressUpdate(values);
+		if (listener != null && listener.get() != null)
+			listener.get().onGetProgressUpdate(values);
 	}
 
 	@Override
@@ -59,7 +62,8 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryService<?>, Integer,
 	}
 
 	@Override
-	protected void onPostExecute(InputStream result) {
-		listener.onPostGet(result);
+	protected void onPostExecute(byte[] result) {
+		if (listener != null && listener.get() != null)
+			listener.get().onPostGet(result);
 	}
 }

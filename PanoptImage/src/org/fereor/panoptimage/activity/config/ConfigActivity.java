@@ -30,12 +30,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
-public class ConfigActivity extends PanoptesActivity {	
+public class ConfigActivity extends PanoptesActivity {
 	/** Database helper to access DB through ORMLite */
 	private DatabaseHelper databaseHelper = null;
 	/** Config information */
@@ -118,10 +117,10 @@ public class ConfigActivity extends PanoptesActivity {
 	 * read content of config into screen fields
 	 */
 	private void readFields() {
-		EditText proxyIp = (EditText) findViewById(R.id.param_proxy_ip_value);
-		data.setProxyIp(proxyIp.getText().toString());
-		EditText proxyPort = (EditText) findViewById(R.id.param_proxy_port_value);
-		data.setProxyPort(Integer.parseInt(proxyPort.getText().toString()));
+		// EditText proxyIp = (EditText) findViewById(R.id.param_proxy_ip_value);
+		// data.setProxyIp(proxyIp.getText().toString());
+		// EditText proxyPort = (EditText) findViewById(R.id.param_proxy_port_value);
+		// data.setProxyPort(Integer.parseInt(proxyPort.getText().toString()));
 		CheckBox showtip = (CheckBox) findViewById(R.id.param_showtip_value);
 		data.setShowtip(showtip.isChecked());
 		Spinner memoptims = (Spinner) findViewById(R.id.param_memory_optim_value);
@@ -134,11 +133,11 @@ public class ConfigActivity extends PanoptesActivity {
 	 */
 	private void fillFields() {
 		// proxy IP
-		EditText proxyIp = (EditText) findViewById(R.id.param_proxy_ip_value);
-		proxyIp.setText(data.getProxyIp());
+		// EditText proxyIp = (EditText) findViewById(R.id.param_proxy_ip_value);
+		// proxyIp.setText(data.getProxyIp());
 		// proxy port
-		EditText proxyPort = (EditText) findViewById(R.id.param_proxy_port_value);
-		proxyPort.setText(Integer.toString(data.getProxyPort()));
+		// EditText proxyPort = (EditText) findViewById(R.id.param_proxy_port_value);
+		// proxyPort.setText(Integer.toString(data.getProxyPort()));
 		// Show tip
 		CheckBox showtip = (CheckBox) findViewById(R.id.param_showtip_value);
 		showtip.setChecked(data.isShowtip());

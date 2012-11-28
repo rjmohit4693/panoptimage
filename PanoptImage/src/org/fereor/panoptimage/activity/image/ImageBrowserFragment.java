@@ -37,7 +37,7 @@ import android.widget.TextView;
  * 
  * @author "arnaud.p.fereor"
  */
-public class ImageBrowserFragment extends Fragment implements RepositoryDirListener<Integer, List<String>> {
+public class ImageBrowserFragment extends Fragment implements RepositoryDirListener<Long, List<String>> {
 	/** mark reference of list view to update it */
 	private ListView lv = null;
 	/** mark reference for loading message */
@@ -84,7 +84,7 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 	}
 
 	@Override
-	public void onDirProgressUpdate(Integer... values) {
+	public void onDirProgressUpdate(Long... values) {
 		// TODO Auto-generated method stub
 
 	}

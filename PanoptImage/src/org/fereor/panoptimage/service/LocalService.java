@@ -15,17 +15,19 @@
 
 package org.fereor.panoptimage.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.model.LocalParam;
+import org.fereor.panoptimage.service.async.RepositoryDirListener;
+import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.RegexpFilenameFilter;
 
@@ -50,7 +52,8 @@ public class LocalService extends RepositoryService<LocalParam> {
 	}
 
 	@Override
-	public List<String> dir(String regexp) throws PanoptimageFileNotFoundException {
+	public List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn)
+			throws PanoptimageFileNotFoundException {
 		// browse directory location
 		String location = PanoptesHelper.formatPath(root, currentPath);
 		File locationFile = new File(location);
@@ -65,14 +68,26 @@ public class LocalService extends RepositoryService<LocalParam> {
 	}
 
 	@Override
-	public InputStream get(String filename) throws PanoptimageException {
+	public byte[] get(String filename, RepositoryGetListener<Long, byte[]> lsn) throws PanoptimageException {
 		try {
 			// read content file
 			File currentDir = new File(PanoptesHelper.formatPath(root, currentPath));
 			File locationFile = new File(currentDir, filename);
-			return new FileInputStream(locationFile);
+			FileInputStream fis = new FileInputStream(locationFile);
+
+			// read file content
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			byte[] buf = new byte[1024];
+			int cnt;
+
+			while ((cnt = fis.read(buf)) > 0) {
+				baos.write(buf, 0, cnt);
+			}
+			fis.close();
+			baos.close();
+			return baos.toByteArray();
 		} catch (IOException e) {
-			throw new PanoptimageException(e.toString());
+			throw new PanoptimageFileNotFoundException(filename);
 		}
 	}
 

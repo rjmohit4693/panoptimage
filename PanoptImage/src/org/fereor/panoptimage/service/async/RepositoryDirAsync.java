@@ -27,13 +27,13 @@ import android.os.AsyncTask;
  * @author "arnaud.p.fereor"
  *
  */
-public class RepositoryDirAsync extends AsyncTask<RepositoryService<?>, Integer, List<String>> {
+public class RepositoryDirAsync extends AsyncTask<RepositoryService<?>, Long, List<String>> {
 	/** regular expression for the dir command */
 	private String regexp;
 	/** listener for this task */
-	RepositoryDirListener<Integer, List<String>> listener;
+	RepositoryDirListener<Long, List<String>> listener;
 
-	public RepositoryDirAsync(RepositoryDirListener<Integer, List<String>> listener, String regexp) {
+	public RepositoryDirAsync(RepositoryDirListener<Long, List<String>> listener, String regexp) {
 		this.regexp = regexp;
 		this.listener = listener;
 	}
@@ -41,7 +41,7 @@ public class RepositoryDirAsync extends AsyncTask<RepositoryService<?>, Integer,
 	@Override
 	protected List<String> doInBackground(RepositoryService<?>... repo) {
 		try {
-			return repo[0].dir(regexp);
+			return repo[0].dir(regexp, listener);
 		} catch (PanoptimageFileNotFoundException e) {
 			return null;
 		}
@@ -64,10 +64,10 @@ public class RepositoryDirAsync extends AsyncTask<RepositoryService<?>, Integer,
 	}
 
 	@Override
-	protected void onProgressUpdate(Integer... values) {
+	protected void onProgressUpdate(Long... values) {
 		// TODO Auto-generated method stub
 		super.onProgressUpdate(values);
-		listener.onDirProgressUpdate(values);
+		listener.onDirProgressUpdate(values[0]);
 	}
 
 }
