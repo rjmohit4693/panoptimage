@@ -28,7 +28,6 @@ import org.apache.http.HttpVersion;
 import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpOptions;
@@ -55,18 +54,17 @@ import org.fereor.davdroid.exception.DavDroidUnimplementedException;
 import org.fereor.davdroid.http.enums.HttpDepth;
 import org.fereor.davdroid.http.enums.HttpMethod;
 import org.fereor.davdroid.http.request.HttpCopy;
-import org.fereor.davdroid.http.request.HttpExists;
 import org.fereor.davdroid.http.request.HttpMkcol;
 import org.fereor.davdroid.http.request.HttpPropfind;
 import org.fereor.davdroid.http.response.AllowResponseHandler;
 import org.fereor.davdroid.http.response.BufferResponseHandler;
-import org.fereor.davdroid.http.response.InputStreamResponseHandler;
 import org.fereor.davdroid.http.response.ExistsResponseHandler;
+import org.fereor.davdroid.http.response.ByteArrayResponseHandler;
 import org.fereor.davdroid.http.response.StatusCodeResponseHandler;
 import org.fereor.davdroid.http.util.ResponseBuffer;
 import org.fereor.davdroid.http.util.XmlContentParser;
-import org.fereor.davdroid.http.util.XmlRegexpIterator;
 import org.fereor.davdroid.http.util.XmlMultistatusIterator;
+import org.fereor.davdroid.http.util.XmlRegexpIterator;
 import org.fereor.davdroid.http.xml.i.Prop;
 import org.fereor.davdroid.http.xml.i.Propfind;
 import org.fereor.davdroid.http.xml.o.Response;
@@ -313,10 +311,10 @@ public class DavDroid {
 	 * @throws IOException
 	 *             is content cannot be retrieved
 	 */
-	public InputStream get(String path, boolean buf) throws IOException {
+	public byte[] get(String path, boolean buf, DavDroidListener<Long> lsn) throws IOException {
 		HttpGet req = new HttpGet(path);
 		// GET request returns a 200 code if the target exists
-		return client.execute(host, req, new InputStreamResponseHandler(buf),
+		return client.execute(host, req, new ByteArrayResponseHandler(buf, lsn),
 				context);
 	}
 

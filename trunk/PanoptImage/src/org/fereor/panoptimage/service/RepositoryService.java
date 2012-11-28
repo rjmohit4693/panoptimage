@@ -15,7 +15,6 @@
 
 package org.fereor.panoptimage.service;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,8 @@ import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
+import org.fereor.panoptimage.service.async.RepositoryDirListener;
+import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
 
 /**
@@ -114,7 +115,7 @@ public abstract class RepositoryService<T> {
 	 * @param regexp regular expression to match to search for files
 	 * @return list of child locations
 	 */
-	public abstract List<String> dir(String regexp) throws PanoptimageFileNotFoundException;
+	public abstract List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn) throws PanoptimageFileNotFoundException;
 
 	/**
 	 * Get the content of a repository location
@@ -122,7 +123,7 @@ public abstract class RepositoryService<T> {
 	 * @param location location to get
 	 * @return byte content of location
 	 */
-	public abstract InputStream get(String location) throws PanoptimageException;
+	public abstract byte[] get(String location, RepositoryGetListener<Long, byte[]> lsn) throws PanoptimageException;
 
 	/**
 	 * Tests if a path exists (absolute or relative)

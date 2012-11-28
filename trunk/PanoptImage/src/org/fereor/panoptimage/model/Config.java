@@ -23,42 +23,42 @@ public class Config {
 	public static final String DEFAULT_KEY = "default";
 	public static final String CONFIG_TABLE_NAME = "config";
 	public static final String CONFIG_KEY = "key";
-	public static final String CONFIG_PROXY_IP = "proxy_ip";
-	public static final String CONFIG_PROXY_PORT = "proxy_port";
+	// public static final String CONFIG_PROXY_IP = "proxy_ip";
+	// public static final String CONFIG_PROXY_PORT = "proxy_port";
 	public static final String CONFIG_SHOWTIP = "showtip";
 	public static final String CONFIG_MEMOPTIM = "memoptim";
 	@DatabaseField(id = true, columnName = CONFIG_KEY)
 	private String key;
-	@DatabaseField(columnName = CONFIG_PROXY_IP)
-	private String proxyIp;
-	@DatabaseField(columnName = CONFIG_PROXY_PORT)
-	private int proxyPort;
+	// @DatabaseField(columnName = CONFIG_PROXY_IP)
+	// private String proxyIp;
+	// @DatabaseField(columnName = CONFIG_PROXY_PORT)
+	// private int proxyPort;
 	@DatabaseField(columnName = CONFIG_SHOWTIP)
 	private boolean showtip;
 	@DatabaseField(columnName = CONFIG_MEMOPTIM)
 	private int memoptim;
-	
+
 	/**
 	 * Empty constructor (mandatory for ORMLite)
 	 */
 	public Config() {
 	}
 
-	public String getProxyIp() {
-		return proxyIp;
-	}
-
-	public void setProxyIp(String proxyIp) {
-		this.proxyIp = proxyIp;
-	}
-
-	public int getProxyPort() {
-		return proxyPort;
-	}
-
-	public void setProxyPort(int proxyPort) {
-		this.proxyPort = proxyPort;
-	}
+	// public String getProxyIp() {
+	// return proxyIp;
+	// }
+	//
+	// public void setProxyIp(String proxyIp) {
+	// this.proxyIp = proxyIp;
+	// }
+	//
+	// public int getProxyPort() {
+	// return proxyPort;
+	// }
+	//
+	// public void setProxyPort(int proxyPort) {
+	// this.proxyPort = proxyPort;
+	// }
 
 	public boolean isShowtip() {
 		return showtip;

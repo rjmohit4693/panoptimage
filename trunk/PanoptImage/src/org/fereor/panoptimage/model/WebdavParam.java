@@ -27,6 +27,8 @@ public class WebdavParam extends CreateParam {
 	public static final String WEBDAVPARAM_PROTOCOL = "protocol";
 	public static final String WEBDAVPARAM_SERVER = "server";
 	public static final String WEBDAVPARAM_PORT = "port";
+	public static final String WEBDAVPARAM_USER = "user";
+	public static final String WEBDAVPARAM_PWD = "pwd";
 	public static final String WEBDAVPARAM_BASE = "base";
 	public static final String WEBDAVPARAM_PATH = "path";
 
@@ -38,10 +40,17 @@ public class WebdavParam extends CreateParam {
 	private String server;
 	@DatabaseField(columnName = WEBDAVPARAM_PORT)
 	private String port;
+	@DatabaseField(columnName = WEBDAVPARAM_USER)
+	private String user;
+	@DatabaseField(columnName = WEBDAVPARAM_PWD)
+	private String pwd;
 	@DatabaseField(columnName = WEBDAVPARAM_BASE)
 	private String base;
 	@DatabaseField(columnName = WEBDAVPARAM_PATH)
 	private String path;
+
+	public WebdavParam() {
+	}
 
 	public String getProtocol() {
 		return protocol;
@@ -67,6 +76,22 @@ public class WebdavParam extends CreateParam {
 		this.port = port;
 	}
 
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
 	public String getBase() {
 		return base;
 	}
@@ -86,9 +111,6 @@ public class WebdavParam extends CreateParam {
 	@Override
 	public boolean hasData() {
 		return true;
-	}
-
-	public WebdavParam() {
 	}
 
 	public String getKey() {

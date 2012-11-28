@@ -15,7 +15,6 @@
 
 package org.fereor.davdroid.http.response;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,35 +22,33 @@ import java.io.InputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.fereor.davdroid.DavDroidListener;
 import org.fereor.davdroid.exception.DavDroidException;
-import org.fereor.davdroid.http.util.ResponseBuffer;
 
 /**
  * Handler for a stream output
  * 
  * @author "arnaud.p.fereor"
- * 
  */
-public class InputStreamResponseHandler extends BasicResponseHandler<InputStream> {
-	/** use buffer or not */
-	private boolean usebuf = true;
+public class ByteArrayResponseHandler extends BasicResponseHandler<byte[]> {
+	/** listener */
+	private DavDroidListener<Long> lsn;
+	private Long progress = 0l;
 
 	/**
 	 * Default constructor
 	 * 
-	 * @param input
-	 *            input data
+	 * @param input input data
 	 */
-	public InputStreamResponseHandler(boolean buf) {
+	public ByteArrayResponseHandler(boolean buf, DavDroidListener<Long> lsn) {
 		super();
-		usebuf = buf;
+		this.lsn = lsn;
 	}
 
 	/**
 	 * Handles the response
 	 */
-	public InputStream handleResponse(HttpResponse response)
-			throws DavDroidException, IOException {
+	public byte[] handleResponse(HttpResponse response) throws DavDroidException, IOException {
 		// check the response return code
 		super.validateResponse(response);
 
@@ -59,26 +56,23 @@ public class InputStreamResponseHandler extends BasicResponseHandler<InputStream
 		HttpEntity entity = response.getEntity();
 		StatusLine statusLine = response.getStatusLine();
 		if (entity == null) {
-			throw new DavDroidException("Unknown entity",
-					statusLine.getStatusCode(), statusLine.getReasonPhrase());
+			throw new DavDroidException("Unknown entity", statusLine.getStatusCode(), statusLine.getReasonPhrase());
 		}
 		// if no buffer used
-		if (!usebuf) {
-			return entity.getContent();
-		} else {
-			// get content
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			InputStream in = entity.getContent();
-			byte[] buf = new byte[1024];
-			int cnt;
-			while ((cnt = in.read(buf)) > 0) {
-				baos.write(buf, 0, cnt);
-			}
-			in.close();
 
-			// create buffer object with results
-			return new ByteArrayInputStream(baos.toByteArray());
+		// get content
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		InputStream in = entity.getContent();
+		Long length = entity.getContentLength();
+		byte[] buf = new byte[1024];
+		int cnt;
+		while ((cnt = in.read(buf)) > 0) {
+			baos.write(buf, 0, cnt);
+			lsn.onProgress(progress += cnt, length);
 		}
-	}
+		in.close();
 
+		// create buffer object with results
+		return baos.toByteArray();
+	}
 }

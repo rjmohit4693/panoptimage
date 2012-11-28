@@ -15,15 +15,12 @@
 
 package org.fereor.panoptimage.activity.image;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.service.RepositoryService;
 import org.fereor.panoptimage.service.async.RepositoryGetAsync;
 import org.fereor.panoptimage.service.async.RepositoryGetListener;
+import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 
@@ -31,11 +28,14 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
@@ -44,7 +44,7 @@ import android.widget.ImageView.ScaleType;
  * 
  * @author "arnaud.p.fereor"
  */
-public class ImageListFragment extends Fragment implements RepositoryGetListener<Integer, InputStream> {
+public class ImageListFragment extends Fragment implements RepositoryGetListener<Long, byte[]> {
 	private static final String BUNDLE_IMGDATA = "imgdata";
 	private static final String BUNDLE_OPTIM = "optim";
 
@@ -64,6 +64,10 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	private String path;
 	/** memory optimization level */
 	private int optimlvl;
+	/** Task loading the image */
+	private RepositoryGetAsync task;
+	/** Handler to refresh the UI thread */
+	private Handler handler = new Handler();
 
 	/**
 	 * Create a new instance of CountingFragment, providing "num" as an argument.
@@ -72,8 +76,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 		// create instance
 		ImageListFragment f = new ImageListFragment();
 		// Lauch async task
-		RepositoryGetAsync task = new RepositoryGetAsync(f, path);
-		task.execute(repo);
+		f.task = new RepositoryGetAsync(f, path);
+		f.task.execute(repo);
 
 		// Supply input arguments.
 		Bundle args = new Bundle();
@@ -116,48 +120,74 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (task != null) {
+			task.cancel(true);
+		}
+	}
+
+	@Override
 	public void onPreGet() {
 		// Nothing to do
 	}
 
 	@Override
-	public void onPostGet(InputStream result) {
+	public void onPostGet(byte[] result) {
 		if (result == null) {
-			((PanoptesActivity)getActivity()).showErrorMsg(R.string.error_loading_file, path);
-			return;
-		}
-		// read image content
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buf = new byte[1024];
-		int cnt;
-		try {
-			while ((cnt = result.read(buf)) > 0) {
-				baos.write(buf, 0, cnt);
-			}
-			result.close();
-			baos.close();
-		} catch (IOException e) {
-			((PanoptesActivity)getActivity()).showErrorMsg(R.string.error_loading_file, path);
+			((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_loading_file, path);
 			return;
 		}
 		// put content in view
 		if (imageView != null) {
-			// get image at correct size
-			image = PanoptesHelper.decodeSampledBitmap(baos.toByteArray(), (int) scrRect.width(), (int) scrRect.height(), optimlvl);
-			// resize data to optimize memory
-//			ByteArrayOutputStream sbaos = new ByteArrayOutputStream();
-//			image.compress(CompressFormat.JPEG, 60, sbaos);
-//			data = baos.toByteArray();
-			imgRect = new RectF(0, 0, image.getWidth(), image.getHeight());
-			// Compute matrix
-			scale.setRectToRect(imgRect, scrRect, Matrix.ScaleToFit.CENTER);
-			imageView.setImageBitmap(image);
+			try {
+				// get image at correct size
+				image = PanoptesHelper.decodeSampledBitmap(result, (int) scrRect.width(), (int) scrRect.height(),
+						optimlvl);
+				// resize data to optimize memory
+				imgRect = new RectF(0, 0, image.getWidth(), image.getHeight());
+				// Compute matrix
+				scale.setRectToRect(imgRect, scrRect, Matrix.ScaleToFit.CENTER);
+				imageView.getLayoutParams().width = LayoutParams.MATCH_PARENT;
+				imageView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
+				imageView.setImageBitmap(image);
+			} catch (OutOfMemoryError oem) {
+				Log.d(PanoptesConstants.TAGNAME, oem.toString());
+				((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_outofmemory);
+				// do something to revive memory
+			}
 		}
 	}
 
 	@Override
-	public void onGetProgressUpdate(Integer... values) {
-		// TODO Auto-generated method stub
+	public void onGetProgressUpdate(Long... values) {
+		final int splashRes;
+		float val = ((float) values[0]) / ((float) values[1]) * 7.0f;
+		// identify image to draw
+		if (val < 1.0f) {
+			splashRes = R.drawable.splash_0;
+		} else if (val < 2.0f) {
+			splashRes = R.drawable.splash_1;
+		} else if (val < 3.0f) {
+			splashRes = R.drawable.splash_2;
+		} else if (val < 4.0f) {
+			splashRes = R.drawable.splash_3;
+		} else if (val < 5.0f) {
+			splashRes = R.drawable.splash_4;
+		} else if (val < 6.0f) {
+			splashRes = R.drawable.splash_5;
+		} else {
+			splashRes = R.drawable.splash_6;
+		}
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				// This gets executed on the UI thread so it can safely modify Views
+				imageView.getLayoutParams().width = 120;
+				imageView.getLayoutParams().height = 120;
+				imageView.setImageResource(splashRes);
+			}
+		});
 	}
 
 	/**
@@ -212,4 +242,5 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 			imageView.setImageMatrix(newTransform);
 		}
 	}
+
 }

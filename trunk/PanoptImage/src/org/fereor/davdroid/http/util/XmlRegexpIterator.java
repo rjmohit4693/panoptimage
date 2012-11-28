@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import org.fereor.davdroid.DavDroidConstants;
+import org.fereor.davdroid.DavDroidListener;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 

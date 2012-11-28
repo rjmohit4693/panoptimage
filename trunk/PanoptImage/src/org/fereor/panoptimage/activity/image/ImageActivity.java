@@ -44,7 +44,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 public class ImageActivity extends PanoptesActivity implements OnItemClickListener,
-		RepositoryDirListener<Integer, List<String>> {
+		RepositoryDirListener<Long, List<String>> {
 	private static final String SAVESTATE_CURRENTITEM = "org.fereor.panoptimage.activity.image.ImageActivity.currentItem";
 	private static final String SAVESTATE_CURRENTPATH = "org.fereor.panoptimage.activity.image.ImageActivity.currentPath";
 	private RepositoryService<?> repoBrowser;
@@ -71,13 +71,13 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			adapter = new LoadingPagerAdapter(getSupportFragmentManager(), optim);
 			pager = (ViewPager) findViewById(R.id.imagepager);
 			pager.setAdapter(adapter);
-			pager.setOffscreenPageLimit(0);
-			// if (savedInstanceState != null) {
-			// repoBrowser.cd(savedInstanceState.getString(SAVESTATE_CURRENTPATH));
-			// adapter.setData(repoBrowser);
-			// pager.setAdapter(adapter);
-			// pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
-			// }
+			pager.setOffscreenPageLimit(1);
+			if (savedInstanceState != null) {
+				repoBrowser.cd(savedInstanceState.getString(SAVESTATE_CURRENTPATH));
+				adapter.setData(repoBrowser);
+				pager.setAdapter(adapter);
+				pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
+			}
 			// Launch loading task
 			RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
 			task.execute(repoBrowser);
@@ -118,7 +118,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 
 	@Override
 	public void onPreDir() {
-		// TODO Auto-generated method stub
+		// do nothing
 	}
 
 	@Override
@@ -131,19 +131,18 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		pager.setOffscreenPageLimit(0);
 		adapter.notifyDataSetChanged();
 		// restore state if needed
-		// if (savedInstanceState != null) {
-		// repoBrowser.cd(savedInstanceState.getString(SAVESTATE_CURRENTPATH));
-		// adapter.setData(repoBrowser);
-		// pager.setAdapter(adapter);
-		// pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
-		// adapter.notifyDataSetChanged();
-		// }
+//		if (savedInstanceState != null) {
+//			repoBrowser.cd(savedInstanceState.getString(SAVESTATE_CURRENTPATH));
+//			adapter.setData(repoBrowser);
+//			pager.setAdapter(adapter);
+//			pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
+//			adapter.notifyDataSetChanged();
+//		}
 	}
 
 	@Override
-	public void onDirProgressUpdate(Integer... values) {
-		// TODO Auto-generated method stub
-
+	public void onDirProgressUpdate(Long... values) {
+		// do nothing
 	}
 
 	// -------------------------------------------------------------------------
