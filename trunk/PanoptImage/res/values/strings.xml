@@ -23,6 +23,10 @@
     <string name="param_proxy_ip_hint">Ex: 192.168.0.1</string>
     <string name="param_proxy_port">Proxy port</string>
     <string name="param_proxy_port_hint">Ex: 8080</string>
+    <string name="param_proxy_user">User name</string>
+    <string name="param_proxy_user_hint">User name</string>
+    <string name="param_proxy_pwd">Password</string>
+    <string name="param_proxy_pwd_hint">Your password</string>
     <string name="param_showtip">Show Tips</string>
     <string name="param_memory_optim">Memory optimization</string>
     <string name="param_memory_auto">Auto</string>
@@ -58,7 +62,11 @@
     <string name="create_webdav_ip">Server</string>
     <string name="create_webdav_ip_hint">Ex: 192.168.0.1</string>
     <string name="create_webdav_port">Port</string>
-    <string name="create_webdav_port_hint">Ex: 8080</string>
+    <string name="create_webdav_port_hint">Default: 80</string>
+    <string name="create_webdav_user">User name</string>
+    <string name="create_webdav_user_hint">User name</string>
+    <string name="create_webdav_pwd">Password</string>
+    <string name="create_webdav_pwd_hint">Your password</string>
     <string name="create_webdav_base">Repository</string>
     <string name="create_webdav_base_hint">Ex: /WebDAV/Myroot</string>
     <string name="create_webdav_path">Path</string>
@@ -76,5 +84,6 @@
     <string name="error_loading_file">Error accessing file : %s</string>
     <string name="error_filenotfound">Path not found : %s</string>
     <string name="error_nonetwork">Network not available</string>
+    <string name="error_outofmemory">Out of memory</string>
 
 </resources>
