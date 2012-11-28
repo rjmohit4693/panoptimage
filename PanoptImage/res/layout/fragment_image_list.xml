@@ -12,7 +12,6 @@
         android:adjustViewBounds="true"
         android:clickable="false"
         android:contentDescription="@string/message"
-        android:longClickable="false"
-        android:src="@drawable/ic_empty_storage" />
+        android:longClickable="false" />
 
 </RelativeLayout>
