@@ -46,6 +46,7 @@ import android.util.Log;
  * @author "arnaud.p.fereor"
  */
 public class WebdavService extends RepositoryService<WebdavParam> {
+	
 	/** base of webdav link */
 	DavDroid dav = null;
 
@@ -99,6 +100,7 @@ public class WebdavService extends RepositoryService<WebdavParam> {
 				// remove base path from Webdav answer
 				URL pathuri = new URL(param.getProtocol(), param.getServer(), result.next());
 				String path = pathuri.toString();
+				// TODO: ArrayIndexOutOfBounds si %20 dans répertoire destination
 				ret.add(path.substring(len + 1));
 			}
 			return ret;
@@ -117,7 +119,7 @@ public class WebdavService extends RepositoryService<WebdavParam> {
 	public byte[] get(String location, RepositoryGetListener<Long, byte[]> lsn) throws PanoptimageFileNotFoundException {
 		try {
 			// construct child listener
-			DavDroidGetListener<Long, byte[]> plsn = new DavDroidGetListener<Long, byte[]>(lsn);
+			DavDroidGetListener<Long, byte[]> plsn = new DavDroidGetListener<Long, byte[]>(lsn, PanoptesConstants.ONPROGRESS_STEPS);
 			// prepare request
 			String val = PanoptesHelper.formatPath(root, currentPath);
 			URI uri = new URI(param.getProtocol(), param.getServer(), val, null);

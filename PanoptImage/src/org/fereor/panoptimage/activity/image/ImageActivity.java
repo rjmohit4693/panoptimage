@@ -273,7 +273,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 				config = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
 				optim = PanoptimageMemoryOptimEnum.values()[PanoptimageMemoryOptimEnum.findPosition(config
 						.getMemoptim())];
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				config = null;
 				optim = PanoptimageMemoryOptimEnum.Auto;
 			}

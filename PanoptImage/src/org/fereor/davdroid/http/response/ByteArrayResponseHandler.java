@@ -66,9 +66,15 @@ public class ByteArrayResponseHandler extends BasicResponseHandler<byte[]> {
 		Long length = entity.getContentLength();
 		byte[] buf = new byte[1024];
 		int cnt;
+		float step = 0;
 		while ((cnt = in.read(buf)) > 0) {
 			baos.write(buf, 0, cnt);
-			lsn.onProgress(progress += cnt, length);
+			progress += cnt;
+			float val = ((float) progress) / ((float) length) * lsn.nbSteps();
+			if (val >= step) {
+				step = val;
+				lsn.onProgress(progress, length);
+			}
 		}
 		in.close();
 

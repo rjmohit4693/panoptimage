@@ -162,7 +162,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	@Override
 	public void onGetProgressUpdate(Long... values) {
 		final int splashRes;
-		float val = ((float) values[0]) / ((float) values[1]) * 7.0f;
+		float val = ((float) values[0]) / ((float) values[1]) * PanoptesConstants.ONPROGRESS_STEPS;
 		// identify image to draw
 		if (val < 1.0f) {
 			splashRes = R.drawable.splash_0;
