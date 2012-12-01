@@ -17,4 +17,5 @@ package org.fereor.davdroid;
 
 public interface DavDroidListener<T> {
 	void onProgress(T... values);
+	float nbSteps();
 }

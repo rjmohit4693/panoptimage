@@ -163,9 +163,9 @@ public class PanoptesHelper {
 		BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
 		// Calculate inSampleSize
-		options.inSampleSize = optimlvl;
-		if (optimlvl <= 1)
-			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+		if (optimlvl >= 1)
+			options.inSampleSize *= optimlvl;
 
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
