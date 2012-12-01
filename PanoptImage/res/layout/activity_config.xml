@@ -36,7 +36,7 @@
         android:id="@+id/param_showtip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/param_proxy_port_value"
+        android:layout_below="@+id/param_title"
         android:layout_marginTop="60dp"
         android:layout_toLeftOf="@+id/param_center"
         android:text="@string/param_showtip"
