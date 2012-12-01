@@ -16,6 +16,7 @@
 package org.fereor.panoptimage.activity.image;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.fereor.panoptimage.R;
@@ -62,6 +63,8 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 
 	@Override
 	public void onPostDir(List<String> rawdir) {
+		// sort rawdir
+		Collections.sort(rawdir); 
 		// Include .. to the list
 		ArrayList<String> directories = new ArrayList<String>();
 		directories.add(PanoptesHelper.DDOT);

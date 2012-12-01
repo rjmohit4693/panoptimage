@@ -72,12 +72,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			pager = (ViewPager) findViewById(R.id.imagepager);
 			pager.setAdapter(adapter);
 			pager.setOffscreenPageLimit(1);
-			if (savedInstanceState != null) {
-				repoBrowser.cd(savedInstanceState.getString(SAVESTATE_CURRENTPATH));
-				adapter.setData(repoBrowser);
-				pager.setAdapter(adapter);
-				pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
-			}
+			savedState = savedInstanceState;
 			// Launch loading task
 			RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
 			task.execute(repoBrowser);
@@ -129,15 +124,16 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		pager = (ViewPager) findViewById(R.id.imagepager);
 		pager.setAdapter(adapter);
 		pager.setOffscreenPageLimit(0);
-		adapter.notifyDataSetChanged();
+		
 		// restore state if needed
-//		if (savedInstanceState != null) {
-//			repoBrowser.cd(savedInstanceState.getString(SAVESTATE_CURRENTPATH));
-//			adapter.setData(repoBrowser);
-//			pager.setAdapter(adapter);
-//			pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
-//			adapter.notifyDataSetChanged();
-//		}
+		if (savedState != null) {
+			repoBrowser.cd(savedState.getString(SAVESTATE_CURRENTPATH));
+			adapter.setData(repoBrowser);
+			pager.setAdapter(adapter);
+			pager.setCurrentItem(savedState.getInt(SAVESTATE_CURRENTITEM));
+			savedState = null;
+		}
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override
