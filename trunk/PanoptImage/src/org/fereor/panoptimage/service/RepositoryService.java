@@ -46,8 +46,8 @@ public abstract class RepositoryService<T> {
 	 * 
 	 * @return
 	 * @throws PanoptesUnknownParamException
-	 * @throws PanoptimageNoNetworkException 
-	 * @throws  
+	 * @throws PanoptimageNoNetworkException
+	 * @throws
 	 */
 	public static RepositoryService<?> createInstance(HomePagerParamService content)
 			throws PanoptesUnknownParamException, PanoptimageNoNetworkException {
@@ -96,7 +96,9 @@ public abstract class RepositoryService<T> {
 		} else {
 			// recursive cd
 			String subpath = path.substring(0, path.indexOf(PanoptesHelper.SLASH));
+			String postpath = path.substring(path.indexOf(PanoptesHelper.SLASH) + 1, path.length());
 			cd(subpath);
+			cd(postpath);
 		}
 	}
 
@@ -115,7 +117,8 @@ public abstract class RepositoryService<T> {
 	 * @param regexp regular expression to match to search for files
 	 * @return list of child locations
 	 */
-	public abstract List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn) throws PanoptimageFileNotFoundException;
+	public abstract List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn)
+			throws PanoptimageFileNotFoundException;
 
 	/**
 	 * Get the content of a repository location
