@@ -73,6 +73,10 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			pager.setAdapter(adapter);
 			pager.setOffscreenPageLimit(1);
 			savedState = savedInstanceState;
+			// restore state if needed
+			if (savedState != null) {
+				repoBrowser.cd(savedState.getString(SAVESTATE_CURRENTPATH));
+			}
 			// Launch loading task
 			RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
 			task.execute(repoBrowser);
@@ -123,16 +127,11 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		adapter.setImageList(result);
 		pager = (ViewPager) findViewById(R.id.imagepager);
 		pager.setAdapter(adapter);
-		pager.setOffscreenPageLimit(0);
-		
-		// restore state if needed
 		if (savedState != null) {
-			repoBrowser.cd(savedState.getString(SAVESTATE_CURRENTPATH));
-			adapter.setData(repoBrowser);
-			pager.setAdapter(adapter);
 			pager.setCurrentItem(savedState.getInt(SAVESTATE_CURRENTITEM));
 			savedState = null;
 		}
+		pager.setOffscreenPageLimit(0);
 		adapter.notifyDataSetChanged();
 	}
 
