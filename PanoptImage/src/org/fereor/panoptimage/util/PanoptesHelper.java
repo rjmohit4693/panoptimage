@@ -34,12 +34,13 @@ public class PanoptesHelper {
 	public static final String HTTPPORT = ":";
 	public static final String REGEXP_ALLIMAGES = ".+\\.jpg|.+\\.jpeg|.+\\.png|.+\\.gif";
 	public static final String REGEXP_DIRECTORY = "^[^\\\\.]*$";
+	// TODO: û and -
 	private static final String[][] HTML_ENCODING_MAP = {
 			{ " ", "%", "$", "&", "+", ",", "/", ":", ";", "=", "?", "@", "<", ">", "#", "à", "á", "â", "ã", "ä", "ç",
-					"è", "é", "ê", "ë", "ì", "í", "î", "ï", "ñ", "ô", "ö" },
+					"è", "é", "ê", "ë", "ì", "í", "î", "ï", "ñ", "ô", "ö", "û", "ü" },
 			{ "%20", "%25", "%24", "%26", "%2B", "%2C", "%2F", "%3A", "%3B", "%3D", "%3F", "%40", "%3C", "%3E", "%23",
 					"%c3%a0", "%c3%a1", "%c3%a2", "%c3%a3", "%c3%a4", "%c3%a7", "%c3%a8", "%c3%a9", "%c3%aa", "%c3%ab",
-					"%c3%ac", "%c3%ad", "%c3%ae", "%c3%af", "%c3%b1", "%c3%b4", "%c3%b6" } };
+					"%c3%ac", "%c3%ad", "%c3%ae", "%c3%af", "%c3%b1", "%c3%b4", "%c3%b6", "%c3%bb", "%c3%bc" } };
 
 	/**
 	 * Format a string to a path using SLASH

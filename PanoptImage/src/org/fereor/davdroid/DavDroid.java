@@ -247,7 +247,7 @@ public class DavDroid {
 			XmlPullParserException {
 		// call propfind to get data
 		byte[] data = propfind(path,
-				Propfind.createProp(new String[] { "creationdate", "etag" }),
+				Propfind.createProp(new String[] { }),
 				HttpDepth.DEPTH_ONE);
 
 		// Parse the result
