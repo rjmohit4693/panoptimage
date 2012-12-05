@@ -32,7 +32,7 @@ public class PanoptesHelper {
 	public static final String SLASH = "/";
 	public static final String HTTPBASE = "://";
 	public static final String HTTPPORT = ":";
-	public static final String REGEXP_ALLIMAGES = ".+\\.jpg|.+\\.jpeg|.+\\.png|.+\\.gif";
+	public static final String REGEXP_ALLIMAGES = ".+\\.jpg|.+\\.jpeg|.+\\.png|.+\\.gif|.+\\.JPG|.+\\.JPEG|.+\\.PNG|.+\\.GIF";
 	public static final String REGEXP_DIRECTORY = "^[^\\\\.]*$";
 	// TODO: û and -
 	private static final String[][] HTML_ENCODING_MAP = {
