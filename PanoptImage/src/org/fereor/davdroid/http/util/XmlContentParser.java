@@ -18,7 +18,6 @@ package org.fereor.davdroid.http.util;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.fereor.davdroid.DavDroidConstants;
 import org.fereor.davdroid.exception.DavDroidException;
 import org.fereor.davdroid.exception.DavDroidIOException;
 import org.fereor.davdroid.exception.DavDroidInstanceException;
@@ -26,8 +25,6 @@ import org.fereor.davdroid.exception.DavDroidXmlException;
 import org.fereor.davdroid.http.xml.o.DavOutput;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
-import android.util.Log;
 
 public class XmlContentParser<T extends DavOutput> {
 	/** Class declared to create */

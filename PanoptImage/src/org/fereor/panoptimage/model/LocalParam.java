@@ -53,4 +53,9 @@ public class LocalParam extends CreateParam {
 	public void setPath(String path) {
 		this.path = path;
 	}
+
+	@Override
+	public boolean needNetwork() {
+		return false;
+	}
 }

@@ -53,6 +53,7 @@ public class HomeActivity extends PanoptesActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onCreate");
+		// go on
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		try {
@@ -125,6 +126,12 @@ public class HomeActivity extends PanoptesActivity {
 		HomePagerParamService curparam = content.get(location);
 		if (!curparam.getParam().hasData()) {
 			// This parameter has no data to display : return
+			return;
+		}
+		// check network availability
+		if (curparam.getParam().needNetwork() && !isNetworkAvailable()) {
+			// Network is not available. Inform and return
+			showErrorMsg(getString(R.string.error_nonetwork));
 			return;
 		}
 

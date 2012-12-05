@@ -120,4 +120,9 @@ public class WebdavParam extends CreateParam {
 	public void setKey(String key) {
 		this.key = key;
 	}
+
+	@Override
+	public boolean needNetwork() {
+		return true;
+	}
 }

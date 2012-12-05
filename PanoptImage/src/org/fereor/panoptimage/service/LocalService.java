@@ -108,5 +108,4 @@ public class LocalService extends RepositoryService<LocalParam> {
 	public boolean showSplashWhileLoading() {
 		return false;
 	}
-
 }

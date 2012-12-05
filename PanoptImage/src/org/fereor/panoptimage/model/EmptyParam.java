@@ -38,11 +38,14 @@ public class EmptyParam extends CreateParam {
 	public void setKey(String key) {
 		this.key = key;
 	}
-	
+
 	@Override
-	public boolean hasData(){
+	public boolean hasData() {
 		return false;
 	}
-	
-	
+
+	@Override
+	public boolean needNetwork() {
+		return false;
+	}
 }

@@ -19,6 +19,9 @@ import org.fereor.panoptimage.dao.DatabaseHelper;
 import org.fereor.panoptimage.dao.DatabaseStatus;
 import org.fereor.panoptimage.util.PanoptesConstants;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -60,12 +63,25 @@ public abstract class PanoptesActivity extends FragmentActivity {
 		}
 	}
 
+	/**
+	 * check network availability
+	 * 
+	 * @param status
+	 */
+	protected boolean isNetworkAvailable() {
+		// test network availability
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		return networkInfo != null && networkInfo.isConnected();
+	}
+
 	// -------------------------------------------------------------------------
 	// Methods for Database status
 	// -------------------------------------------------------------------------
 	public void markConfigRead() {
 		configRead = System.currentTimeMillis();
 	}
+
 	protected boolean isConfigUptodate() {
 		return configRead > DatabaseStatus.getInstance().getConfigUpdated();
 	}
@@ -73,6 +89,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	public void markWebdavRead() {
 		webdavRead = System.currentTimeMillis();
 	}
+
 	protected boolean isWebdavParamUptodate() {
 		return webdavRead > DatabaseStatus.getInstance().getWebdavUpdated();
 	}
@@ -80,6 +97,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	public void markLocalRead() {
 		localRead = System.currentTimeMillis();
 	}
+
 	protected boolean isLocalParamUptodate() {
 		return localRead > DatabaseStatus.getInstance().getLocalUpdated();
 	}
@@ -112,7 +130,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * @param e
 	 */
 	public void showInfoMsg(int stringRes, Object... args) {
-		String msg = String.format(getString(stringRes), args);
+		String msg = getString(stringRes, args);
 		showInfoMsg(msg);
 	}
 

@@ -67,6 +67,12 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		try {
 			// Retrieve content
 			repoBrowser = RepositoryService.createInstance(param);
+			// check network availability
+			if (param.getParam().needNetwork() && !isNetworkAvailable()) {
+				// Network is not available. Inform and return
+				showErrorMsg(getString(R.string.error_nonetwork));
+				return;
+			}
 			// set temporary adapter
 			adapter = new LoadingPagerAdapter(getSupportFragmentManager(), optim);
 			pager = (ViewPager) findViewById(R.id.imagepager);

@@ -37,4 +37,11 @@ public abstract class CreateParam implements Serializable {
 	 * @return true if the parameter has data to display, false else
 	 */
 	public abstract boolean hasData();
+	
+	/**
+	 * Check if the network is needed
+	 * @return true if network
+	 */
+	public abstract boolean needNetwork();
+
 }

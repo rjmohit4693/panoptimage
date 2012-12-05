@@ -57,8 +57,6 @@ public class WebdavService extends RepositoryService<WebdavParam> {
 	 */
 	public WebdavService(WebdavParam param) throws PanoptimageNoNetworkException {
 		super(param);
-		// test network availability
-		// TODO
 		// set root path
 		if (!param.getBase().endsWith(PanoptesHelper.SLASH)) {
 			this.root = param.getBase() + PanoptesHelper.SLASH;

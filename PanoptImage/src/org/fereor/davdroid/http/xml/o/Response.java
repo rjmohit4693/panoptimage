@@ -17,12 +17,9 @@ package org.fereor.davdroid.http.xml.o;
 
 import java.io.IOException;
 
-import org.fereor.davdroid.DavDroidConstants;
 import org.fereor.davdroid.http.xml.i.Prop;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
-import android.util.Log;
 
 public class Response implements DavOutput {
 	public static final String TAGNAME = "response";
