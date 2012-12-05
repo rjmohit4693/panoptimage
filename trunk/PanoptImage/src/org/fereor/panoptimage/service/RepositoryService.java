@@ -151,4 +151,5 @@ public abstract class RepositoryService<T> {
 	 * @return true is the splash has to be displayed
 	 */
 	public abstract boolean showSplashWhileLoading();
+
 }

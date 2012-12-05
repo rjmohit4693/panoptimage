@@ -17,8 +17,11 @@ package org.fereor.panoptimage.util;
 
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 /**
@@ -34,7 +37,6 @@ public class PanoptesHelper {
 	public static final String HTTPPORT = ":";
 	public static final String REGEXP_ALLIMAGES = ".+\\.jpg|.+\\.jpeg|.+\\.png|.+\\.gif|.+\\.JPG|.+\\.JPEG|.+\\.PNG|.+\\.GIF";
 	public static final String REGEXP_DIRECTORY = "^[^\\\\.]*$";
-	// TODO: û and -
 	private static final String[][] HTML_ENCODING_MAP = {
 			{ " ", "%", "$", "&", "+", ",", "/", ":", ";", "=", "?", "@", "<", ">", "#", "à", "á", "â", "ã", "ä", "ç",
 					"è", "é", "ê", "ë", "ì", "í", "î", "ï", "ñ", "ô", "ö", "û", "ü" },
