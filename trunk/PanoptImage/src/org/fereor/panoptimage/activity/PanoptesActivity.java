@@ -15,8 +15,8 @@
 
 package org.fereor.panoptimage.activity;
 
-import org.fereor.panoptimage.dao.DatabaseHelper;
-import org.fereor.panoptimage.dao.DatabaseStatus;
+import org.fereor.panoptimage.dao.db.DatabaseHelper;
+import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.util.PanoptesConstants;
 
 import android.content.Context;
