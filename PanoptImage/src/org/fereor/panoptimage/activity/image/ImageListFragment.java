@@ -17,7 +17,7 @@ package org.fereor.panoptimage.activity.image;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
-import org.fereor.panoptimage.service.RepositoryService;
+import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.service.async.RepositoryGetAsync;
 import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
@@ -72,7 +72,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	/**
 	 * Create a new instance of CountingFragment, providing "num" as an argument.
 	 */
-	public static ImageListFragment newInstance(RepositoryService<?> repo, String path, PanoptimageMemoryOptimEnum optim) {
+	public static ImageListFragment newInstance(RepositoryLoaderDao<?> repo, String path, PanoptimageMemoryOptimEnum optim) {
 		// create instance
 		ImageListFragment f = new ImageListFragment();
 		// Lauch async task

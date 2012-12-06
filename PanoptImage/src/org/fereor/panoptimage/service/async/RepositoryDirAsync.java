@@ -17,8 +17,8 @@ package org.fereor.panoptimage.service.async;
 
 import java.util.List;
 
+import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
-import org.fereor.panoptimage.service.RepositoryService;
 
 import android.os.AsyncTask;
 
@@ -27,7 +27,7 @@ import android.os.AsyncTask;
  * @author "arnaud.p.fereor"
  *
  */
-public class RepositoryDirAsync extends AsyncTask<RepositoryService<?>, Long, List<String>> {
+public class RepositoryDirAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, List<String>> {
 	/** regular expression for the dir command */
 	private String regexp;
 	/** listener for this task */
@@ -39,7 +39,7 @@ public class RepositoryDirAsync extends AsyncTask<RepositoryService<?>, Long, Li
 	}
 
 	@Override
-	protected List<String> doInBackground(RepositoryService<?>... repo) {
+	protected List<String> doInBackground(RepositoryLoaderDao<?>... repo) {
 		try {
 			return repo[0].dir(regexp, listener);
 		} catch (PanoptimageFileNotFoundException e) {

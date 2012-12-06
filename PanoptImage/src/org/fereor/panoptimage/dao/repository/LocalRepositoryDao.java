@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with panoptimage.  If not, see <http://www.gnu.org/licenses/>
 
-package org.fereor.panoptimage.service;
+package org.fereor.panoptimage.dao.repository;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,13 +36,13 @@ import org.fereor.panoptimage.util.RegexpFilenameFilter;
  * 
  * @author "arnaud.p.fereor"
  */
-public class LocalService extends RepositoryService<LocalParam> {
+public class LocalRepositoryDao extends RepositoryLoaderDao<LocalParam> {
 	/**
 	 * Default constructor with param data
 	 * 
 	 * @param param
 	 */
-	public LocalService(LocalParam param) {
+	public LocalRepositoryDao(LocalParam param) {
 		super(param);
 		if (!param.getPath().endsWith(PanoptesHelper.SLASH)) {
 			this.root = param.getPath() + PanoptesHelper.SLASH;

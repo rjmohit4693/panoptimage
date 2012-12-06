@@ -20,12 +20,12 @@ import java.util.List;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
+import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.service.HomePagerParamService;
-import org.fereor.panoptimage.service.RepositoryService;
 import org.fereor.panoptimage.service.async.RepositoryDirAsync;
 import org.fereor.panoptimage.service.async.RepositoryDirListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
@@ -47,7 +47,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		RepositoryDirListener<Long, List<String>> {
 	private static final String SAVESTATE_CURRENTITEM = "org.fereor.panoptimage.activity.image.ImageActivity.currentItem";
 	private static final String SAVESTATE_CURRENTPATH = "org.fereor.panoptimage.activity.image.ImageActivity.currentPath";
-	private RepositoryService<?> repoBrowser;
+	private RepositoryLoaderDao<?> repoBrowser;
 	private ImagePagerAdapter adapter;
 	private ViewPager pager;
 	private Bundle savedState;
@@ -66,7 +66,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		hideBrowserPanel();
 		try {
 			// Retrieve content
-			repoBrowser = RepositoryService.createInstance(param);
+			repoBrowser = RepositoryLoaderDao.createInstance(param);
 			// check network availability
 			if (param.getParam().needNetwork() && !isNetworkAvailable()) {
 				// Network is not available. Inform and return
