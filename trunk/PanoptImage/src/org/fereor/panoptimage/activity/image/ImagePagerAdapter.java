@@ -17,9 +17,9 @@ package org.fereor.panoptimage.activity.image;
 
 import java.util.List;
 
+import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
-import org.fereor.panoptimage.service.RepositoryService;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 
 import android.support.v4.app.Fragment;
@@ -35,7 +35,7 @@ import android.view.ViewGroup;
 public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 
 	/** data to display */
-	private RepositoryService<?> repo = null;
+	private RepositoryLoaderDao<?> repo = null;
 	/** current directory content */
 	private List<String> imageList = null;
 	/** current visible item */
@@ -43,7 +43,7 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 	/** Memory optimization level */
 	PanoptimageMemoryOptimEnum optim;
 
-	public ImagePagerAdapter(RepositoryService<?> repo, FragmentManager fm, PanoptimageMemoryOptimEnum optim) {
+	public ImagePagerAdapter(RepositoryLoaderDao<?> repo, FragmentManager fm, PanoptimageMemoryOptimEnum optim) {
 		super(fm);
 		setData(repo);
 		this.optim = (optim != null) ? optim : PanoptimageMemoryOptimEnum.Auto;
@@ -55,7 +55,7 @@ public class ImagePagerAdapter extends FragmentStatePagerAdapter {
 	 * @param data
 	 * @throws PanoptimageException
 	 */
-	public void setData(RepositoryService<?> data) {
+	public void setData(RepositoryLoaderDao<?> data) {
 		this.repo = data;
 	}
 

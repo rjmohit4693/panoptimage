@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with panoptimage.  If not, see <http://www.gnu.org/licenses/>
 
-package org.fereor.panoptimage.service;
+package org.fereor.panoptimage.dao.repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,7 @@ import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
+import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.service.async.RepositoryDirListener;
 import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
@@ -33,7 +34,7 @@ import org.fereor.panoptimage.util.PanoptesHelper;
  * 
  * @author "arnaud.p.fereor"
  */
-public abstract class RepositoryService<T> {
+public abstract class RepositoryLoaderDao<T> {
 	/** parent parameter */
 	protected T param;
 	/** Root of directory to browse */
@@ -49,14 +50,14 @@ public abstract class RepositoryService<T> {
 	 * @throws PanoptimageNoNetworkException
 	 * @throws
 	 */
-	public static RepositoryService<?> createInstance(HomePagerParamService content)
+	public static RepositoryLoaderDao<?> createInstance(HomePagerParamService content)
 			throws PanoptesUnknownParamException, PanoptimageNoNetworkException {
 		// case of type LocalParam
 		if (content.getParam() instanceof LocalParam)
-			return new LocalService((LocalParam) content.getParam());
+			return new LocalRepositoryDao((LocalParam) content.getParam());
 		// case of type WebdavParam
 		if (content.getParam() instanceof WebdavParam)
-			return new WebdavService((WebdavParam) content.getParam());
+			return new WebdavRepositoryDao((WebdavParam) content.getParam());
 		// if type is unknown : throw error
 		throw new PanoptesUnknownParamException();
 	}
@@ -66,7 +67,7 @@ public abstract class RepositoryService<T> {
 	 * 
 	 * @param param parameter to use in the class
 	 */
-	protected RepositoryService(T param) {
+	protected RepositoryLoaderDao(T param) {
 		this.param = param;
 	}
 

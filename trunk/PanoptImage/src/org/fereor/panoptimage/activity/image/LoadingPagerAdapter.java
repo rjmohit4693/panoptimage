@@ -1,7 +1,7 @@
 package org.fereor.panoptimage.activity.image;
 
+import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
-import org.fereor.panoptimage.service.RepositoryService;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 
 import android.support.v4.app.Fragment;
@@ -23,7 +23,7 @@ public class LoadingPagerAdapter extends ImagePagerAdapter {
 		return new LoadingFragment();
 	}
 
-	public void setData(RepositoryService<?> data) {
+	public void setData(RepositoryLoaderDao<?> data) {
 		// do nothing
 	}
 

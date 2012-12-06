@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with panoptimage.  If not, see <http://www.gnu.org/licenses/>
 
-package org.fereor.panoptimage.service;
+package org.fereor.panoptimage.dao.repository;
 
 import java.io.IOException;
 import java.net.URI;
@@ -45,7 +45,7 @@ import android.util.Log;
  * 
  * @author "arnaud.p.fereor"
  */
-public class WebdavService extends RepositoryService<WebdavParam> {
+public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 
 	/** base of webdav link */
 	DavDroid dav = null;
@@ -55,7 +55,7 @@ public class WebdavService extends RepositoryService<WebdavParam> {
 	 * 
 	 * @param param
 	 */
-	public WebdavService(WebdavParam param) throws PanoptimageNoNetworkException {
+	public WebdavRepositoryDao(WebdavParam param) throws PanoptimageNoNetworkException {
 		super(param);
 		// set root path
 		if (!param.getBase().endsWith(PanoptesHelper.SLASH)) {

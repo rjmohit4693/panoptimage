@@ -20,8 +20,8 @@ import java.util.concurrent.Callable;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
-import org.fereor.panoptimage.dao.DatabaseHelper;
-import org.fereor.panoptimage.dao.DatabaseStatus;
+import org.fereor.panoptimage.dao.db.DatabaseHelper;
+import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;

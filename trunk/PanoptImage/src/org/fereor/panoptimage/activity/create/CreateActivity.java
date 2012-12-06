@@ -22,7 +22,7 @@ import java.util.concurrent.Callable;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
-import org.fereor.panoptimage.dao.DatabaseStatus;
+import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;

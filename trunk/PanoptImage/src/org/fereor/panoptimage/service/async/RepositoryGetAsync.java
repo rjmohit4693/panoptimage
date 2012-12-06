@@ -17,13 +17,13 @@ package org.fereor.panoptimage.service.async;
 
 import java.lang.ref.WeakReference;
 
+import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
-import org.fereor.panoptimage.service.RepositoryService;
 
 import android.os.AsyncTask;
 
-public class RepositoryGetAsync extends AsyncTask<RepositoryService<?>, Long, byte[]> {
+public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, byte[]> {
 	/** path to get */
 	private String path;
 	/** listener for this task */
@@ -35,7 +35,7 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryService<?>, Long, by
 	}
 
 	@Override
-	protected byte[] doInBackground(RepositoryService<?>... repo) {
+	protected byte[] doInBackground(RepositoryLoaderDao<?>... repo) {
 		try {
 			if (listener != null && listener.get() != null)
 				return repo[0].get(path, listener.get());
