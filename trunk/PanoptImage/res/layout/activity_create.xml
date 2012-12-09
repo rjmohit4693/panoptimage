@@ -55,4 +55,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/browser_fragment"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/create_title"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_ellipsis_pressed" android:state_pressed="true"/> <!-- pressed -->
+    <item android:drawable="@drawable/ic_ellipsis_normal"/> <!-- default -->
+</selector>

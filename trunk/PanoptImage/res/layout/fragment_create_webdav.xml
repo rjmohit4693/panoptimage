@@ -155,6 +155,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/create_webdav_base_hint" />
+
+        <Button
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/test"
+            android:onClick="doTestServer" />
     </TableRow>
 
     <TableRow
@@ -177,6 +184,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/create_webdav_path_hint" />
+
+        <Button
+            android:id="@+id/browse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ellipsis"
+            android:onClick="doBrowse" />
     </TableRow>
 
 </TableLayout>
