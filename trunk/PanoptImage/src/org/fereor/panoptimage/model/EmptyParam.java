@@ -40,6 +40,16 @@ public class EmptyParam extends CreateParam {
 	}
 
 	@Override
+	public String getPath() {
+		return null;
+	}
+
+	@Override
+	public void setPath(String path) {
+		return;
+	}
+
+	@Override
 	public boolean hasData() {
 		return false;
 	}

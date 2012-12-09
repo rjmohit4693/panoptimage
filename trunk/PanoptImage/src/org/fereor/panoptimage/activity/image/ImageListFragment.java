@@ -45,8 +45,8 @@ import android.widget.ImageView.ScaleType;
  * @author "arnaud.p.fereor"
  */
 public class ImageListFragment extends Fragment implements RepositoryGetListener<Long, byte[]> {
-	private static final String BUNDLE_IMGDATA = "imgdata";
-	private static final String BUNDLE_OPTIM = "optim";
+	private static final String BUNDLE_IMGDATA = "org.fereor.panoptimage.activity.image.ImageListFragment.imgdata";
+	private static final String BUNDLE_OPTIM = "org.fereor.panoptimage.activity.image.ImageListFragment.optim";
 
 	/** image displayed */
 	private Bitmap image;

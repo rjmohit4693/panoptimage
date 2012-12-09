@@ -44,6 +44,11 @@ public class EmptyCreateFragment extends CreateFragment<EmptyParam> {
 	}
 
 	@Override
+	public void setPath(String path) {
+		// do nothing
+	}
+
+	@Override
 	public Class<EmptyParam> getParamClass() {
 		return EmptyParam.class;
 	}
