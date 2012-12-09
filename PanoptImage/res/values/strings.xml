@@ -46,6 +46,8 @@
     <string name="create_empty_text2">Choose New&#8230; to create a new one.</string>
     <string name="create_message_saved">%s saved</string>
     <string name="create_message_deleted">%s deleted</string>
+    <string name="create_button_ok">OK</string>
+    <string name="create_button_cancel">Cancel</string>
 
     <!-- Create Local fragment -->
     <string name="create_local_name">Name</string>
@@ -74,6 +76,7 @@
     <string name="create_webdav_save">Save</string>
 
     <!-- Error messages -->
+    <string name="error_header">Error: %s</string>
     <string name="error_title">Error&#8230;</string>
     <string name="error_load">Cannot load content</string>
     <string name="error_save">Cannot save content</string>
@@ -85,6 +88,10 @@
     <string name="error_filenotfound">Path not found : %s</string>
     <string name="error_nonetwork">Network not available</string>
     <string name="error_outofmemory">Out of memory</string>
+    <string name="error_noserver">Server not found</string>
+    <string name="error_okserver">Server reached</string>
+    <string name="error_nopath">Path not found on server</string>
+    <string name="error_okpath">Path found !</string>
 
     <!-- About messages -->
     <string name="about_title">About Panoptimage</string>
