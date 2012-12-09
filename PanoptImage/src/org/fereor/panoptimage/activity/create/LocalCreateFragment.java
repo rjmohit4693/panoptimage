@@ -98,6 +98,11 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 		// do nothing (no data to save in this fragment
 		return nameField.getText().toString();
 	}
+	
+	@Override
+	public void setPath(String path) {
+		pathField.setText(path);
+	}
 
 	@Override
 	public Class<LocalParam> getParamClass() {

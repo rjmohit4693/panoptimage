@@ -33,6 +33,17 @@ public abstract class CreateParam implements Serializable {
 	public abstract String getKey();
 	
 	/**
+	 * Return key value of this parameter
+	 * @return key
+	 */
+	public abstract String getPath();
+
+	/**
+	 * sets the value of this parameter
+	 */
+	public abstract void setPath(String path);
+
+	/**
 	 * Return if this parameter has data
 	 * @return true if the parameter has data to display, false else
 	 */

@@ -135,8 +135,12 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 	public boolean exists(String path) {
 		try {
 			String val = PanoptesHelper.formatPath(root, currentPath, path);
-			return dav.head(val);
+			// prepare request
+			URI uri = new URI(param.getProtocol(), param.getServer(), val, null);
+			return dav.head(uri.toASCIIString());
 		} catch (IOException e) {
+			return false;
+		} catch (URISyntaxException e) {
 			return false;
 		}
 	}

@@ -42,6 +42,12 @@ public abstract class CreateFragment<T extends CreateParam> extends Fragment {
 	public abstract String readKey();
 
 	/**
+	 * Sets the path selected
+	 * @param path path to set
+	 */
+	public abstract void setPath(String path);
+
+	/**
 	 * Called to set the parameter for the fragment
 	 * 
 	 * @param displayParam

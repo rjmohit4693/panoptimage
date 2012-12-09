@@ -94,6 +94,11 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 	}
 
 	@Override
+	public void setPath(String path) {
+		pathField.setText(path);
+	}
+
+	@Override
 	public WebdavParam readParam() {
 		// create content if null
 		if (content == null) {

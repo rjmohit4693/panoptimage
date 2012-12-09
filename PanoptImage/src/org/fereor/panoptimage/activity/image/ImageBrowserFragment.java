@@ -63,12 +63,12 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 
 	@Override
 	public void onPostDir(List<String> rawdir) {
-		// sort rawdir
-		Collections.sort(rawdir); 
 		// Include .. to the list
 		ArrayList<String> directories = new ArrayList<String>();
 		directories.add(PanoptesHelper.DDOT);
 		if (rawdir != null) {
+			// sort rawdir
+			Collections.sort(rawdir);
 			for (String it : rawdir) {
 				if (!it.isEmpty()) {
 					directories.add(it);

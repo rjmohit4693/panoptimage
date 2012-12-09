@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.activity;
 
+import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.dao.db.DatabaseHelper;
 import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.util.PanoptesConstants;
@@ -151,7 +152,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 */
 	public void showErrorMsg(String msg) {
 		Log.d(PanoptesConstants.TAGNAME, "Error:" + msg);
-		Toast.makeText(this, "Error:" + msg, Toast.LENGTH_LONG).show();
+		Toast.makeText(this, getString(R.string.error_header, msg), Toast.LENGTH_LONG).show();
 	}
 
 }

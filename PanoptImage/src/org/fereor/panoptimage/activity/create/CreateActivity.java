@@ -23,10 +23,15 @@ import java.util.concurrent.Callable;
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.dao.db.DatabaseStatus;
+import org.fereor.panoptimage.dao.repository.WebdavRepositoryDao;
+import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
+import org.fereor.panoptimage.service.async.RepositoryExistsAsync;
+import org.fereor.panoptimage.service.async.RepositoryExistsListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
 
 import android.os.Bundle;
@@ -38,7 +43,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class CreateActivity extends PanoptesActivity implements OnItemSelectedListener {
+public class CreateActivity extends PanoptesActivity implements OnItemSelectedListener,
+		RepositoryExistsListener<Integer, Boolean> {
+	public static final String BUNDLE_PARAM = "org.fereor.panoptimage.activity.create.CreateActivity.param";
 	/** List of available local configurations */
 	private List<? extends CreateParam> locals;
 	/** List of available Webdav configurations */
@@ -47,6 +54,8 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	private CreateParam displayParam;
 	/** Current fragment displayed */
 	private CreateFragment<? extends CreateParam> displayFragment;
+	/** browser fragment */
+	private CreateBrowserFragment fragment = null;
 
 	// -------------------------------------------------------------------------
 	// Method of Activity interface
@@ -173,6 +182,79 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		showInfoMsg(String.format(getString(R.string.create_message_deleted), param.getKey()));
 	}
 
+	/**
+	 * Test server availability
+	 * 
+	 * @param v view clicked
+	 */
+	public void doTestServer(View v) {
+		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doTestServer");
+		final CreateParam param = displayFragment.readParam();
+		if (param.getKey() == null || param.getKey().trim().isEmpty())
+			return;
+
+		// Test network availability
+		if (param.needNetwork() && !isNetworkAvailable()) {
+			// Network is not available. Inform and return
+			showErrorMsg(getString(R.string.error_nonetwork));
+			return;
+		}
+
+		// test availability according to type of param
+		if (param instanceof WebdavParam) {
+			try {
+				RepositoryExistsAsync task = new RepositoryExistsAsync(this, PanoptesHelper.SLASH);
+				task.execute(new WebdavRepositoryDao((WebdavParam) param));
+			} catch (PanoptimageNoNetworkException e) {
+				showErrorMsg(getString(R.string.error_nonetwork));
+				return;
+			}
+		}
+	}
+
+	/**
+	 * Action on the Browse button
+	 * 
+	 * @param v view clicked
+	 */
+	public void doBrowse(View v) {
+		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doBrowse");
+
+		final CreateParam param = displayFragment.readParam();
+
+		// create the browse fragment and put it
+		fragment = new CreateBrowserFragment();
+		Bundle data = new Bundle();
+		data.putSerializable(BUNDLE_PARAM, param);
+		fragment.setArguments(data);
+
+		getSupportFragmentManager().beginTransaction().add(R.id.browser_fragment, fragment).commit();
+	}
+
+	/**
+	 * Action on validate button
+	 * 
+	 * @param v view clicked
+	 */
+	public void doBrowseValidate(View v) {
+		if (fragment != null) {
+			String path = fragment.getSelectedPath();
+			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+			displayFragment.setPath(path);
+		}
+	}
+
+	/**
+	 * Action on cancel button
+	 * 
+	 * @param v view clicked
+	 */
+	public void doBrowseCancel(View v) {
+		if (fragment != null) {
+			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+		}
+	}
+
 	// -------------------------------------------------------------------------
 	// Methods of interface OnItemSelectedListener
 	// -------------------------------------------------------------------------
@@ -218,6 +300,28 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	public void onNothingSelected(AdapterView<?> parent) {
 		// Another interface callback
 		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:onNothingSelected");
+	}
+
+	// -------------------------------------------------------------------------
+	// Methods of interface RepositoryExistsListener
+	// -------------------------------------------------------------------------
+	@Override
+	public void onExistsProgressUpdate(Integer... values) {
+		// DO nothing
+	}
+
+	@Override
+	public void onPostExists(Boolean result) {
+		if (result) {
+			showInfoMsg(getString(R.string.error_okserver));
+		} else {
+			showInfoMsg(getString(R.string.error_noserver));
+		}
+	}
+
+	@Override
+	public void onPreExists() {
+		// do nothing
 	}
 
 	// -------------------------------------------------------------------------
@@ -292,4 +396,5 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		// Apply the adapter to the spinner
 		selector.setAdapter(adapter);
 	}
+
 }
