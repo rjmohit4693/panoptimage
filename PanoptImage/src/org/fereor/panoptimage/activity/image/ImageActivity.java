@@ -182,6 +182,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		// start async task to load content
 		ImageBrowserFragment browseFragment = (ImageBrowserFragment) getSupportFragmentManager().findFragmentById(
 				R.id.browser_fragment);
+		browseFragment.setRoot(repoBrowser.isRoot());
 		RepositoryDirAsync task = new RepositoryDirAsync(browseFragment, PanoptesHelper.REGEXP_DIRECTORY);
 		task.execute(repoBrowser);
 		showBrowserPanel();

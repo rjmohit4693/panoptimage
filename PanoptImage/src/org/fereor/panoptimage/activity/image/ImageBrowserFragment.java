@@ -43,6 +43,8 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 	private ListView lv = null;
 	/** mark reference for loading message */
 	private TextView msg = null;
+	/** mark if the root directory is displayed */
+	private boolean root = false;
 
 	/**
 	 * The Fragment's UI is a
@@ -63,9 +65,11 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 
 	@Override
 	public void onPostDir(List<String> rawdir) {
-		// Include .. to the list
 		ArrayList<String> directories = new ArrayList<String>();
-		directories.add(PanoptesHelper.DDOT);
+		// Include .. to the list
+		if (!isRoot()) {
+			directories.add(PanoptesHelper.DDOT);
+		}
 		if (rawdir != null) {
 			// sort rawdir
 			Collections.sort(rawdir);
@@ -90,5 +94,19 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 	public void onDirProgressUpdate(Long... values) {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * @return the root
+	 */
+	public boolean isRoot() {
+		return root;
+	}
+
+	/**
+	 * @param root the root to set
+	 */
+	public void setRoot(boolean root) {
+		this.root = root;
 	}
 }
