@@ -111,6 +111,14 @@ public abstract class RepositoryLoaderDao<T> {
 	public String getformatedPath() {
 		return PanoptesHelper.formatPath(currentPath);
 	}
+	
+	/**
+	 * Returns true if the path is root
+	 * @return
+	 */
+	public boolean isRoot(){
+		return currentPath.size() == 0;
+	}
 
 	/**
 	 * Read the content of current path location

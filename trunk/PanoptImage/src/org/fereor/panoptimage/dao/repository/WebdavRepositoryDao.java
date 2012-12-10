@@ -90,11 +90,15 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			// prepare request
 			String val = PanoptesHelper.formatPath(root, currentPath);
 			URI uri = new URI(param.getProtocol(), param.getServer(), val, null);
-			int len = uri.toASCIIString().length();
+			String asciiPath = uri.toASCIIString();
+			if (asciiPath.endsWith(PanoptesHelper.SLASH)) {
+				asciiPath = asciiPath.substring(0, asciiPath.length() - 1);
+			}
+			int len = asciiPath.length();
 
 			ArrayList<String> ret = new ArrayList<String>();
 			// read content returned
-			Iterator<String> result = dav.dir(uri.toASCIIString(), regexp);
+			Iterator<String> result = dav.dir(asciiPath, regexp);
 			while (result.hasNext()) {
 				// remove base path from Webdav answer
 				URL pathuri = new URL(param.getProtocol(), param.getServer(), result.next());
@@ -103,6 +107,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			}
 			return ret;
 		} catch (DavDroidException e) {
+			throw new PanoptimageFileNotFoundException(e.toString());
+		} catch (StringIndexOutOfBoundsException e) {
 			throw new PanoptimageFileNotFoundException(e.toString());
 		} catch (IOException e) {
 			throw new PanoptimageFileNotFoundException(e.toString());
