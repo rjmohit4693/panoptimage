@@ -46,6 +46,7 @@ import android.widget.Spinner;
 public class CreateActivity extends PanoptesActivity implements OnItemSelectedListener,
 		RepositoryExistsListener<Integer, Boolean> {
 	public static final String BUNDLE_PARAM = "org.fereor.panoptimage.activity.create.CreateActivity.param";
+	private static final String SAVESTATE_CURRENTPATH = "org.fereor.panoptimage.activity.create.CreateActivity.currentpath";
 	/** List of available local configurations */
 	private List<? extends CreateParam> locals;
 	/** List of available Webdav configurations */
@@ -56,7 +57,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	private CreateFragment<? extends CreateParam> displayFragment;
 	/** browser fragment */
 	private CreateBrowserFragment fragment = null;
-
+	
 	// -------------------------------------------------------------------------
 	// Method of Activity interface
 	// -------------------------------------------------------------------------
@@ -67,16 +68,20 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		setContentView(R.layout.activity_create);
 		// Populate the spinner
 		populateSpinner();
-		// Prepare fragments
-		if (savedInstanceState != null) {
-			return;
-		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_create, menu);
 		return true;
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (fragment != null) {
+			outState.putString(SAVESTATE_CURRENTPATH, fragment.getSelectedPath());
+		}
 	}
 
 	// -------------------------------------------------------------------------
@@ -252,6 +257,17 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	public void doBrowseCancel(View v) {
 		if (fragment != null) {
 			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+		}
+	}
+
+	/**
+	 * Attache the fragment to this activity
+	 * 
+	 * @param f
+	 */
+	public void attachFragment(CreateBrowserFragment f) {
+		if (fragment == null) {
+			fragment = f;
 		}
 	}
 
