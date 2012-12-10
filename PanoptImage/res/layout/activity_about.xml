@@ -24,113 +24,53 @@
 
     <TextView
         android:id="@+id/about1"
-        android:layout_width="wrap_content"
+        android:layout_width="650dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/about_title"
         android:layout_below="@+id/about_title"
         android:layout_marginLeft="-100dp"
         android:padding="@dimen/padding_medium"
-        android:text="@string/about1" />
+        android:text="@string/about1"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/about2"
-        android:layout_width="wrap_content"
+        android:layout_width="650dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/about_title"
         android:layout_below="@+id/about1"
         android:layout_marginLeft="-100dp"
+        android:lines="4"
+        android:maxLines="4"
         android:padding="@dimen/padding_medium"
         android:text="@string/about2"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         tools:context=".AboutActivity" />
 
     <TextView
         android:id="@+id/about3"
-        android:layout_width="wrap_content"
+        android:layout_width="650dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/about_title"
         android:layout_below="@+id/about2"
         android:layout_marginLeft="-100dp"
+        android:lines="4"
+        android:maxLines="4"
         android:padding="@dimen/padding_medium"
         android:text="@string/about3"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         tools:context=".AboutActivity" />
 
     <TextView
         android:id="@+id/about4"
-        android:layout_width="wrap_content"
+        android:layout_width="650dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/about_title"
         android:layout_below="@+id/about3"
         android:layout_marginLeft="-100dp"
         android:padding="@dimen/padding_medium"
         android:text="@string/about4"
-        tools:context=".AboutActivity" />
-
-    <TextView
-        android:id="@+id/about5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about4"
-        android:layout_marginLeft="-100dp"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about5"
-        tools:context=".AboutActivity" />
-
-    <TextView
-        android:id="@+id/about6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about5"
-        android:layout_marginLeft="-100dp"
-        android:layout_marginTop="20dp"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about6"
-        tools:context=".AboutActivity" />
-
-    <TextView
-        android:id="@+id/about7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about6"
-        android:layout_marginLeft="-100dp"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about7"
-        tools:context=".AboutActivity" />
-
-    <TextView
-        android:id="@+id/about8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about7"
-        android:layout_marginLeft="-100dp"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about8"
-        tools:context=".AboutActivity" />
-
-    <TextView
-        android:id="@+id/about9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about8"
-        android:layout_marginLeft="-100dp"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about9"
-        tools:context=".AboutActivity" />
-
-    <TextView
-        android:id="@+id/about10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about9"
-        android:layout_marginLeft="-100dp"
-        android:layout_marginTop="20dp"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about10"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         tools:context=".AboutActivity" />
 
     <TextView
@@ -138,12 +78,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about10"
+        android:layout_below="@+id/about4"
         android:layout_marginLeft="-100dp"
         android:autoLink="web"
         android:linksClickable="true"
         android:padding="@dimen/padding_medium"
         android:text="@string/about_gpl"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         tools:context=".AboutActivity" />
 
 </RelativeLayout>
