@@ -23,7 +23,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@color/custom_theme_color"
-        android:listSelector="@layout/listselector_browse"
         android:focusable="true" >
     </ListView>
 
