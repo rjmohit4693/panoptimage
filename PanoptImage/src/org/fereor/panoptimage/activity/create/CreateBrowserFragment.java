@@ -30,7 +30,6 @@ import org.fereor.panoptimage.service.async.RepositoryDirListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -85,13 +84,6 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 	public void onPreDir() {
 		lv.setOnItemClickListener(null);
 		msg.setText(R.string.loading);
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		CreateActivity act = (CreateActivity) activity;
-		act.attachFragment(this);
-		super.onAttach(activity);
 	}
 
 	@Override

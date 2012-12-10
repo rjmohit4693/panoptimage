@@ -82,8 +82,8 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 		// hide loading message
 		msg.setVisibility(View.INVISIBLE);
 		// get content for the list
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,
-				directories);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.listrow_browse,
+				R.id.create_row_message, directories);
 		lv.setAdapter(adapter);
 		lv.setVisibility(View.VISIBLE);
 		// set listener
