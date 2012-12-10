@@ -35,6 +35,7 @@ import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -55,9 +56,10 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	private CreateParam displayParam;
 	/** Current fragment displayed */
 	private CreateFragment<? extends CreateParam> displayFragment;
+
 	/** browser fragment */
-	private CreateBrowserFragment fragment = null;
-	
+	// private CreateBrowserFragment fragment = null;
+
 	// -------------------------------------------------------------------------
 	// Method of Activity interface
 	// -------------------------------------------------------------------------
@@ -79,8 +81,11 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		if (fragment != null) {
-			outState.putString(SAVESTATE_CURRENTPATH, fragment.getSelectedPath());
+		
+		CreateBrowserFragment browseFragment = (CreateBrowserFragment) getSupportFragmentManager().findFragmentById(
+				R.id.browser_fragment);
+		if (browseFragment != null) {
+			outState.putString(SAVESTATE_CURRENTPATH, browseFragment.getSelectedPath());
 		}
 	}
 
@@ -228,7 +233,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		final CreateParam param = displayFragment.readParam();
 
 		// create the browse fragment and put it
-		fragment = new CreateBrowserFragment();
+		CreateBrowserFragment fragment = new CreateBrowserFragment();
 		Bundle data = new Bundle();
 		data.putSerializable(BUNDLE_PARAM, param);
 		fragment.setArguments(data);
@@ -242,9 +247,11 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param v view clicked
 	 */
 	public void doBrowseValidate(View v) {
-		if (fragment != null) {
-			String path = fragment.getSelectedPath();
-			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+		CreateBrowserFragment browseFragment = (CreateBrowserFragment) getSupportFragmentManager().findFragmentById(
+				R.id.browser_fragment);
+		if (browseFragment != null) {
+			String path = browseFragment.getSelectedPath();
+			getSupportFragmentManager().beginTransaction().remove(browseFragment).commit();
 			displayFragment.setPath(path);
 		}
 	}
@@ -255,19 +262,9 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param v view clicked
 	 */
 	public void doBrowseCancel(View v) {
-		if (fragment != null) {
-			getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-		}
-	}
-
-	/**
-	 * Attache the fragment to this activity
-	 * 
-	 * @param f
-	 */
-	public void attachFragment(CreateBrowserFragment f) {
-		if (fragment == null) {
-			fragment = f;
+		Fragment browseFragment = getSupportFragmentManager().findFragmentById(R.id.browser_fragment);
+		if (browseFragment != null) {
+			getSupportFragmentManager().beginTransaction().remove(browseFragment).commit();
 		}
 	}
 
