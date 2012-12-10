@@ -30,6 +30,7 @@ import org.fereor.panoptimage.service.async.RepositoryDirListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -87,15 +88,21 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 	}
 
 	@Override
+	public void onAttach(Activity activity) {
+		CreateActivity act = (CreateActivity) activity;
+		act.attachFragment(this);
+		super.onAttach(activity);
+	}
+
+	@Override
 	public void onPostDir(List<String> rawdir) {
 		// Manage null value (Not Found)
 		if (rawdir == null) {
-			//TODO : bug
 			msg.setText(getActivity().getString(R.string.error_filenotfound, repoBrowser.getformatedPath()));
 		} else {
 			// Include .. to the list
 			ArrayList<String> directories = new ArrayList<String>();
-			if (!repoBrowser.getformatedPath().trim().isEmpty()) {
+			if (!repoBrowser.isRoot()) {
 				directories.add(PanoptesHelper.DDOT);
 			}
 			if (rawdir != null) {
@@ -114,7 +121,7 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 			// Change message
 			msg.setText(repoBrowser.getformatedPath());
 		}
-		
+
 		// set listener
 		lv.setOnItemClickListener(this);
 	}
