@@ -172,12 +172,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 			splashRes = R.drawable.splash_2;
 		} else if (val < 4.0f) {
 			splashRes = R.drawable.splash_3;
-		} else if (val < 5.0f) {
-			splashRes = R.drawable.splash_4;
-		} else if (val < 6.0f) {
-			splashRes = R.drawable.splash_5;
 		} else {
-			splashRes = R.drawable.splash_6;
+			splashRes = R.drawable.splash_4;
 		}
 		handler.post(new Runnable() {
 			@Override

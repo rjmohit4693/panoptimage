@@ -157,7 +157,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doRecycle");
 		final CreateParam param = displayFragment.readParam();
 		// if param key is not set, do not save
-		if (param.getKey() == null || param.getKey().trim().isEmpty())
+		if (param == null || param.getKey() == null || param.getKey().trim().isEmpty())
 			return;
 
 		// call the delete method

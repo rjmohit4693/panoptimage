@@ -32,5 +32,5 @@ public interface PanoptesConstants {
 	// Tag for image intent
 	public static final String MSG_HOME = "org.fereor.panoptes.homeintent";
 	// Number of steps for onProgress loading
-	public static final float ONPROGRESS_STEPS = 7.0f;
+	public static final float ONPROGRESS_STEPS = 5.0f;
 }
