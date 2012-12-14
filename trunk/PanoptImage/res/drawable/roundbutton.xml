@@ -1,4 +1,0 @@
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_roundbutton_pressed" android:state_pressed="true"/> <!-- pressed -->
-    <item android:drawable="@drawable/ic_roundbutton_normal"/> <!-- default -->
-</selector>

@@ -13,7 +13,7 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/back"
         android:onClick="doBack" />
@@ -43,8 +43,8 @@
         android:id="@+id/browse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="false"
         android:layout_alignParentTop="true"
         android:background="@drawable/browse"
         android:onClick="doBrowse" />
@@ -54,8 +54,8 @@
         android:name="org.fereor.panoptimage.activity.image.ImageBrowserFragment"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="false"
         android:layout_alignParentTop="true" />
 
 </RelativeLayout>
