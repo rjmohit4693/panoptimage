@@ -24,7 +24,6 @@ import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.activity.about.AboutActivity;
 import org.fereor.panoptimage.activity.config.ConfigActivity;
 import org.fereor.panoptimage.activity.create.CreateActivity;
-import org.fereor.panoptimage.activity.help.HelpActivity;
 import org.fereor.panoptimage.activity.image.ImageActivity;
 import org.fereor.panoptimage.model.EmptyParam;
 import org.fereor.panoptimage.model.LocalParam;
@@ -142,28 +141,27 @@ public class HomeActivity extends PanoptesActivity {
 	}
 
 	/** Called when the user clicks the Create button */
-	public void showCreate(View view) {
+	public void doBack(View view) {
+		finish();
+	}
+
+	/** Called when the user clicks the Create button */
+	public void doCreate(View view) {
 		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showCreate");
 		Intent intent = new Intent(this, CreateActivity.class);
 		startActivity(intent);
 	}
 
-	/** Called when the user clicks the Help button */
-	public void showHelp(View view) {
-		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showHelp");
-		Intent intent = new Intent(this, HelpActivity.class);
-		startActivity(intent);
-	}
-
+	
 	/** Called when the user clicks the Config button */
-	public void showConfig(View view) {
+	public void doConfig(View view) {
 		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showConfig");
 		Intent intent = new Intent(this, ConfigActivity.class);
 		startActivity(intent);
 	}
 
 	/** Called when the user clicks the About button */
-	public void showAbout(View view) {
+	public void doAbout(View view) {
 		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showAbout");
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
