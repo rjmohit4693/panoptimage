@@ -21,16 +21,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/create"
-        android:onClick="showCreate" />
+        android:onClick="doCreate" />
 
     <Button
-        android:id="@+id/help"
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/help"
-        android:onClick="showHelp" />
+        android:background="@drawable/back"
+        android:onClick="doBack" />
 
     <Button
         android:id="@+id/about"
@@ -39,7 +39,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@drawable/about"
-        android:onClick="showAbout" />
+        android:onClick="doAbout" />
 
     <Button
         android:id="@+id/config"
@@ -48,6 +48,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@drawable/config"
-        android:onClick="showConfig" />
+        android:onClick="doConfig" />
 
 </RelativeLayout>

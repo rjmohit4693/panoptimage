@@ -23,8 +23,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/create_browse_message"
         android:background="@color/custom_theme_color"
-        android:listSelector="@layout/listselector_browse"
-        android:focusable="true" >
+        android:focusable="true"
+        android:listSelector="@layout/listselector_browse" >
     </ListView>
 
     <Button
@@ -34,9 +34,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="false"
-        android:background="@drawable/roundbutton"
+        android:background="@drawable/ok"
         android:onClick="doBrowseValidate"
-        android:text="@string/create_button_ok"
+        android:layout_marginLeft="30dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/custom_text_color" />
 
@@ -47,9 +47,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="false"
         android:layout_alignParentRight="true"
-        android:background="@drawable/roundbutton"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/cancel"
         android:onClick="doBrowseCancel"
-        android:text="@string/create_button_cancel"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/custom_text_color" />
 
