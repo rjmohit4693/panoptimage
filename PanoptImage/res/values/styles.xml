@@ -29,6 +29,7 @@
 
     <style name="CustomSpinnerItem.DropDownItem" parent="@android:style/Widget.DropDownItem.Spinner">
         <item name="android:textColor">@color/custom_text_color</item>
+        <item name="android:spinnerMode">dropdown</item>
     </style>
 
     <style name="CustomTextAppearanceSpinnerItem" parent="android:TextAppearance.Widget.TextView.SpinnerItem">

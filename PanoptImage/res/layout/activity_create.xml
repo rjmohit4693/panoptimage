@@ -36,7 +36,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/back"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:drawSelectorOnTop="true"
+        android:spinnerMode="dropdown" />
 
     <TextView
         android:id="@+id/create_title"
@@ -60,9 +62,9 @@
         android:id="@+id/browser_fragment"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/create_title"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/create_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp" />
 
 </RelativeLayout>
