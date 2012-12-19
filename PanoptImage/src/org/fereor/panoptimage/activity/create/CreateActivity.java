@@ -37,11 +37,11 @@ import org.fereor.panoptimage.util.PanoptesTypeEnum;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 public class CreateActivity extends PanoptesActivity implements OnItemSelectedListener,
@@ -376,9 +376,9 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		Spinner selector = (Spinner) findViewById(R.id.create_selection);
 		selector.setOnItemSelectedListener(this);
 		// populate the spinner with default values
-		List<CharSequence> data = new ArrayList<CharSequence>();
+		List<Pair<CharSequence, PanoptesTypeEnum>> data = new ArrayList<Pair<CharSequence, PanoptesTypeEnum>>();
 		for (PanoptesTypeEnum cur : PanoptesTypeEnum.values()) {
-			data.add(getString(cur.key()));
+			data.add(new Pair<CharSequence, PanoptesTypeEnum>(getString(cur.key()), cur));
 		}
 		try {
 			// extract configs
@@ -390,22 +390,22 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 			// populate the spinner with local values
 			for (CreateParam local : locals) {
 				if (local.getKey() != null) {
-					data.add(local.getKey());
+					data.add(new Pair<CharSequence, PanoptesTypeEnum>(local.getKey(), PanoptesTypeEnum.LOCAL));
 				}
 			}
 			// populate the spinner with webdav values
 			for (CreateParam webdav : webdavs) {
 				if (webdav.getKey() != null) {
-					data.add(webdav.getKey());
+					data.add(new Pair<CharSequence, PanoptesTypeEnum>(webdav.getKey(), PanoptesTypeEnum.WEBDAV));
 				}
 			}
 		} catch (SQLException e) {
 			showErrorMsg(e);
 		}
 
-		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item,
-				data);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// populate the spinner with default values
+		CreateParamsSpinnerAdapter adapter = new CreateParamsSpinnerAdapter(this, data, R.layout.round_spinner_item);
+		adapter.setDropDownViewResource(R.layout.spinner_createparam);
 		// Apply the adapter to the spinner
 		selector.setAdapter(adapter);
 	}
