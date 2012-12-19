@@ -41,12 +41,11 @@
             android:text="@string/create_webdav_protocol"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <EditText
+        <Spinner
             android:id="@+id/create_webdav_protocol_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/create_webdav_protocol_hint" />
+            android:spinnerMode="dropdown" />
     </TableRow>
 
     <TableRow
