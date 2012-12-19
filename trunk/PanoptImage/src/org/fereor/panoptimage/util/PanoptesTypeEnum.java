@@ -31,18 +31,21 @@ public enum PanoptesTypeEnum {
 			R.string.create_new_default,
 			R.layout.fragment_create_empty,
 			R.drawable.ic_empty_storage,
+			R.drawable.ic_empty_storage_xs,
 			EmptyCreateFragment.class),
 	LOCAL(
 			1,
 			R.string.create_new_local,
 			R.layout.fragment_create_local,
 			R.drawable.ic_local_storage,
+			R.drawable.ic_local_storage_xs,
 			LocalCreateFragment.class),
 	WEBDAV(
 			2,
 			R.string.create_new_webdav,
 			R.layout.fragment_create_webdav,
 			R.drawable.ic_webdav_storage,
+			R.drawable.ic_webdav_storage_xs,
 			WebdavCreateFragment.class);
 
 	/** ID (used internally for DB) */
@@ -53,8 +56,11 @@ public enum PanoptesTypeEnum {
 	private int layout;
 	/** ID of icon */
 	private int icon;
+	/** ID of icon extra small */
+	private int iconxs;
 	/** class of fragment to instantiate */
 	private Class<? extends CreateFragment<? extends CreateParam>> fragmentClass;
+
 
 	/**
 	 * Private constructor for the fragments of the Create activity
@@ -65,12 +71,13 @@ public enum PanoptesTypeEnum {
 	 * @param layout ID for the fragment layout
 	 * @param fragmentClass Class for the fragment to create it
 	 */
-	private PanoptesTypeEnum(int id, int spinnerText, int layout, int icon,
+	private PanoptesTypeEnum(int id, int spinnerText, int layout, int icon, int iconxs,
 			Class<? extends CreateFragment<? extends CreateParam>> fragmentClass) {
 		this.id = id;
 		this.key = spinnerText;
 		this.layout = layout;
 		this.icon = icon;
+		this.iconxs = iconxs;
 		this.fragmentClass = fragmentClass;
 	}
 
@@ -108,6 +115,15 @@ public enum PanoptesTypeEnum {
 	 */
 	public int icon() {
 		return icon;
+	}
+
+	/**
+	 * Getter for iconxs ID
+	 * 
+	 * @return iconxs ID
+	 */
+	public int iconxs() {
+		return iconxs;
 	}
 
 	/**

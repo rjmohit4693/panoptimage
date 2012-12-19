@@ -16,6 +16,8 @@
 package org.fereor.panoptimage.activity.create;
 
 import org.fereor.panoptimage.R;
+import org.fereor.panoptimage.dao.repository.WebdavRepositoryDao;
+import org.fereor.panoptimage.dao.repository.WebdavRepositoryDao.Protocols;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.WebdavParam;
 
@@ -25,11 +27,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 	private WebdavParam content;
 	private EditText nameField;
-	private EditText protocolField;
+	private Spinner protocolField;
 	private EditText serverField;
 	private EditText portField;
 	private EditText baseField;
@@ -51,11 +54,16 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// Get fields to update
 		nameField = (EditText) getView().findViewById(R.id.create_webdav_name_value);
-		protocolField = (EditText) getView().findViewById(R.id.create_webdav_protocol_value);
+		protocolField = (Spinner) getView().findViewById(R.id.create_webdav_protocol_value);
 		serverField = (EditText) getView().findViewById(R.id.create_webdav_ip_value);
 		portField = (EditText) getView().findViewById(R.id.create_webdav_port_value);
 		baseField = (EditText) getView().findViewById(R.id.create_webdav_base_value);
 		pathField = (EditText) getView().findViewById(R.id.create_webdav_path_value);
+		// populate the spinner
+		ProtocolSpinnerAdapter adapter = new ProtocolSpinnerAdapter(getActivity(),
+				R.layout.round_spinner_item, Protocols.values());
+		adapter.setDropDownViewResource(R.layout.spinner_protocol);
+		protocolField.setAdapter(adapter);
 		// Mark that the view has been created
 		viewCreated = true;
 		onRefresh();
@@ -77,7 +85,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		if (content != null) {
 			// fill fields
 			nameField.setText(content.getKey());
-			protocolField.setText(content.getProtocol());
+			protocolField.setSelection(WebdavRepositoryDao.Protocols.indexOf(content.getProtocol()));
 			serverField.setText(content.getServer());
 			portField.setText(content.getPort());
 			baseField.setText(content.getBase());
@@ -85,7 +93,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		} else {
 			// reset fields
 			nameField.setText("");
-			protocolField.setText("");
+			protocolField.setSelection(0);
 			serverField.setText("");
 			portField.setText("");
 			baseField.setText("");
@@ -110,7 +118,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			content.setKey(nameField.getText().toString());
 		}
 		// update values
-		content.setProtocol(protocolField.getText().toString());
+		content.setProtocol(protocolField.getSelectedItem().toString());
 		content.setServer(serverField.getText().toString());
 		content.setPort(portField.getText().toString());
 		content.setBase(baseField.getText().toString());
