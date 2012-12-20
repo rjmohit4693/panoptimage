@@ -55,7 +55,7 @@ public class LocalRepositoryDao extends RepositoryLoaderDao<LocalParam> {
 	public List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn)
 			throws PanoptimageFileNotFoundException {
 		// browse directory location
-		String location = PanoptesHelper.formatPath(root, currentPath);
+		String location = PanoptesHelper.formatPath(root, currentPath, PanoptesHelper.SLASH);
 		File locationFile = new File(location);
 		FilenameFilter filter = new RegexpFilenameFilter(regexp);
 		String[] result = locationFile.list(filter);

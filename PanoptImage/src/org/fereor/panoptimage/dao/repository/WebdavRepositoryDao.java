@@ -22,6 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.HttpHost;
 import org.fereor.davdroid.DavDroid;
@@ -91,7 +92,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 		} else {
 			this.root = param.getBase();
 		}
-		if (!param.getPath().endsWith(PanoptesHelper.SLASH)) {
+		if (!param.getPath().isEmpty() && !param.getPath().endsWith(PanoptesHelper.SLASH)) {
 			this.root = this.root + param.getPath() + PanoptesHelper.SLASH;
 		} else {
 			this.root = this.root + param.getPath();
@@ -102,7 +103,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 		if (param.getPort() != null && !param.getPort().isEmpty()) {
 			defaultHttpPort = Integer.parseInt(param.getPort());
 		}
-		HttpHost host = new HttpHost(param.getServer(), defaultHttpPort, param.getProtocol());
+		HttpHost host = new HttpHost(param.getServer(), defaultHttpPort, param.getProtocol().toLowerCase(Locale.FRANCE));
 		// create Webdav link
 		try {
 			dav = DavDroidFactory.init(host, param.getUser(), param.getPwd());
@@ -117,7 +118,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 		try {
 			// prepare request
 			String val = PanoptesHelper.formatPath(root, currentPath);
-			URI uri = new URI(param.getProtocol(), param.getServer(), val, null);
+			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
 			String asciiPath = uri.toASCIIString();
 			if (asciiPath.endsWith(PanoptesHelper.SLASH)) {
 				asciiPath = asciiPath.substring(0, asciiPath.length() - 1);
@@ -129,7 +130,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			Iterator<String> result = dav.dir(asciiPath, regexp);
 			while (result.hasNext()) {
 				// remove base path from Webdav answer
-				URL pathuri = new URL(param.getProtocol(), param.getServer(), result.next());
+				URL pathuri = new URL(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), result.next());
 				String path = pathuri.toString();
 				ret.add(PanoptesHelper.decodeUrl(path.substring(len + 1)));
 			}
@@ -155,7 +156,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 					PanoptesConstants.ONPROGRESS_STEPS);
 			// prepare request
 			String val = PanoptesHelper.formatPath(root, currentPath, PanoptesHelper.SLASH, location);
-			URI uri = new URI(param.getProtocol(), param.getServer(), val, null);
+			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
 			String path = uri.toASCIIString();
 			return dav.get(path, true, plsn);
 		} catch (IOException e) {
@@ -170,7 +171,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 		try {
 			String val = PanoptesHelper.formatPath(root, currentPath, path);
 			// prepare request
-			URI uri = new URI(param.getProtocol(), param.getServer(), val, null);
+			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
 			return dav.head(uri.toASCIIString());
 		} catch (IOException e) {
 			return false;

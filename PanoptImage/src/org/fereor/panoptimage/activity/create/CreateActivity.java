@@ -200,7 +200,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	public void doTestServer(View v) {
 		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doTestServer");
 		final CreateParam param = displayFragment.readParam();
-		if (param.getKey() == null || param.getKey().trim().isEmpty())
+		if (param == null || param.getKey() == null || param.getKey().trim().isEmpty())
 			return;
 
 		// Test network availability
