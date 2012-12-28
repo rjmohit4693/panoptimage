@@ -174,4 +174,10 @@ public class ConfigActivity extends PanoptesActivity {
 		});
 	}
 
+	@Override
+	protected void displayTooltips() {
+		showTooltip(R.id.tooltip_save);
+		showTooltip(R.id.tooltip_back);
+	}
+
 }

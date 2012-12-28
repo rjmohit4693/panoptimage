@@ -70,4 +70,10 @@ public class EmptyCreateFragment extends CreateFragment<EmptyParam> {
 		// do nothing
 		return;
 	}
+
+	@Override
+	protected void displayTooltips() {
+		// do nothing
+		return;
+	}
 }

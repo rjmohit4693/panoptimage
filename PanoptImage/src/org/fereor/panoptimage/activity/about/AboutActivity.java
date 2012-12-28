@@ -16,13 +16,13 @@
 package org.fereor.panoptimage.activity.about;
 
 import org.fereor.panoptimage.R;
+import org.fereor.panoptimage.activity.PanoptesActivity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends PanoptesActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,11 @@ public class AboutActivity extends Activity {
 
 	public void doBack(View view) {
 		finish();
+	}
+
+	@Override
+	protected void displayTooltips() {
+		showTooltip(R.id.tooltip_back);  
 	}
 
 }

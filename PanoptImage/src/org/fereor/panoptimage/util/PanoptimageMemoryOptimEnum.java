@@ -23,19 +23,24 @@ public enum PanoptimageMemoryOptimEnum {
 	 */
 	Auto(
 			1,
-			R.string.param_memory_auto),
+			R.string.param_memory_auto,
+			R.drawable.ic_auto),
 	Level_2(
 			2,
-			R.string.param_memory_2),
+			R.string.param_memory_2,
+			R.drawable.ic_level2),
 	Level_4(
 			4,
-			R.string.param_memory_4),
+			R.string.param_memory_4,
+			R.drawable.ic_level4),
 	Level_8(
 			8,
-			R.string.param_memory_8),
+			R.string.param_memory_8,
+			R.drawable.ic_level8),
 	Level_16(
 			16,
-			R.string.param_memory_16);
+			R.string.param_memory_16,
+			R.drawable.ic_max);
 
 	/**
 	 * Find the position of an item matching the value
@@ -56,15 +61,18 @@ public enum PanoptimageMemoryOptimEnum {
 	private int key;
 	/** text to display */
 	private int text;
+	/** icon to display */
+	private int ic;
 
 	/**
 	 * Default constructor
 	 * 
 	 * @param key
 	 */
-	private PanoptimageMemoryOptimEnum(int key, int text) {
+	private PanoptimageMemoryOptimEnum(int key, int text, int icon) {
 		this.setKey(key);
 		this.setText(text);
+		this.setIc(icon);
 	}
 
 	/**
@@ -94,4 +102,19 @@ public enum PanoptimageMemoryOptimEnum {
 	private void setText(int text) {
 		this.text = text;
 	}
+
+	/**
+	 * @param text the text to set
+	 */
+	private void setIc(int ic) {
+		this.ic = ic;
+	}
+
+	/**
+	 * @return the text
+	 */
+	public int ic() {
+		return ic;
+	}
+
 }

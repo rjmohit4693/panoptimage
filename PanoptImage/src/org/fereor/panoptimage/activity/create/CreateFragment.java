@@ -15,9 +15,12 @@
 
 package org.fereor.panoptimage.activity.create;
 
+import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.model.CreateParam;
 
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.TextView;
 
 public abstract class CreateFragment<T extends CreateParam> extends Fragment {
 	/**
@@ -43,6 +46,7 @@ public abstract class CreateFragment<T extends CreateParam> extends Fragment {
 
 	/**
 	 * Sets the path selected
+	 * 
 	 * @param path path to set
 	 */
 	public abstract void setPath(String path);
@@ -61,7 +65,29 @@ public abstract class CreateFragment<T extends CreateParam> extends Fragment {
 
 	/**
 	 * Set the status of the key field
+	 * 
 	 * @param status
 	 */
 	public abstract void setKeyEditable(boolean status);
+	
+	/**
+	 * Display tooltips for the panel
+	 * @param visible
+	 */
+	protected abstract void displayTooltips();
+	
+	/**
+	 * Show tooltips displayed
+	 */
+	protected void showTooltip(int tid) {
+		PanoptesActivity a = (PanoptesActivity) getActivity();
+		if (a == null)
+			return;
+		TextView txt;
+		// Identify texts to display
+		txt = (TextView) a.findViewById(tid);
+		txt.setTypeface(a.getTooltipFont());
+		txt.setVisibility(a.isTooltipVisible() ? View.VISIBLE : View.INVISIBLE);
+	}
+
 }

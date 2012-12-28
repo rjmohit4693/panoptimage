@@ -99,6 +99,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			baseField.setText("");
 			pathField.setText("");
 		}
+		displayTooltips();
 	}
 
 	@Override
@@ -146,5 +147,10 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			nameField.setFocusableInTouchMode(status);
 		}
 	}
-
+	
+	@Override
+	protected void displayTooltips() {
+		showTooltip(R.id.tooltip_test);  
+		showTooltip(R.id.tooltip_browse);  
+	}
 }
