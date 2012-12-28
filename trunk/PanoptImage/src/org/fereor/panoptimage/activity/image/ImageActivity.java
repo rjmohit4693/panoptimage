@@ -116,6 +116,14 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		getMenuInflater().inflate(R.menu.activity_image, menu);
 		return true;
 	}
+	
+	@Override
+	protected void displayTooltips() {
+		showTooltip(R.id.tooltip_browse);  
+		showTooltip(R.id.tooltip_back);  
+		showTooltip(R.id.tooltip_rotate_clockwise);  
+		showTooltip(R.id.tooltip_rotate_counterclockwise);		
+	}
 
 	// -------------------------------------------------------------------------
 	// Methods for Dir listener

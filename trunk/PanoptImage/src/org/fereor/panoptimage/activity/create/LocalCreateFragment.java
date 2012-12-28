@@ -75,6 +75,12 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 			pathField.setText("");
 			setKeyEditable(true);
 		}
+		displayTooltips();
+	}
+
+	@Override
+	protected void displayTooltips() {
+		showTooltip(R.id.tooltip_browse);  
 	}
 
 	@Override

@@ -96,6 +96,7 @@ public class HomeActivity extends PanoptesActivity {
 				showErrorMsg(e);
 			}
 		}
+
 		super.onResume();
 	}
 
@@ -103,6 +104,15 @@ public class HomeActivity extends PanoptesActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_home, menu);
 		return true;
+	}
+
+	@Override
+	protected void displayTooltips() {
+		showTooltip(R.id.tooltip_create);
+		showTooltip(R.id.tooltip_about);
+		showTooltip(R.id.tooltip_back);
+		showTooltip(R.id.tooltip_config);
+		showTooltip(R.id.tooltip_slide);
 	}
 
 	// -------------------------------------------------------------------------
@@ -152,7 +162,6 @@ public class HomeActivity extends PanoptesActivity {
 		startActivity(intent);
 	}
 
-	
 	/** Called when the user clicks the Config button */
 	public void doConfig(View view) {
 		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showConfig");

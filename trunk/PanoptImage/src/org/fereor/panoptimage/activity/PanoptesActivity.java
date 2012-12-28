@@ -15,16 +15,23 @@
 
 package org.fereor.panoptimage.activity;
 
+import java.sql.SQLException;
+
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.dao.db.DatabaseHelper;
 import org.fereor.panoptimage.dao.db.DatabaseStatus;
+import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.util.PanoptesConstants;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -38,6 +45,10 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	protected long webdavRead = 0;
 	/** date of LocalParam table read */
 	protected long localRead = 0;
+	/** font for tooltips */
+	protected Typeface tooltipfont;
+	/** tooltip visibility */
+	protected boolean tooltipvisible = false;
 
 	// -------------------------------------------------------------------------
 	// Methods for DB access
@@ -52,6 +63,27 @@ public abstract class PanoptesActivity extends FragmentActivity {
 			databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
 		}
 		return databaseHelper;
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		tooltipfont = Typeface.createFromAsset(getAssets(), "hansa.ttf");
+	}
+
+	@Override
+	protected void onResume() {
+		Config data;
+		try {
+			data = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
+			tooltipvisible = data.isShowtip();
+			displayTooltips();
+		} catch (SQLException e) {
+			// config not available, hide tooltips
+			tooltipvisible = false;
+			displayTooltips();
+		}
+		super.onResume();
 	}
 
 	@Override
@@ -74,6 +106,22 @@ public abstract class PanoptesActivity extends FragmentActivity {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		return networkInfo != null && networkInfo.isConnected();
+	}
+
+	/**
+	 * Show tooltips
+	 */
+	protected abstract void displayTooltips();
+
+	/**
+	 * Show tooltips displayed
+	 */
+	protected void showTooltip(int tid) {
+		TextView txt;
+		// Identify texts to display
+		txt = (TextView) findViewById(tid);
+		txt.setTypeface(tooltipfont);
+		txt.setVisibility(tooltipvisible ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	// -------------------------------------------------------------------------
@@ -101,6 +149,24 @@ public abstract class PanoptesActivity extends FragmentActivity {
 
 	protected boolean isLocalParamUptodate() {
 		return localRead > DatabaseStatus.getInstance().getLocalUpdated();
+	}
+
+	/**
+	 * Get tooltip font
+	 * 
+	 * @return
+	 */
+	public Typeface getTooltipFont() {
+		return tooltipfont;
+	}
+
+	/**
+	 * Get tooltip visibility
+	 * 
+	 * @return
+	 */
+	public boolean isTooltipVisible() {
+		return tooltipvisible;
 	}
 
 	// -------------------------------------------------------------------------

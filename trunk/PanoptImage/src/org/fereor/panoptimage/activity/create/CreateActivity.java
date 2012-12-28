@@ -88,6 +88,13 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 			outState.putString(SAVESTATE_CURRENTPATH, browseFragment.getSelectedPath());
 		}
 	}
+	
+	@Override
+	protected void displayTooltips() {
+		showTooltip(R.id.tooltip_back);  
+		showTooltip(R.id.tooltip_save);  
+		showTooltip(R.id.tooltip_recycle);  
+	}
 
 	// -------------------------------------------------------------------------
 	// Methods for Action buttons
