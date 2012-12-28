@@ -23,6 +23,7 @@
             android:id="@+id/create_local_name_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:ems="10"
             android:hint="@string/create_local_name_hint" />
     </TableRow>
@@ -45,6 +46,7 @@
             android:id="@+id/create_local_path_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:ems="10"
             android:hint="@string/create_local_path_hint" />
 
@@ -54,6 +56,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ellipsis"
             android:onClick="doBrowse" />
+
+        <TextView
+            android:id="@+id/tooltip_browse"
+            android:gravity="left"
+            android:text="@string/tooltip_create_browse"
+            android:textSize="30sp"
+            android:visibility="invisible" />
     </TableRow>
 
 </TableLayout>

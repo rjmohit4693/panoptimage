@@ -87,4 +87,15 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         tools:context=".AboutActivity" />
 
+    <TextView
+        android:id="@+id/tooltip_back"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/back"
+        android:layout_toLeftOf="@+id/back"
+        android:gravity="right"
+        android:text="@string/tooltip_about_back"
+        android:textSize="30sp"
+        android:visibility="invisible" />
+
 </RelativeLayout>

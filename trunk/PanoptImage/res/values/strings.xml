@@ -103,4 +103,23 @@
     <string name="about12">To get the sources of the program, visit</string>
     <string name="about_source">http://code.google.com/p/panoptimage/</string>
 
+    <!-- Tooltip messages -->
+    <string name="tooltip_home_create">Click here to create new links</string>
+    <string name="tooltip_home_back">Close application here</string>
+    <string name="tooltip_home_about">Licence information</string>
+    <string name="tooltip_home_config">Click here for configuration</string>
+    <string name="tooltip_home_slide">Slide left or right to display links</string>
+    <string name="tooltip_config_back">Close (discard changes)</string>
+    <string name="tooltip_config_save">Save configuration changes</string>
+    <string name="tooltip_create_back">Close (discard changes)</string>
+    <string name="tooltip_create_recycle">Delete selected link</string>
+    <string name="tooltip_create_save">Save link</string>
+    <string name="tooltip_create_test">Test server</string>
+    <string name="tooltip_create_browse">Browse repository</string>
+    <string name="tooltip_about_back">Close panel</string>
+    <string name="tooltip_image_back">Close panel</string>
+    <string name="tooltip_image_browse">Click here to browse directories</string>
+    <string name="tooltip_image_rotate_clockwise">Rotate image clockwise</string>
+    <string name="tooltip_image_rotate_counterclockwise">Rotate image counter-clockwise</string>
+
 </resources>

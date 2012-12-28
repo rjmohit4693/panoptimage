@@ -23,6 +23,7 @@
             android:id="@+id/create_webdav_name_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:hint="@string/create_webdav_name_hint" />
     </TableRow>
 
@@ -43,6 +44,7 @@
             android:id="@+id/create_webdav_protocol_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/spinner_selector"
             android:spinnerMode="dropdown" />
     </TableRow>
 
@@ -63,6 +65,7 @@
             android:id="@+id/create_webdav_ip_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:hint="@string/create_webdav_ip_hint" />
     </TableRow>
 
@@ -83,6 +86,7 @@
             android:id="@+id/create_webdav_port_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:hint="@string/create_webdav_port_hint"
             android:inputType="number" />
     </TableRow>
@@ -104,6 +108,7 @@
             android:id="@+id/create_webdav_user_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:hint="@string/create_webdav_user_hint"
             android:inputType="number" />
     </TableRow>
@@ -125,6 +130,7 @@
             android:id="@+id/create_webdav_pwd_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:hint="@string/create_webdav_pwd_hint"
             android:inputType="number" />
     </TableRow>
@@ -146,6 +152,7 @@
             android:id="@+id/create_webdav_base_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:hint="@string/create_webdav_base_hint" />
 
         <Button
@@ -154,6 +161,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/test"
             android:onClick="doTestServer" />
+
+        <TextView
+            android:id="@+id/tooltip_test"
+            android:gravity="left"
+            android:text="@string/tooltip_create_test"
+            android:textSize="30sp"
+            android:visibility="invisible" />
     </TableRow>
 
     <TableRow
@@ -173,6 +187,7 @@
             android:id="@+id/create_webdav_path_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ic_textview"
             android:hint="@string/create_webdav_path_hint" />
 
         <Button
@@ -181,6 +196,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ellipsis"
             android:onClick="doBrowse" />
+
+        <TextView
+            android:id="@+id/tooltip_browse"
+            android:gravity="left"
+            android:text="@string/tooltip_create_browse"
+            android:textSize="30sp"
+            android:visibility="invisible" />
     </TableRow>
 
 </TableLayout>
