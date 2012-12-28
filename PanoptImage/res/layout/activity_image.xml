@@ -58,4 +58,48 @@
         android:layout_alignParentRight="false"
         android:layout_alignParentTop="true" />
 
+    <TextView
+        android:id="@+id/tooltip_back"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/back"
+        android:layout_toLeftOf="@+id/back"
+        android:gravity="right"
+        android:text="@string/tooltip_image_back"
+        android:textSize="30sp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tooltip_browse"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/browse"
+        android:layout_toRightOf="@+id/browse"
+        android:gravity="right"
+        android:text="@string/tooltip_image_browse"
+        android:textSize="30sp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tooltip_rotate_clockwise"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/image_clockwise"
+        android:layout_toRightOf="@+id/image_clockwise"
+        android:gravity="right"
+        android:text="@string/tooltip_image_rotate_clockwise"
+        android:textSize="30sp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/tooltip_rotate_counterclockwise"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/image_counterclockwise"
+        android:layout_toLeftOf="@+id/image_counterclockwise"
+        android:gravity="right"
+        android:text="@string/tooltip_image_rotate_counterclockwise"
+        android:textSize="30sp"
+        android:visibility="invisible" />
+
 </RelativeLayout>
