@@ -49,7 +49,6 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 
 	@Override
 	protected void onProgressUpdate(Long... values) {
-		// TODO Auto-generated method stub
 		super.onProgressUpdate(values);
 		if (listener != null && listener.get() != null)
 			listener.get().onGetProgressUpdate(values);
@@ -57,7 +56,6 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 
 	@Override
 	protected void onCancelled() {
-		// TODO Auto-generated method stub
 		super.onCancelled();
 	}
 

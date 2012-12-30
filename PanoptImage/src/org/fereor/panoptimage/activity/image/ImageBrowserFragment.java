@@ -92,8 +92,7 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 
 	@Override
 	public void onDirProgressUpdate(Long... values) {
-		// TODO Auto-generated method stub
-
+		// Do nothing
 	}
 
 	/**

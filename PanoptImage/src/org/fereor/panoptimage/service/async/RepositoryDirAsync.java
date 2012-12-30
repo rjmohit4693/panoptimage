@@ -49,7 +49,6 @@ public class RepositoryDirAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 
 	@Override
 	protected void onCancelled() {
-		// TODO Auto-generated method stub
 		super.onCancelled();
 	}
 
@@ -65,7 +64,6 @@ public class RepositoryDirAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 
 	@Override
 	protected void onProgressUpdate(Long... values) {
-		// TODO Auto-generated method stub
 		super.onProgressUpdate(values);
 		listener.onDirProgressUpdate(values[0]);
 	}

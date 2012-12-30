@@ -81,11 +81,7 @@ public abstract class RepositoryLoaderDao<T> {
 		// test param values
 		if (path == null || path.length() == 0) {
 			return;
-		} // else if (!isDirectory(path)) {
-			// try to access to current path
-			// throw new PanoptimageFileNotFoundException(path);
-		// }
-		else if (PanoptesHelper.DOT.equals(path.trim())) {
+		} else if (PanoptesHelper.DOT.equals(path.trim())) {
 			// test param values
 			return;
 		} else if (PanoptesHelper.DDOT.equals(path.trim()) && currentPath.size() != 0) {
@@ -111,12 +107,13 @@ public abstract class RepositoryLoaderDao<T> {
 	public String getformatedPath() {
 		return PanoptesHelper.formatPath(currentPath);
 	}
-	
+
 	/**
 	 * Returns true if the path is root
+	 * 
 	 * @return
 	 */
-	public boolean isRoot(){
+	public boolean isRoot() {
 		return currentPath.size() == 0;
 	}
 
