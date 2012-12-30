@@ -42,7 +42,6 @@ public class RepositoryExistsAsync extends AsyncTask<RepositoryLoaderDao<?>, Int
 
 	@Override
 	protected void onCancelled() {
-		// TODO Auto-generated method stub
 		super.onCancelled();
 	}
 
@@ -58,7 +57,6 @@ public class RepositoryExistsAsync extends AsyncTask<RepositoryLoaderDao<?>, Int
 
 	@Override
 	protected void onProgressUpdate(Integer... values) {
-		// TODO Auto-generated method stub
 		super.onProgressUpdate(values);
 		listener.onExistsProgressUpdate(values[0]);
 	}

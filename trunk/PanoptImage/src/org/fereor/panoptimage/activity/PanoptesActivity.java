@@ -76,7 +76,11 @@ public abstract class PanoptesActivity extends FragmentActivity {
 		Config data;
 		try {
 			data = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
-			tooltipvisible = data.isShowtip();
+			if (data != null) {
+				tooltipvisible = data.isShowtip();
+			} else {
+				tooltipvisible = false;
+			}
 			displayTooltips();
 		} catch (SQLException e) {
 			// config not available, hide tooltips

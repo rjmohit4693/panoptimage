@@ -57,9 +57,6 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	/** Current fragment displayed */
 	private CreateFragment<? extends CreateParam> displayFragment;
 
-	/** browser fragment */
-	// private CreateBrowserFragment fragment = null;
-
 	// -------------------------------------------------------------------------
 	// Method of Activity interface
 	// -------------------------------------------------------------------------
