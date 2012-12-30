@@ -49,6 +49,7 @@ public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavRepositoryDao.Pro
 		WebdavRepositoryDao.Protocols item = getItem(position);
 		v.setText(item.toString());
 		v.setCompoundDrawablesWithIntrinsicBounds(item.icon(), 0, 0, 0);
+		v.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
 		return v;
 	}
 
@@ -68,6 +69,7 @@ public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavRepositoryDao.Pro
 			TextView text = (TextView) row.findViewById(R.id.spinner_row_text);
 			text.setText(item.toString());
 			text.setCompoundDrawablesWithIntrinsicBounds(item.icon(), 0, 0, 0);
+			text.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
 		}
 
 		return row;
