@@ -68,7 +68,7 @@
         android:layout_toRightOf="@+id/browse"
         android:gravity="left"
         android:text="@string/tooltip_image_browse"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <TextView
@@ -79,7 +79,7 @@
         android:layout_toRightOf="@+id/image_clockwise"
         android:gravity="left"
         android:text="@string/tooltip_image_rotate_clockwise"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <TextView
@@ -90,13 +90,13 @@
         android:layout_toLeftOf="@+id/image_counterclockwise"
         android:gravity="right"
         android:text="@string/tooltip_image_rotate_counterclockwise"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <fragment
         android:id="@+id/browser_fragment"
         android:name="org.fereor.panoptimage.activity.image.ImageBrowserFragment"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/image_browse"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="false"

@@ -29,8 +29,7 @@
         android:layout_alignBottom="@+id/back"
         android:layout_centerHorizontal="true"
         android:text="@string/param_title"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="40sp" />
+        android:textSize="@dimen/titlesize" />
 
     <TextView
         android:id="@+id/param_showtip"
@@ -40,7 +39,7 @@
         android:layout_marginTop="60dp"
         android:layout_toLeftOf="@+id/param_center"
         android:text="@string/param_showtip"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <CheckBox
         android:id="@+id/param_showtip_value"
@@ -66,7 +65,7 @@
         android:layout_below="@+id/param_showtip"
         android:layout_marginTop="29dp"
         android:text="@string/param_memory_optim"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize"  />
 
     <Spinner
         android:id="@+id/param_memory_optim_value"
@@ -80,24 +79,24 @@
 
     <TextView
         android:id="@+id/tooltip_back"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_below="@+id/back"
         android:layout_toLeftOf="@+id/back"
         android:gravity="right"
         android:text="@string/tooltip_config_back"
-        android:textSize="30sp"
+        android:textSize="@dimen/textsize" 
         android:visibility="invisible" />
 
     <TextView
         android:id="@+id/tooltip_save"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_above="@+id/save"
         android:layout_toRightOf="@+id/save"
         android:gravity="left"
         android:text="@string/tooltip_config_save"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize" 
         android:visibility="invisible" />
 
 </RelativeLayout>

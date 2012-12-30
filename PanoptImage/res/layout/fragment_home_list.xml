@@ -23,6 +23,6 @@
         android:layout_centerHorizontal="true"
         android:padding="@dimen/padding_medium"
         android:text="@string/message"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/titlesize" />
 
 </RelativeLayout>
