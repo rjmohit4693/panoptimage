@@ -44,6 +44,7 @@ public class MemoryOptimSpinnerAdapter extends ArrayAdapter<PanoptimageMemoryOpt
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TextView v = (TextView) super.getView(position, convertView, parent);
 		v.setText(getContext().getString(PanoptimageMemoryOptimEnum.values()[position].text()));
+		v.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
 		return v;
 	}
 
@@ -63,6 +64,7 @@ public class MemoryOptimSpinnerAdapter extends ArrayAdapter<PanoptimageMemoryOpt
 			TextView text = (TextView) row.findViewById(R.id.spinner_row_text);
 			text.setText(item.text());
 			text.setCompoundDrawablesWithIntrinsicBounds(item.ic(), 0, 0, 0);
+			text.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
 		}
 
 		return row;

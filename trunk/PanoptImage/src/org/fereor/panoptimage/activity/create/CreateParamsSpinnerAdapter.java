@@ -51,6 +51,7 @@ public class CreateParamsSpinnerAdapter extends ArrayAdapter<Pair<CharSequence, 
 		TextView v = (TextView) super.getView(position, convertView, parent);
 		v.setText(getItem(position).first);
 		v.setCompoundDrawablesWithIntrinsicBounds(getItem(position).second.iconxs(), 0, 0, 0);
+		v.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
 		return v;
 	}
 
@@ -70,6 +71,7 @@ public class CreateParamsSpinnerAdapter extends ArrayAdapter<Pair<CharSequence, 
 			TextView text = (TextView) row.findViewById(R.id.spinner_row_text);
 			text.setText(item.first);
 			text.setCompoundDrawablesWithIntrinsicBounds(item.second.iconxs(), 0, 0, 0);
+			text.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
 		}
 
 		return row;
