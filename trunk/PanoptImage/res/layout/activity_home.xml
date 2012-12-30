@@ -52,58 +52,58 @@
 
     <TextView
         android:id="@+id/tooltip_create"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_below="@+id/create"
         android:layout_toRightOf="@+id/create"
         android:gravity="left"
         android:text="@string/tooltip_home_create"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <TextView
         android:id="@+id/tooltip_back"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_below="@+id/back"
         android:layout_toLeftOf="@+id/back"
         android:gravity="right"
         android:text="@string/tooltip_home_back"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <TextView
         android:id="@+id/tooltip_slide"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_above="@+id/config"
         android:layout_centerHorizontal="true"
         android:gravity="right"
         android:drawableTop="@drawable/ic_arrow_rl"
         android:text="@string/tooltip_home_slide"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <TextView
         android:id="@+id/tooltip_about"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_above="@+id/about"
         android:layout_toLeftOf="@+id/about"
         android:gravity="right"
         android:text="@string/tooltip_home_about"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <TextView
         android:id="@+id/tooltip_config"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_above="@+id/config"
         android:layout_toRightOf="@+id/config"
         android:gravity="left"
         android:text="@string/tooltip_home_config"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
 </RelativeLayout>

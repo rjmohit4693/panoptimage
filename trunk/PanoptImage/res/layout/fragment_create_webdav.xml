@@ -14,16 +14,17 @@
         android:paddingBottom="10dp"
         android:paddingRight="10dp"
         android:text="@string/create_webdav_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <EditText
         android:id="@+id/create_webdav_name_value"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
         android:layout_below="@+id/webdav"
         android:layout_centerHorizontal="true"
         android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_name_hint" />
+        android:hint="@string/create_webdav_name_hint"
+        android:textSize="@dimen/editsize" />
 
     <TextView
         android:id="@+id/create_webdav_protocol"
@@ -34,16 +35,17 @@
         android:layout_toLeftOf="@+id/create_webdav_protocol_value"
         android:paddingRight="10dp"
         android:text="@string/create_webdav_protocol"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <Spinner
         android:id="@+id/create_webdav_protocol_value"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/create_webdav_name_value"
         android:layout_below="@+id/create_webdav_name_value"
         android:background="@drawable/spinner_selector"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:textSize="@dimen/editsize" />
 
     <TextView
         android:id="@+id/create_webdav_ip"
@@ -54,16 +56,17 @@
         android:layout_toLeftOf="@+id/create_webdav_ip_value"
         android:paddingRight="10dp"
         android:text="@string/create_webdav_ip"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <EditText
         android:id="@+id/create_webdav_ip_value"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/create_webdav_protocol_value"
         android:layout_below="@+id/create_webdav_protocol_value"
         android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_ip_hint" />
+        android:hint="@string/create_webdav_ip_hint"
+        android:textSize="@dimen/editsize" />
 
     <TextView
         android:id="@+id/create_webdav_port"
@@ -74,17 +77,18 @@
         android:layout_toLeftOf="@+id/create_webdav_port_value"
         android:paddingRight="10dp"
         android:text="@string/create_webdav_port"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <EditText
         android:id="@+id/create_webdav_port_value"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/create_webdav_ip_value"
         android:layout_below="@+id/create_webdav_ip_value"
         android:background="@drawable/ic_textview"
         android:hint="@string/create_webdav_port_hint"
-        android:inputType="number" />
+        android:inputType="number"
+        android:textSize="@dimen/editsize" />
 
     <TextView
         android:id="@+id/create_webdav_user"
@@ -95,17 +99,18 @@
         android:layout_toLeftOf="@+id/create_webdav_user_value"
         android:paddingRight="10dp"
         android:text="@string/create_webdav_user"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <EditText
         android:id="@+id/create_webdav_user_value"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/create_webdav_port_value"
         android:layout_below="@+id/create_webdav_port_value"
         android:background="@drawable/ic_textview"
         android:hint="@string/create_webdav_user_hint"
-        android:inputType="number" />
+        android:inputType="number"
+        android:textSize="@dimen/editsize" />
 
     <TextView
         android:id="@+id/create_webdav_pwd"
@@ -116,17 +121,18 @@
         android:layout_toLeftOf="@+id/create_webdav_pwd_value"
         android:paddingRight="10dp"
         android:text="@string/create_webdav_pwd"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <EditText
         android:id="@+id/create_webdav_pwd_value"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/create_webdav_user_value"
         android:layout_below="@+id/create_webdav_user_value"
         android:background="@drawable/ic_textview"
         android:hint="@string/create_webdav_pwd_hint"
-        android:inputType="number" />
+        android:inputType="number"
+        android:textSize="@dimen/editsize" />
 
     <TextView
         android:id="@+id/create_webdav_base"
@@ -137,16 +143,17 @@
         android:layout_toLeftOf="@+id/create_webdav_base_value"
         android:paddingRight="10dp"
         android:text="@string/create_webdav_base"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <EditText
         android:id="@+id/create_webdav_base_value"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/create_webdav_pwd_value"
         android:layout_below="@+id/create_webdav_pwd_value"
         android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_base_hint" />
+        android:hint="@string/create_webdav_base_hint"
+        android:textSize="@dimen/editsize" />
 
     <Button
         android:id="@+id/create_webdav_test"
@@ -167,7 +174,7 @@
         android:layout_toRightOf="@+id/create_webdav_test"
         android:gravity="left"
         android:text="@string/tooltip_create_test"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <TextView
@@ -179,17 +186,18 @@
         android:layout_toLeftOf="@+id/create_webdav_path_value"
         android:paddingRight="10dp"
         android:text="@string/create_webdav_path"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <EditText
         android:id="@+id/create_webdav_path_value"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/create_webdav_base_value"
         android:layout_below="@+id/create_webdav_base_value"
         android:background="@drawable/ic_textview"
         android:hint="@string/create_webdav_path_hint"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textSize="@dimen/editsize" />
 
     <Button
         android:id="@+id/create_webdav_browse"
@@ -210,7 +218,7 @@
         android:layout_toRightOf="@+id/create_webdav_browse"
         android:gravity="left"
         android:text="@string/tooltip_create_browse"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
 </RelativeLayout>

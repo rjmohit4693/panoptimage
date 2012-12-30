@@ -11,7 +11,7 @@
         android:layout_below="@+id/local"
         android:layout_centerHorizontal="true"
         android:text="@string/create_empty_text1"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <TextView
         android:id="@+id/empty_text2"
@@ -21,6 +21,6 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
         android:text="@string/create_empty_text2"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
 </RelativeLayout>
