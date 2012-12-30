@@ -51,6 +51,7 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 		// Mark that the view has been created
 		viewCreated = true;
 		onRefresh();
+		displayTooltips();
 	}
 
 	@Override
@@ -75,12 +76,11 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 			pathField.setText("");
 			setKeyEditable(true);
 		}
-		displayTooltips();
 	}
 
 	@Override
 	protected void displayTooltips() {
-		showTooltip(R.id.tooltip_browse);  
+		showTooltip(R.id.tooltip_browse, R.id.create_local_browse);
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 		// do nothing (no data to save in this fragment
 		return nameField.getText().toString();
 	}
-	
+
 	@Override
 	public void setPath(String path) {
 		pathField.setText(path);
