@@ -81,19 +81,19 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		
+
 		CreateBrowserFragment browseFragment = (CreateBrowserFragment) getSupportFragmentManager().findFragmentById(
 				R.id.browser_fragment);
 		if (browseFragment != null) {
 			outState.putString(SAVESTATE_CURRENTPATH, browseFragment.getSelectedPath());
 		}
 	}
-	
+
 	@Override
 	protected void displayTooltips() {
-		showTooltip(R.id.tooltip_back);  
-		showTooltip(R.id.tooltip_save);  
-		showTooltip(R.id.tooltip_recycle);  
+		showTooltip(R.id.tooltip_back);
+		showTooltip(R.id.tooltip_save);
+		showTooltip(R.id.tooltip_recycle);
 	}
 
 	// -------------------------------------------------------------------------

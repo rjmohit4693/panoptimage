@@ -69,25 +69,25 @@ public abstract class CreateFragment<T extends CreateParam> extends Fragment {
 	 * @param status
 	 */
 	public abstract void setKeyEditable(boolean status);
-	
+
 	/**
 	 * Display tooltips for the panel
+	 * 
 	 * @param visible
 	 */
 	protected abstract void displayTooltips();
-	
+
 	/**
 	 * Show tooltips displayed
 	 */
-	protected void showTooltip(int tid) {
+	protected void showTooltip(int tooltipid, int baseline) {
 		PanoptesActivity a = (PanoptesActivity) getActivity();
 		if (a == null)
 			return;
+		// Identify tooltip to display
 		TextView txt;
-		// Identify texts to display
-		txt = (TextView) a.findViewById(tid);
+		txt = (TextView) a.findViewById(tooltipid);
 		txt.setTypeface(a.getTooltipFont());
 		txt.setVisibility(a.isTooltipVisible() ? View.VISIBLE : View.INVISIBLE);
 	}
-
 }

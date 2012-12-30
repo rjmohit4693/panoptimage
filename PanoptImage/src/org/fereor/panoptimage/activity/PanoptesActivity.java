@@ -124,6 +124,16 @@ public abstract class PanoptesActivity extends FragmentActivity {
 		txt.setVisibility(tooltipvisible ? View.VISIBLE : View.INVISIBLE);
 	}
 
+	/**
+	 * Hide tooltips displayed
+	 */
+	protected void hideTooltip(int tid) {
+		TextView txt;
+		// Identify texts to display
+		txt = (TextView) findViewById(tid);
+		txt.setVisibility(View.INVISIBLE);
+	}
+
 	// -------------------------------------------------------------------------
 	// Methods for Database status
 	// -------------------------------------------------------------------------

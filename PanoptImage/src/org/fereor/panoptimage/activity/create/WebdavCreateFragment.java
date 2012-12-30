@@ -60,19 +60,25 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		baseField = (EditText) getView().findViewById(R.id.create_webdav_base_value);
 		pathField = (EditText) getView().findViewById(R.id.create_webdav_path_value);
 		// populate the spinner
-		ProtocolSpinnerAdapter adapter = new ProtocolSpinnerAdapter(getActivity(),
-				R.layout.round_spinner_item, Protocols.values());
+		ProtocolSpinnerAdapter adapter = new ProtocolSpinnerAdapter(getActivity(), R.layout.round_spinner_item,
+				Protocols.values());
 		adapter.setDropDownViewResource(R.layout.spinner_protocol);
 		protocolField.setAdapter(adapter);
 		// Mark that the view has been created
 		viewCreated = true;
 		onRefresh();
+		displayTooltips();
 	}
 
 	@Override
 	public void setParam(CreateParam data) {
 		// Get data to display
 		content = (WebdavParam) data;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 	}
 
 	@Override
@@ -99,7 +105,12 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			baseField.setText("");
 			pathField.setText("");
 		}
-		displayTooltips();
+	}
+
+	@Override
+	protected void displayTooltips() {
+		showTooltip(R.id.tooltip_test, R.id.create_webdav_test);
+		showTooltip(R.id.tooltip_browse, R.id.create_webdav_browse);
 	}
 
 	@Override
@@ -146,11 +157,5 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			nameField.setFocusable(status);
 			nameField.setFocusableInTouchMode(status);
 		}
-	}
-	
-	@Override
-	protected void displayTooltips() {
-		showTooltip(R.id.tooltip_test);  
-		showTooltip(R.id.tooltip_browse);  
 	}
 }
