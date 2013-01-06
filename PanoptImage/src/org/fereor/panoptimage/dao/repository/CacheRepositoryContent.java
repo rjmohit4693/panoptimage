@@ -28,4 +28,14 @@ public class CacheRepositoryContent extends RepositoryContent {
 	public void destroy() {
 		content.delete();		
 	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		try {
+			content.delete();
+		} catch (Exception e) {
+			// Do nothing
+		}
+		super.finalize();
+	}
 }
