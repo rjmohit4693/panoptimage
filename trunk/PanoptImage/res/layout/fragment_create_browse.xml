@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="false"
         android:padding="@dimen/padding_medium"
         android:text="@string/loading"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="@dimen/textsize" />
 
     <ListView
         android:id="@+id/create_browse_list"
@@ -34,9 +34,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="false"
+        android:layout_marginLeft="30dp"
         android:background="@drawable/ok"
         android:onClick="doBrowseValidate"
-        android:layout_marginLeft="30dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/custom_text_color" />
 
