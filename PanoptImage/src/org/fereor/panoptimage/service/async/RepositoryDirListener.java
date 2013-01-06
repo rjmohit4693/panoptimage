@@ -34,4 +34,9 @@ public interface RepositoryDirListener<Progress, Result> {
 	 * Mark result before execution
 	 */
 	void onPreDir();
+
+	/**
+	 * OutOfMemory error happened
+	 */
+	void onOEM(Throwable t);
 }

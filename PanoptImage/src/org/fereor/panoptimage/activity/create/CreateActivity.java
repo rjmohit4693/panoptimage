@@ -218,7 +218,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		if (param instanceof WebdavParam) {
 			try {
 				RepositoryExistsAsync task = new RepositoryExistsAsync(this, PanoptesHelper.SLASH);
-				task.execute(new WebdavRepositoryDao((WebdavParam) param));
+				task.execute(new WebdavRepositoryDao((WebdavParam) param, getFilesDir()));
 			} catch (PanoptimageNoNetworkException e) {
 				showErrorMsg(getString(R.string.error_nonetwork));
 				return;

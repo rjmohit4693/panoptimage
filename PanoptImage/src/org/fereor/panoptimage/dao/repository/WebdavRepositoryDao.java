@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.dao.repository;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -78,14 +79,16 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 
 	/** base of webdav link */
 	DavDroid dav = null;
+	private File cachedir;
 
 	/**
 	 * Default constructor with param data
 	 * 
 	 * @param param
 	 */
-	public WebdavRepositoryDao(WebdavParam param) throws PanoptimageNoNetworkException {
+	public WebdavRepositoryDao(WebdavParam param, File cachedir) throws PanoptimageNoNetworkException {
 		super(param);
+		this.cachedir = cachedir;
 		// set root path
 		if (!param.getBase().endsWith(PanoptesHelper.SLASH)) {
 			this.root = param.getBase() + PanoptesHelper.SLASH;
@@ -149,16 +152,16 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 	}
 
 	@Override
-	public byte[] get(String location, RepositoryGetListener<Long, byte[]> lsn) throws PanoptimageFileNotFoundException {
+	public RepositoryContent get(String location, RepositoryGetListener<Long, RepositoryContent> lsn) throws PanoptimageFileNotFoundException {
 		try {
 			// construct child listener
-			DavDroidGetListener<Long, byte[]> plsn = new DavDroidGetListener<Long, byte[]>(lsn,
+			DavDroidGetListener<Long, RepositoryContent> plsn = new DavDroidGetListener<Long, RepositoryContent>(lsn,
 					PanoptesConstants.ONPROGRESS_STEPS);
 			// prepare request
 			String val = PanoptesHelper.formatPath(root, currentPath, PanoptesHelper.SLASH, location);
 			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
 			String path = uri.toASCIIString();
-			return dav.get(path, true, plsn);
+			return new ByteRepositoryContent(dav.getAsBuffer(path, plsn));
 		} catch (IOException e) {
 			throw new PanoptimageFileNotFoundException(e.toString());
 		} catch (URISyntaxException e) {

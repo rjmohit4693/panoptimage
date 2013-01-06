@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.dao.repository;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,14 +51,14 @@ public abstract class RepositoryLoaderDao<T> {
 	 * @throws PanoptimageNoNetworkException
 	 * @throws
 	 */
-	public static RepositoryLoaderDao<?> createInstance(HomePagerParamService content)
+	public static RepositoryLoaderDao<?> createInstance(HomePagerParamService content, File cachedir)
 			throws PanoptesUnknownParamException, PanoptimageNoNetworkException {
 		// case of type LocalParam
 		if (content.getParam() instanceof LocalParam)
 			return new LocalRepositoryDao((LocalParam) content.getParam());
 		// case of type WebdavParam
 		if (content.getParam() instanceof WebdavParam)
-			return new WebdavRepositoryDao((WebdavParam) content.getParam());
+			return new WebdavRepositoryDao((WebdavParam) content.getParam(), cachedir);
 		// if type is unknown : throw error
 		throw new PanoptesUnknownParamException();
 	}
@@ -132,7 +133,7 @@ public abstract class RepositoryLoaderDao<T> {
 	 * @param location location to get
 	 * @return byte content of location
 	 */
-	public abstract byte[] get(String location, RepositoryGetListener<Long, byte[]> lsn) throws PanoptimageException;
+	public abstract RepositoryContent get(String location, RepositoryGetListener<Long, RepositoryContent> repositoryGetListener) throws PanoptimageException;
 
 	/**
 	 * Tests if a path exists (absolute or relative)
@@ -157,5 +158,4 @@ public abstract class RepositoryLoaderDao<T> {
 	 * @return true is the splash has to be displayed
 	 */
 	public abstract boolean showSplashWhileLoading();
-
 }

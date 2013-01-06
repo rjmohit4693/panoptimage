@@ -17,6 +17,7 @@ package org.fereor.panoptimage.activity.image;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
+import org.fereor.panoptimage.dao.repository.RepositoryContent;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.service.async.RepositoryGetAsync;
 import org.fereor.panoptimage.service.async.RepositoryGetListener;
@@ -44,7 +45,7 @@ import android.widget.ImageView.ScaleType;
  * 
  * @author "arnaud.p.fereor"
  */
-public class ImageListFragment extends Fragment implements RepositoryGetListener<Long, byte[]> {
+public class ImageListFragment extends Fragment implements RepositoryGetListener<Long, RepositoryContent> {
 	private static final String BUNDLE_IMGDATA = "org.fereor.panoptimage.activity.image.ImageListFragment.imgdata";
 	private static final String BUNDLE_OPTIM = "org.fereor.panoptimage.activity.image.ImageListFragment.optim";
 
@@ -72,7 +73,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	/**
 	 * Create a new instance of CountingFragment, providing "num" as an argument.
 	 */
-	public static ImageListFragment newInstance(RepositoryLoaderDao<?> repo, String path, PanoptimageMemoryOptimEnum optim) {
+	public static ImageListFragment newInstance(RepositoryLoaderDao<?> repo, String path,
+			PanoptimageMemoryOptimEnum optim) {
 		// create instance
 		ImageListFragment f = new ImageListFragment();
 		// Lauch async task
@@ -122,8 +124,14 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		// destroy task
 		if (task != null) {
 			task.cancel(true);
+			task = null;
+		}
+		// destroy image
+		if (image != null) {
+			image.recycle();
 		}
 	}
 
@@ -133,7 +141,9 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	}
 
 	@Override
-	public void onPostGet(byte[] result) {
+	public void onPostGet(RepositoryContent result) {
+		// task is finished, release reference
+		task = null;
 		if (result == null) {
 			((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_loading_file, path);
 			return;
@@ -152,11 +162,25 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 				imageView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
 				imageView.setImageBitmap(image);
 			} catch (OutOfMemoryError oem) {
-				Log.d(PanoptesConstants.TAGNAME, oem.toString());
-				((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_outofmemory);
-				// do something to revive memory
+				onOEM(oem);
 			}
 		}
+		System.gc();
+		System.gc();
+	}
+
+	@Override
+	public void onOEM(Throwable t) {
+		Log.d(PanoptesConstants.TAGNAME, t.toString());
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				if (getActivity() != null)
+					((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_outofmemory);
+			}
+		});
+
+		// do something to revive memory
 	}
 
 	@Override
@@ -238,5 +262,4 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 			imageView.setImageMatrix(newTransform);
 		}
 	}
-
 }

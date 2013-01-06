@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,6 +137,25 @@ public abstract class PanoptesActivity extends FragmentActivity {
 		// Identify texts to display
 		txt = (TextView) findViewById(tid);
 		txt.setVisibility(View.INVISIBLE);
+	}
+
+	/**
+	 * Unbind all images
+	 * 
+	 * @param view
+	 */
+	protected void unbindDrawables(View view) {
+		if (view == null)
+			return;
+		if (view.getBackground() != null) {
+			view.getBackground().setCallback(null);
+		}
+		if (view instanceof ViewGroup) {
+			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+				unbindDrawables(((ViewGroup) view).getChildAt(i));
+			}
+			((ViewGroup) view).removeAllViews();
+		}
 	}
 
 	// -------------------------------------------------------------------------
