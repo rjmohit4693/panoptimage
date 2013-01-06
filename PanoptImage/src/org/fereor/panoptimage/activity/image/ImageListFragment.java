@@ -181,6 +181,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 		});
 
 		// do something to revive memory
+		System.gc();
+		System.gc();
 	}
 
 	@Override
