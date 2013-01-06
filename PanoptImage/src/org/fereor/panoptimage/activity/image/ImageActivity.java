@@ -145,7 +145,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			pager.setCurrentItem(savedState.getInt(SAVESTATE_CURRENTITEM));
 			savedState = null;
 		}
-		pager.setOffscreenPageLimit(0);
+		pager.setOffscreenPageLimit(1);
 		adapter.notifyDataSetChanged();
 	}
 
