@@ -66,7 +66,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		hideBrowserPanel();
 		try {
 			// Retrieve content
-			repoBrowser = RepositoryLoaderDao.createInstance(param);
+			repoBrowser = RepositoryLoaderDao.createInstance(param, getFilesDir());
 			// check network availability
 			if (param.getParam().needNetwork() && !isNetworkAvailable()) {
 				// Network is not available. Inform and return
@@ -154,6 +154,11 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		// do nothing
 	}
 
+	@Override
+	public void onOEM(Throwable t) {
+		showErrorMsg(R.string.error_outofmemory);
+	}
+	
 	// -------------------------------------------------------------------------
 	// Methods for Action buttons
 	// -------------------------------------------------------------------------

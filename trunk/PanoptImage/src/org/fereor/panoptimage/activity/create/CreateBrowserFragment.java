@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fereor.panoptimage.R;
+import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
@@ -124,6 +125,11 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 	}
 
 	@Override
+	public void onOEM(Throwable t) {
+		((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_outofmemory);
+	}
+
+	@Override
 	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 		// long click
 		Object item = parent.getAdapter().getItem(position);
@@ -158,7 +164,7 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 		// create repo browser
 		HomePagerParamService service = new HomePagerParamService(param, getString(R.string.message),
 				PanoptesTypeEnum.EMPTY.icon());
-		repoBrowser = RepositoryLoaderDao.createInstance(service);
+		repoBrowser = RepositoryLoaderDao.createInstance(service, getActivity().getFilesDir());
 		// put the content to the repository
 		repoBrowser.cd(basepath);
 	}

@@ -17,6 +17,11 @@ package org.fereor.panoptimage.util;
 
 import java.util.List;
 
+import org.fereor.panoptimage.dao.repository.ByteRepositoryContent;
+import org.fereor.panoptimage.dao.repository.CacheRepositoryContent;
+import org.fereor.panoptimage.dao.repository.FileRepositoryContent;
+import org.fereor.panoptimage.dao.repository.RepositoryContent;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -206,20 +211,47 @@ public class PanoptesHelper {
 	 * @param optimlvl
 	 * @return bitmap at the target size
 	 */
-	public static Bitmap decodeSampledBitmap(byte[] data, int reqWidth, int reqHeight, int optimlvl) {
+	public static Bitmap decodeSampledBitmap(RepositoryContent data, int reqWidth, int reqHeight, int optimlvl) {
 		// get image size
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeByteArray(data, 0, data.length, options);
-
-		// Calculate inSampleSize
-		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-		if (optimlvl >= 1)
-			options.inSampleSize *= optimlvl;
-
-		// Decode bitmap with inSampleSize set
-		options.inJustDecodeBounds = false;
-		return BitmapFactory.decodeByteArray(data, 0, data.length, options);
+		// For FileRepositoryContent
+		if (data instanceof FileRepositoryContent) {
+			FileRepositoryContent fdata = (FileRepositoryContent) data;
+			BitmapFactory.decodeFile(fdata.getContent().getAbsolutePath(), options);
+			// Calculate inSampleSize
+			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+			if (optimlvl >= 1)
+				options.inSampleSize *= optimlvl;
+			// Decode bitmap with inSampleSize set
+			options.inJustDecodeBounds = false;
+			return BitmapFactory.decodeFile(fdata.getContent().getAbsolutePath(), options);
+		} else if (data instanceof CacheRepositoryContent) {
+			CacheRepositoryContent cdata = (CacheRepositoryContent) data;
+			BitmapFactory.decodeFile(cdata.getContent().getAbsolutePath(), options);
+			// Calculate inSampleSize
+			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+			if (optimlvl >= 1)
+				options.inSampleSize *= optimlvl;
+			// Decode bitmap with inSampleSize set
+			options.inJustDecodeBounds = false;
+			Bitmap bmp = BitmapFactory.decodeFile(cdata.getContent().getAbsolutePath(), options);
+			// cached file is no more needed : destroy it
+			cdata.destroy();
+			return bmp;
+		} else if (data instanceof ByteRepositoryContent) {
+			ByteRepositoryContent bdata = (ByteRepositoryContent) data;
+			BitmapFactory.decodeByteArray(bdata.getBytes(), 0, bdata.getBytes().length, options);
+			// Calculate inSampleSize
+			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+			if (optimlvl >= 1)
+				options.inSampleSize *= optimlvl;
+			// Decode bitmap with inSampleSize set
+			options.inJustDecodeBounds = false;
+			return BitmapFactory.decodeByteArray(bdata.getBytes(), 0, bdata.getBytes().length, options);
+		} else {
+			return null;
+		}
 	}
 
 }

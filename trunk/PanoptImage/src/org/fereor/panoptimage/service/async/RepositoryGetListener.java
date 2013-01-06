@@ -35,4 +35,9 @@ public interface RepositoryGetListener<Progress, Result> {
 	 * Mark before get is launched
 	 */
 	void onPreGet();
+
+	/**
+	 * OutOfMemory Error happened
+	 */
+	void onOEM(Throwable t);
 }

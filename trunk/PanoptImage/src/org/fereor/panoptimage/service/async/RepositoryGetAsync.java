@@ -17,34 +17,39 @@ package org.fereor.panoptimage.service.async;
 
 import java.lang.ref.WeakReference;
 
+import org.fereor.panoptimage.dao.repository.RepositoryContent;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 
 import android.os.AsyncTask;
 
-public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, byte[]> {
+public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, RepositoryContent> {
 	/** path to get */
 	private String path;
 	/** listener for this task */
-	WeakReference<RepositoryGetListener<Long, byte[]>> listener;
+	WeakReference<RepositoryGetListener<Long, RepositoryContent>> listener;
 
-	public RepositoryGetAsync(RepositoryGetListener<Long, byte[]> listener, String path) {
+	public RepositoryGetAsync(RepositoryGetListener<Long, RepositoryContent> listener, String path) {
 		this.path = path;
-		this.listener = new WeakReference<RepositoryGetListener<Long, byte[]>>(listener);
+		this.listener = new WeakReference<RepositoryGetListener<Long, RepositoryContent>>(listener);
 	}
 
 	@Override
-	protected byte[] doInBackground(RepositoryLoaderDao<?>... repo) {
-		try {
-			if (listener != null && listener.get() != null)
+	protected RepositoryContent doInBackground(RepositoryLoaderDao<?>... repo) {
+
+		if (listener != null && listener.get() != null) {
+			try {
 				return repo[0].get(path, listener.get());
-			return null;
-		} catch (PanoptimageFileNotFoundException e) {
-			return null;
-		} catch (PanoptimageException e) {
-			return null;
+			} catch (OutOfMemoryError oem) {
+				listener.get().onOEM(oem);
+			} catch (PanoptimageFileNotFoundException e) {
+				return null;
+			} catch (PanoptimageException e) {
+				return null;
+			}
 		}
+		return null;
 	}
 
 	@Override
@@ -60,7 +65,7 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 	}
 
 	@Override
-	protected void onPostExecute(byte[] result) {
+	protected void onPostExecute(RepositoryContent result) {
 		if (listener != null && listener.get() != null)
 			listener.get().onPostGet(result);
 	}

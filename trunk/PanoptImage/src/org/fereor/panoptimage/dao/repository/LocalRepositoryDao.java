@@ -15,15 +15,11 @@
 
 package org.fereor.panoptimage.dao.repository;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.service.async.RepositoryDirListener;
@@ -68,27 +64,13 @@ public class LocalRepositoryDao extends RepositoryLoaderDao<LocalParam> {
 	}
 
 	@Override
-	public byte[] get(String filename, RepositoryGetListener<Long, byte[]> lsn) throws PanoptimageException {
-		try {
-			// read content file
-			File currentDir = new File(PanoptesHelper.formatPath(root, currentPath));
-			File locationFile = new File(currentDir, filename);
-			FileInputStream fis = new FileInputStream(locationFile);
+	public RepositoryContent get(String filename, RepositoryGetListener<Long, RepositoryContent> lsn) {
+		// read content file
+		File currentDir = new File(PanoptesHelper.formatPath(root, currentPath));
+		File locationFile = new File(currentDir, filename);
 
-			// read file content
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			byte[] buf = new byte[1024];
-			int cnt;
+		return new FileRepositoryContent(locationFile);
 
-			while ((cnt = fis.read(buf)) > 0) {
-				baos.write(buf, 0, cnt);
-			}
-			fis.close();
-			baos.close();
-			return baos.toByteArray();
-		} catch (IOException e) {
-			throw new PanoptimageFileNotFoundException(filename);
-		}
 	}
 
 	@Override
