@@ -33,4 +33,6 @@ public interface PanoptesConstants {
 	public static final String MSG_HOME = "org.fereor.panoptes.homeintent";
 	// Number of steps for onProgress loading
 	public static final float ONPROGRESS_STEPS = 5.0f;
+	// sub directory for cache files
+	public static final String CACHE_DIR = "cache";
 }
