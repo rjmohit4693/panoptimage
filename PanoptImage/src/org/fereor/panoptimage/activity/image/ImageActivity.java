@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.activity.image;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		hideBrowserPanel();
 		try {
 			// Retrieve content
-			repoBrowser = RepositoryLoaderDao.createInstance(param, getFilesDir());
+			repoBrowser = RepositoryLoaderDao.createInstance(param, new File(getFilesDir(), PanoptesConstants.CACHE_DIR));
 			// check network availability
 			if (param.getParam().needNetwork() && !isNetworkAvailable()) {
 				// Network is not available. Inform and return

@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.activity.home;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ import android.view.View;
 
 public class HomeActivity extends PanoptesActivity {
 	private static final String SAVESTATE_CURRENTITEM = "org.fereor.panoptimage.activity.home.HomeActivity.currentItem";
+
 	/** Adapter for the pager */
 	private HomePagerAdapter adapter;
 	/** Pager for the List */
@@ -54,6 +56,7 @@ public class HomeActivity extends PanoptesActivity {
 		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onCreate");
 		// go on
 		super.onCreate(savedInstanceState);
+		prepareCache();
 		setContentView(R.layout.activity_home);
 		try {
 			adapter = new HomePagerAdapter(getSupportFragmentManager());
@@ -104,6 +107,12 @@ public class HomeActivity extends PanoptesActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_home, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		clearCache();
 	}
 
 	@Override
@@ -205,6 +214,30 @@ public class HomeActivity extends PanoptesActivity {
 		}
 		markWebdavRead();
 		return data;
+	}
+
+	/**
+	 * Prepare cache for files
+	 */
+	private void prepareCache() {
+		// check if cache exists
+		File cachedir = new File(getFilesDir(), PanoptesConstants.CACHE_DIR);
+		if (!cachedir.exists()) {
+			cachedir.mkdirs();
+		}
+	}
+
+	/**
+	 * Clear cache of files
+	 */
+	private void clearCache() {
+		// check if cache exists
+		File cachedir = new File(getFilesDir(), PanoptesConstants.CACHE_DIR);
+		if (cachedir.exists()) {
+			for (File f : cachedir.listFiles()) {
+				f.delete();
+			}
+		}
 	}
 
 }
