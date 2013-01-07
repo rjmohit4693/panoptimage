@@ -95,6 +95,7 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 		// Manage null value (Not Found)
 		if (rawdir == null) {
 			msg.setText(getActivity().getString(R.string.error_filenotfound, repoBrowser.getformatedPath()));
+			repoBrowser.cd(PanoptesHelper.DDOT);
 		} else {
 			// Include .. to the list
 			ArrayList<String> directories = new ArrayList<String>();
