@@ -61,6 +61,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		super.onCreate(savedInstanceState);
 		// set layout
 		setContentView(R.layout.activity_image);
+		prepareCache();
 		// Get the message from the intent
 		Intent intent = getIntent();
 		HomePagerParamService param = (HomePagerParamService) intent.getParcelableExtra(PanoptesConstants.MSG_HOME);
@@ -111,6 +112,13 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		loadConfig();
 		// hide panel
 		// hideBrowserPanel();
+	}
+
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		clearCache();
 	}
 
 	@Override
@@ -293,6 +301,30 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			} catch (Exception e) {
 				config = null;
 				optim = PanoptimageMemoryOptimEnum.Auto;
+			}
+		}
+	}
+
+	/**
+	 * Prepare cache for files
+	 */
+	private void prepareCache() {
+		// check if cache exists
+		File cachedir = new File(getFilesDir(), PanoptesConstants.CACHE_DIR);
+		if (!cachedir.exists()) {
+			cachedir.mkdirs();
+		}
+	}
+
+	/**
+	 * Clear cache of files
+	 */
+	private void clearCache() {
+		// check if cache exists
+		File cachedir = new File(getFilesDir(), PanoptesConstants.CACHE_DIR);
+		if (cachedir.exists()) {
+			for (File f : cachedir.listFiles()) {
+				f.delete();
 			}
 		}
 	}

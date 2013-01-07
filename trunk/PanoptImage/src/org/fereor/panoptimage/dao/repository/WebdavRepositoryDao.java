@@ -133,8 +133,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			String val = PanoptesHelper.formatPath(root, currentPath, PanoptesHelper.SLASH, location);
 			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
 			String path = uri.toASCIIString();
-			return new ByteRepositoryContent(dav.get(path, false, plsn));
-			//return new CacheRepositoryContent(dav.getAsFile(path, cachedir, plsn));
+			//return new ByteRepositoryContent(dav.get(path, false, plsn));
+			return new CacheRepositoryContent(dav.getAsFile(path, cachedir, plsn));
 		} catch (IOException e) {
 			throw new PanoptimageFileNotFoundException(e.toString());
 		} catch (URISyntaxException e) {
