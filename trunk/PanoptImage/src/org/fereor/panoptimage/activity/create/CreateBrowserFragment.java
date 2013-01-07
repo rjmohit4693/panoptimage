@@ -22,12 +22,14 @@ import java.util.List;
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
+import org.fereor.panoptimage.dao.repository.RepositoryLoaderFactory;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.service.async.RepositoryDirAsync;
 import org.fereor.panoptimage.service.async.RepositoryDirListener;
+import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
 
@@ -41,6 +43,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+//import org.fereor.panoptimage.activity.PanoptesActivity;
 
 /**
  * Fragment class for the Browse panel
@@ -65,7 +68,7 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 		lv = (ListView) v.findViewById(R.id.create_browse_list);
 		msg = (TextView) v.findViewById(R.id.create_browse_message);
 		if (getArguments() != null) {
-			CreateParam param = (CreateParam) getArguments().getSerializable(CreateActivity.BUNDLE_PARAM);
+			CreateParam param = (CreateParam) getArguments().getSerializable(PanoptesConstants.CREATE_BUNDLE_PARAM);
 			try {
 				setRepository(param);
 			} catch (PanoptesUnknownParamException e) {
@@ -164,7 +167,7 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 		// create repo browser
 		HomePagerParamService service = new HomePagerParamService(param, getString(R.string.message),
 				PanoptesTypeEnum.EMPTY.icon());
-		repoBrowser = RepositoryLoaderDao.createInstance(service, getActivity().getFilesDir());
+		repoBrowser = RepositoryLoaderFactory.createInstance(service, getActivity().getFilesDir());
 		// put the content to the repository
 		repoBrowser.cd(basepath);
 	}

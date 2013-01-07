@@ -16,8 +16,6 @@
 package org.fereor.panoptimage.activity.create;
 
 import org.fereor.panoptimage.R;
-import org.fereor.panoptimage.dao.repository.WebdavRepositoryDao;
-import org.fereor.panoptimage.dao.repository.WebdavRepositoryDao.Protocols;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.WebdavParam;
 
@@ -61,7 +59,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		pathField = (EditText) getView().findViewById(R.id.create_webdav_path_value);
 		// populate the spinner
 		ProtocolSpinnerAdapter adapter = new ProtocolSpinnerAdapter(getActivity(), R.layout.round_spinner_item,
-				Protocols.values());
+				WebdavProtocols.values());
 		adapter.setDropDownViewResource(R.layout.spinner_protocol);
 		protocolField.setAdapter(adapter);
 		// Mark that the view has been created
@@ -91,7 +89,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		if (content != null) {
 			// fill fields
 			nameField.setText(content.getKey());
-			protocolField.setSelection(WebdavRepositoryDao.Protocols.indexOf(content.getProtocol()));
+			protocolField.setSelection(WebdavProtocols.indexOf(content.getProtocol()));
 			serverField.setText(content.getServer());
 			portField.setText(content.getPort());
 			baseField.setText(content.getBase());

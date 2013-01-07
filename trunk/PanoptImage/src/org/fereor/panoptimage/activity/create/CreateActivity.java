@@ -46,7 +46,6 @@ import android.widget.Spinner;
 
 public class CreateActivity extends PanoptesActivity implements OnItemSelectedListener,
 		RepositoryExistsListener<Integer, Boolean> {
-	public static final String BUNDLE_PARAM = "org.fereor.panoptimage.activity.create.CreateActivity.param";
 	private static final String SAVESTATE_CURRENTPATH = "org.fereor.panoptimage.activity.create.CreateActivity.currentpath";
 	/** List of available local configurations */
 	private List<? extends CreateParam> locals;
@@ -239,7 +238,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		// create the browse fragment and put it
 		CreateBrowserFragment fragment = new CreateBrowserFragment();
 		Bundle data = new Bundle();
-		data.putSerializable(BUNDLE_PARAM, param);
+		data.putSerializable(PanoptesConstants.CREATE_BUNDLE_PARAM, param);
 		fragment.setArguments(data);
 
 		getSupportFragmentManager().beginTransaction().add(R.id.browser_fragment, fragment).commit();
