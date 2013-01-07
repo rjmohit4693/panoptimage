@@ -16,7 +16,6 @@
 package org.fereor.panoptimage.activity.create;
 
 import org.fereor.panoptimage.R;
-import org.fereor.panoptimage.dao.repository.WebdavRepositoryDao;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -25,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavRepositoryDao.Protocols> {
+public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavProtocols> {
 	
 	/** parent activity */
 	private Activity container;
@@ -38,7 +37,7 @@ public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavRepositoryDao.Pro
 	 * @param
 	 */
 	public ProtocolSpinnerAdapter(Activity context,
-			int textViewResourceId, WebdavRepositoryDao.Protocols[] data) {
+			int textViewResourceId, WebdavProtocols[] data) {
 		super(context, textViewResourceId, data);
 		this.container = context;
 	}
@@ -46,7 +45,7 @@ public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavRepositoryDao.Pro
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TextView v = (TextView) super.getView(position, convertView, parent);
-		WebdavRepositoryDao.Protocols item = getItem(position);
+		WebdavProtocols item = getItem(position);
 		v.setText(item.toString());
 		v.setCompoundDrawablesWithIntrinsicBounds(item.icon(), 0, 0, 0);
 		v.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
@@ -62,7 +61,7 @@ public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavRepositoryDao.Pro
 		}
 
 		// get item to display
-		WebdavRepositoryDao.Protocols item = getItem(position);
+		WebdavProtocols item = getItem(position);
 
 		if (item != null) {
 			// Parse the data from each object and set it.

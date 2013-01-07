@@ -30,7 +30,6 @@ import org.fereor.davdroid.DavDroid;
 import org.fereor.davdroid.DavDroidFactory;
 import org.fereor.davdroid.exception.DavDroidException;
 import org.fereor.davdroid.http.xml.i.Prop;
-import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.WebdavParam;
@@ -49,33 +48,6 @@ import android.util.Log;
  * @author "arnaud.p.fereor"
  */
 public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
-	public enum Protocols {
-		HTTP(
-				R.drawable.ic_protocol_http),
-		HTTPS(
-				R.drawable.ic_protocol_https);
-
-		private int icon;
-
-		private Protocols(int icon) {
-			this.icon = icon;
-		}
-
-		public int icon() {
-			return icon;
-		}
-
-		public static int indexOf(String key) {
-			int pos = 0;
-			for (Protocols value : values()) {
-				if (value.toString().equalsIgnoreCase(key)) {
-					return pos;
-				}
-				pos++;
-			}
-			return pos;
-		}
-	}
 
 	/** base of webdav link */
 	DavDroid dav = null;
@@ -161,8 +133,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			String val = PanoptesHelper.formatPath(root, currentPath, PanoptesHelper.SLASH, location);
 			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
 			String path = uri.toASCIIString();
-			//return new ByteRepositoryContent(dav.getAsBuffer(path, plsn));
-			return new CacheRepositoryContent(dav.getAsFile(path, cachedir, plsn));
+			return new ByteRepositoryContent(dav.get(path, false, plsn));
+			//return new CacheRepositoryContent(dav.getAsFile(path, cachedir, plsn));
 		} catch (IOException e) {
 			throw new PanoptimageFileNotFoundException(e.toString());
 		} catch (URISyntaxException e) {

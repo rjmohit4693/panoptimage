@@ -15,17 +15,11 @@
 
 package org.fereor.panoptimage.dao.repository;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
-import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
-import org.fereor.panoptimage.model.LocalParam;
-import org.fereor.panoptimage.model.WebdavParam;
-import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.service.async.RepositoryDirListener;
 import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
@@ -42,26 +36,6 @@ public abstract class RepositoryLoaderDao<T> {
 	protected String root;
 	/** Current path */
 	protected List<String> currentPath = new ArrayList<String>();
-
-	/**
-	 * Create a new repository service matching the type passed
-	 * 
-	 * @return
-	 * @throws PanoptesUnknownParamException
-	 * @throws PanoptimageNoNetworkException
-	 * @throws
-	 */
-	public static RepositoryLoaderDao<?> createInstance(HomePagerParamService content, File cachedir)
-			throws PanoptesUnknownParamException, PanoptimageNoNetworkException {
-		// case of type LocalParam
-		if (content.getParam() instanceof LocalParam)
-			return new LocalRepositoryDao((LocalParam) content.getParam());
-		// case of type WebdavParam
-		if (content.getParam() instanceof WebdavParam)
-			return new WebdavRepositoryDao((WebdavParam) content.getParam(), cachedir);
-		// if type is unknown : throw error
-		throw new PanoptesUnknownParamException();
-	}
 
 	/**
 	 * Constructor for child classes

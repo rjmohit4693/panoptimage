@@ -35,4 +35,7 @@ public interface PanoptesConstants {
 	public static final float ONPROGRESS_STEPS = 5.0f;
 	// sub directory for cache files
 	public static final String CACHE_DIR = "cache";
+	// Bundle param for create activity
+	public static final String CREATE_BUNDLE_PARAM = "org.fereor.panoptimage.activity.create.CreateActivity.param";
+
 }
