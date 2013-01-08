@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.util;
 
+import java.nio.IntBuffer;
 import java.util.List;
 
 import org.fereor.panoptimage.dao.repository.ByteRepositoryContent;
@@ -24,6 +25,7 @@ import org.fereor.panoptimage.dao.repository.RepositoryContent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.GLES10;
 import android.util.Log;
 
 /**
@@ -45,6 +47,7 @@ public class PanoptesHelper {
 			{ "%20", "%25", "%24", "%26", "%2B", "%2C", "%2F", "%3A", "%3B", "%3D", "%3F", "%40", "%3C", "%3E", "%23",
 					"%c3%a0", "%c3%a1", "%c3%a2", "%c3%a3", "%c3%a4", "%c3%a7", "%c3%a8", "%c3%a9", "%c3%aa", "%c3%ab",
 					"%c3%ac", "%c3%ad", "%c3%ae", "%c3%af", "%c3%b1", "%c3%b4", "%c3%b6", "%c3%bb", "%c3%bc" } };
+	private static int MAX_BITMAP_SIZE = -1;
 
 	/**
 	 * Format a string to a path using SLASH
@@ -156,53 +159,6 @@ public class PanoptesHelper {
 	}
 
 	/**
-	 * Encode a URL to allow correct URL encoding
-	 * 
-	 * @param url url to encode
-	 * @return url encoded
-	 */
-	// public static String decode(String url) {
-	// if (url == null)
-	// return null;
-	// // read each char of string
-	// StringBuilder res = new StringBuilder();
-	// for (int i = 0; i < url.length(); i++) {
-	// String next = url.substring(i, i + 1);
-	// // encode value
-	// if (encoder.containsValue(value)(next)) {
-	// res.append(encoder.get(next));
-	// } else {
-	// res.append(next);
-	// }
-	// }
-	// return res.toString();
-	// }
-
-	/**
-	 * Calculates the sample size of image
-	 * 
-	 * @param options
-	 * @param reqWidth
-	 * @param reqHeight
-	 * @return
-	 */
-	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-		// Raw height and width of image
-		final int height = options.outHeight;
-		final int width = options.outWidth;
-		int inSampleSize = 1;
-
-		if (height > reqHeight || width > reqWidth) {
-			if (width > height) {
-				inSampleSize = Math.round((float) height / (float) reqHeight);
-			} else {
-				inSampleSize = Math.round((float) width / (float) reqWidth);
-			}
-		}
-		return inSampleSize;
-	}
-
-	/**
 	 * Extract bitmap at the given size
 	 * 
 	 * @param data binary data
@@ -220,9 +176,7 @@ public class PanoptesHelper {
 			FileRepositoryContent fdata = (FileRepositoryContent) data;
 			BitmapFactory.decodeFile(fdata.getContent().getAbsolutePath(), options);
 			// Calculate inSampleSize
-			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-			if (optimlvl >= 1)
-				options.inSampleSize *= optimlvl;
+			options.inSampleSize = (int) Math.pow(2d, calculateInSampleSize(optimlvl, options, reqWidth, reqHeight));
 			// Decode bitmap with inSampleSize set
 			options.inJustDecodeBounds = false;
 			return BitmapFactory.decodeFile(fdata.getContent().getAbsolutePath(), options);
@@ -230,9 +184,7 @@ public class PanoptesHelper {
 			CacheRepositoryContent cdata = (CacheRepositoryContent) data;
 			BitmapFactory.decodeFile(cdata.getContent().getAbsolutePath(), options);
 			// Calculate inSampleSize
-			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-			if (optimlvl >= 1)
-				options.inSampleSize *= optimlvl;
+			options.inSampleSize = (int) Math.pow(2d, calculateInSampleSize(optimlvl, options, reqWidth, reqHeight));
 			// Decode bitmap with inSampleSize set
 			options.inJustDecodeBounds = false;
 			Bitmap bmp = BitmapFactory.decodeFile(cdata.getContent().getAbsolutePath(), options);
@@ -243,15 +195,52 @@ public class PanoptesHelper {
 			ByteRepositoryContent bdata = (ByteRepositoryContent) data;
 			BitmapFactory.decodeByteArray(bdata.getBytes(), 0, bdata.getBytes().length, options);
 			// Calculate inSampleSize
-			options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-			if (optimlvl >= 1)
-				options.inSampleSize *= optimlvl;
+			options.inSampleSize = (int) Math.pow(2d, calculateInSampleSize(optimlvl, options, reqWidth, reqHeight));
 			// Decode bitmap with inSampleSize set
 			options.inJustDecodeBounds = false;
 			return BitmapFactory.decodeByteArray(bdata.getBytes(), 0, bdata.getBytes().length, options);
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Calculates the sample size of image
+	 * 
+	 * @param optimlvl
+	 * @param options
+	 * @param reqWidth
+	 * @param reqHeight
+	 * @return
+	 */
+	private static double calculateInSampleSize(int optimlvl, BitmapFactory.Options options, int reqWidth, int reqHeight) {
+		// Raw height and width of image
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		double inSampleSize = 1;
+
+		// TODO Calculer la puissance de 2 supérieure la plus proche
+		if (height > reqHeight || width > reqWidth) {
+			if (width > height) {
+				inSampleSize = Math.ceil(Math.log((double) height / (double) reqHeight) / Math.log(2));
+			} else {
+				inSampleSize = Math.ceil(Math.log((double) width / (double) reqWidth) / Math.log(2));
+			}
+		}
+		return inSampleSize * optimlvl;
+	}
+
+	/**
+	 * Calculate max bitmap size
+	 */
+	private static int getMaxBitmapSize() {
+		if (MAX_BITMAP_SIZE < 0) {
+			// identify max size for bitmap
+			IntBuffer params = IntBuffer.allocate(1);
+			GLES10.glGetIntegerv(GLES10.GL_MAX_TEXTURE_SIZE, params);
+			MAX_BITMAP_SIZE = params.get(0);
+		}
+		return MAX_BITMAP_SIZE;
 	}
 
 }

@@ -30,16 +30,16 @@ public enum PanoptimageMemoryOptimEnum {
 			R.string.param_memory_2,
 			R.drawable.ic_level2),
 	Level_4(
-			4,
-			R.string.param_memory_4,
+			3,
+			R.string.param_memory_3,
 			R.drawable.ic_level4),
 	Level_8(
-			8,
-			R.string.param_memory_8,
+			4,
+			R.string.param_memory_4,
 			R.drawable.ic_level8),
 	Level_16(
-			16,
-			R.string.param_memory_16,
+			5,
+			R.string.param_memory_5,
 			R.drawable.ic_max);
 
 	/**
