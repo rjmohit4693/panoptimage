@@ -15,7 +15,6 @@
 
 package org.fereor.panoptimage.util;
 
-import java.nio.IntBuffer;
 import java.util.List;
 
 import org.fereor.panoptimage.dao.repository.ByteRepositoryContent;
@@ -25,7 +24,6 @@ import org.fereor.panoptimage.dao.repository.RepositoryContent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.GLES10;
 import android.util.Log;
 
 /**
@@ -47,7 +45,6 @@ public class PanoptesHelper {
 			{ "%20", "%25", "%24", "%26", "%2B", "%2C", "%2F", "%3A", "%3B", "%3D", "%3F", "%40", "%3C", "%3E", "%23",
 					"%c3%a0", "%c3%a1", "%c3%a2", "%c3%a3", "%c3%a4", "%c3%a7", "%c3%a8", "%c3%a9", "%c3%aa", "%c3%ab",
 					"%c3%ac", "%c3%ad", "%c3%ae", "%c3%af", "%c3%b1", "%c3%b4", "%c3%b6", "%c3%bb", "%c3%bc" } };
-	private static int MAX_BITMAP_SIZE = -1;
 
 	/**
 	 * Format a string to a path using SLASH
@@ -219,7 +216,7 @@ public class PanoptesHelper {
 		final int width = options.outWidth;
 		double inSampleSize = 1;
 
-		// TODO Calculer la puissance de 2 supérieure la plus proche
+		// Compute optimization level as closer power of 2
 		if (height > reqHeight || width > reqWidth) {
 			if (width > height) {
 				inSampleSize = Math.ceil(Math.log((double) height / (double) reqHeight) / Math.log(2));
@@ -229,18 +226,4 @@ public class PanoptesHelper {
 		}
 		return inSampleSize * optimlvl;
 	}
-
-	/**
-	 * Calculate max bitmap size
-	 */
-	private static int getMaxBitmapSize() {
-		if (MAX_BITMAP_SIZE < 0) {
-			// identify max size for bitmap
-			IntBuffer params = IntBuffer.allocate(1);
-			GLES10.glGetIntegerv(GLES10.GL_MAX_TEXTURE_SIZE, params);
-			MAX_BITMAP_SIZE = params.get(0);
-		}
-		return MAX_BITMAP_SIZE;
-	}
-
 }
