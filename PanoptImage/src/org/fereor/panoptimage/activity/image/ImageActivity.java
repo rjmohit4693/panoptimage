@@ -45,8 +45,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class ImageActivity extends PanoptesActivity implements
-		OnItemClickListener, RepositoryDirListener<Long, List<String>> {
+public class ImageActivity extends PanoptesActivity implements OnItemClickListener,
+		RepositoryDirListener<Long, List<String>> {
 	private static final String SAVESTATE_CURRENTITEM = "org.fereor.panoptimage.activity.image.ImageActivity.currentItem";
 	private static final String SAVESTATE_CURRENTPATH = "org.fereor.panoptimage.activity.image.ImageActivity.currentPath";
 	private RepositoryLoaderDao<?> repoBrowser;
@@ -56,6 +56,8 @@ public class ImageActivity extends PanoptesActivity implements
 	private Bundle savedState;
 	private Config config;
 	private PanoptimageMemoryOptimEnum optim;
+	/** Task loading the repository content */
+	private RepositoryDirAsync task;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,14 +67,13 @@ public class ImageActivity extends PanoptesActivity implements
 		prepareCache();
 		// Get the message from the intent
 		Intent intent = getIntent();
-		HomePagerParamService param = (HomePagerParamService) intent
-				.getParcelableExtra(PanoptesConstants.MSG_HOME);
+		HomePagerParamService param = (HomePagerParamService) intent.getParcelableExtra(PanoptesConstants.MSG_HOME);
 		// hide panel
 		hideBrowserPanel();
 		try {
 			// Retrieve content
-			repoBrowser = RepositoryLoaderFactory.createInstance(param,
-					new File(getFilesDir(), PanoptesConstants.CACHE_DIR));
+			repoBrowser = RepositoryLoaderFactory.createInstance(param, new File(getFilesDir(),
+					PanoptesConstants.CACHE_DIR));
 			// check network availability
 			if (param.getParam().needNetwork() && !isNetworkAvailable()) {
 				// Network is not available. Inform and return
@@ -80,8 +81,7 @@ public class ImageActivity extends PanoptesActivity implements
 				return;
 			}
 			// set temporary adapter
-			adapter = new LoadingPagerAdapter(getSupportFragmentManager(),
-					optim);
+			adapter = new LoadingPagerAdapter(getSupportFragmentManager(), optim);
 			pager = (ViewPager) findViewById(R.id.imagepager);
 			pager.setAdapter(adapter);
 			pager.setOffscreenPageLimit(1);
@@ -91,8 +91,7 @@ public class ImageActivity extends PanoptesActivity implements
 				repoBrowser.cd(savedState.getString(SAVESTATE_CURRENTPATH));
 			}
 			// Launch loading task
-			RepositoryDirAsync task = new RepositoryDirAsync(this,
-					PanoptesHelper.REGEXP_ALLIMAGES);
+			task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
 			task.execute(repoBrowser);
 		} catch (PanoptimageFileNotFoundException e) {
 			showErrorMsg(R.string.error_filenotfound, e.getLocation());
@@ -124,6 +123,12 @@ public class ImageActivity extends PanoptesActivity implements
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		// destroy task
+		if (task != null) {
+			task.cancel(true);
+			task = null;
+		}
+		// clear cache
 		clearCache();
 	}
 
@@ -146,15 +151,15 @@ public class ImageActivity extends PanoptesActivity implements
 	 * Show/Hide navigation buttons
 	 */
 	private void showButtons(boolean status) {
-//		buttonVisible = status;
-//		findViewById(R.id.back).setVisibility(
-//				status ? View.VISIBLE : View.INVISIBLE);
-//		findViewById(R.id.image_clockwise).setVisibility(
-//				status ? View.VISIBLE : View.INVISIBLE);
-//		findViewById(R.id.image_counterclockwise).setVisibility(
-//				status ? View.VISIBLE : View.INVISIBLE);
-//		findViewById(R.id.browse).setVisibility(
-//				status ? View.VISIBLE : View.INVISIBLE);
+		// buttonVisible = status;
+		// findViewById(R.id.back).setVisibility(
+		// status ? View.VISIBLE : View.INVISIBLE);
+		// findViewById(R.id.image_clockwise).setVisibility(
+		// status ? View.VISIBLE : View.INVISIBLE);
+		// findViewById(R.id.image_counterclockwise).setVisibility(
+		// status ? View.VISIBLE : View.INVISIBLE);
+		// findViewById(R.id.browse).setVisibility(
+		// status ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	@Override
@@ -176,18 +181,23 @@ public class ImageActivity extends PanoptesActivity implements
 
 	@Override
 	public void onPostDir(List<String> result) {
-		// set adapter
-		adapter = new ImagePagerAdapter(repoBrowser,
-				getSupportFragmentManager(), optim);
-		adapter.setImageList(result);
-		pager = (ViewPager) findViewById(R.id.imagepager);
-		pager.setAdapter(adapter);
-		if (savedState != null) {
-			pager.setCurrentItem(savedState.getInt(SAVESTATE_CURRENTITEM));
-			savedState = null;
+		// task is finished, release reference
+		task = null;
+		try {
+			// set adapter
+			adapter = new ImagePagerAdapter(repoBrowser, getSupportFragmentManager(), optim);
+			adapter.setImageList(result);
+			pager = (ViewPager) findViewById(R.id.imagepager);
+			pager.setAdapter(adapter);
+			if (savedState != null) {
+				pager.setCurrentItem(savedState.getInt(SAVESTATE_CURRENTITEM));
+				savedState = null;
+			}
+			pager.setOffscreenPageLimit(1);
+			adapter.notifyDataSetChanged();
+		} catch (IllegalStateException ise) {
+			// dirty mean to prevent exception when screen rotates
 		}
-		pager.setOffscreenPageLimit(1);
-		adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -206,8 +216,7 @@ public class ImageActivity extends PanoptesActivity implements
 	/**
 	 * Called when the image is clicked
 	 * 
-	 * @param view
-	 *            image clicked
+	 * @param view image clicked
 	 * @return
 	 */
 	public void onImageClicked(View view) {
@@ -235,11 +244,10 @@ public class ImageActivity extends PanoptesActivity implements
 			return;
 		}
 		// start async task to load content
-		ImageBrowserFragment browseFragment = (ImageBrowserFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.browser_fragment);
+		ImageBrowserFragment browseFragment = (ImageBrowserFragment) getSupportFragmentManager().findFragmentById(
+				R.id.browser_fragment);
 		browseFragment.setRoot(repoBrowser.isRoot());
-		RepositoryDirAsync task = new RepositoryDirAsync(browseFragment,
-				PanoptesHelper.REGEXP_DIRECTORY);
+		RepositoryDirAsync task = new RepositoryDirAsync(browseFragment, PanoptesHelper.REGEXP_DIRECTORY);
 		task.execute(repoBrowser);
 		showBrowserPanel();
 	}
@@ -264,8 +272,7 @@ public class ImageActivity extends PanoptesActivity implements
 
 		// set temporary adapter
 		try {
-			adapter = new LoadingPagerAdapter(getSupportFragmentManager(),
-					optim);
+			adapter = new LoadingPagerAdapter(getSupportFragmentManager(), optim);
 		} catch (PanoptimageFileNotFoundException e) {
 			// cannot happen on LoadingPagerAdapter
 		}
@@ -275,8 +282,7 @@ public class ImageActivity extends PanoptesActivity implements
 		Toast.makeText(this, item.toString(), Toast.LENGTH_LONG).show();
 		// change to directory selected
 		repoBrowser.cd(item.toString());
-		RepositoryDirAsync task = new RepositoryDirAsync(this,
-				PanoptesHelper.REGEXP_ALLIMAGES);
+		RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
 		task.execute(repoBrowser);
 	}
 
@@ -312,20 +318,16 @@ public class ImageActivity extends PanoptesActivity implements
 	 * Hide the browser fragment
 	 */
 	private void hideBrowserPanel() {
-		Fragment browseFragment = getSupportFragmentManager().findFragmentById(
-				R.id.browser_fragment);
-		getSupportFragmentManager().beginTransaction().hide(browseFragment)
-				.commit();
+		Fragment browseFragment = getSupportFragmentManager().findFragmentById(R.id.browser_fragment);
+		getSupportFragmentManager().beginTransaction().hide(browseFragment).commit();
 	}
 
 	/**
 	 * Show the browser fragment
 	 */
 	private void showBrowserPanel() {
-		Fragment browseFragment = getSupportFragmentManager().findFragmentById(
-				R.id.browser_fragment);
-		getSupportFragmentManager().beginTransaction().show(browseFragment)
-				.commit();
+		Fragment browseFragment = getSupportFragmentManager().findFragmentById(R.id.browser_fragment);
+		getSupportFragmentManager().beginTransaction().show(browseFragment).commit();
 	}
 
 	/**
@@ -336,10 +338,9 @@ public class ImageActivity extends PanoptesActivity implements
 	private void loadConfig() {
 		if (!isConfigUptodate()) {
 			try {
-				config = getHelper().getConfigDao().queryForId(
-						Config.DEFAULT_KEY);
-				optim = PanoptimageMemoryOptimEnum.values()[PanoptimageMemoryOptimEnum
-						.findPosition(config.getMemoptim())];
+				config = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
+				optim = PanoptimageMemoryOptimEnum.values()[PanoptimageMemoryOptimEnum.findPosition(config
+						.getMemoptim())];
 			} catch (Exception e) {
 				config = null;
 				optim = PanoptimageMemoryOptimEnum.Auto;

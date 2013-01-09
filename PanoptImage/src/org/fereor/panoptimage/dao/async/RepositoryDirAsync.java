@@ -62,7 +62,7 @@ public class RepositoryDirAsync extends
 
 	@Override
 	protected void onPostExecute(List<String> result) {
-		if (listenerRef != null)
+		if (listenerRef != null && !isCancelled())
 			listenerRef.get().onPostDir(result);
 	}
 
@@ -75,7 +75,7 @@ public class RepositoryDirAsync extends
 	@Override
 	protected void onProgressUpdate(Long... values) {
 		super.onProgressUpdate(values);
-		if (listenerRef != null)
+		if (listenerRef != null && !isCancelled())
 			listenerRef.get().onDirProgressUpdate(values[0]);
 	}
 
