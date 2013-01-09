@@ -22,7 +22,6 @@ import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.service.async.RepositoryGetAsync;
 import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
-import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 
 import android.graphics.Bitmap;
@@ -45,7 +44,8 @@ import android.widget.ImageView.ScaleType;
  * 
  * @author "arnaud.p.fereor"
  */
-public class ImageListFragment extends Fragment implements RepositoryGetListener<Long, RepositoryContent> {
+public class ImageListFragment extends Fragment implements
+		RepositoryGetListener<Long, RepositoryContent> {
 	private static final String BUNDLE_IMGDATA = "org.fereor.panoptimage.activity.image.ImageListFragment.imgdata";
 	private static final String BUNDLE_OPTIM = "org.fereor.panoptimage.activity.image.ImageListFragment.optim";
 
@@ -71,10 +71,11 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	private Handler handler = new Handler();
 
 	/**
-	 * Create a new instance of CountingFragment, providing "num" as an argument.
+	 * Create a new instance of CountingFragment, providing "num" as an
+	 * argument.
 	 */
-	public static ImageListFragment newInstance(RepositoryLoaderDao<?> repo, String path,
-			PanoptimageMemoryOptimEnum optim) {
+	public static ImageListFragment newInstance(RepositoryLoaderDao<?> repo,
+			String path, PanoptimageMemoryOptimEnum optim) {
 		// create instance
 		ImageListFragment f = new ImageListFragment();
 		// Lauch async task
@@ -100,7 +101,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 			optimlvl = getArguments().getInt(BUNDLE_OPTIM);
 			path = getArguments().getString(BUNDLE_IMGDATA);
 			// get screen size
-			Display display = getActivity().getWindowManager().getDefaultDisplay();
+			Display display = getActivity().getWindowManager()
+					.getDefaultDisplay();
 			scrRect = new RectF(0, 0, display.getWidth(), display.getHeight());
 		}
 	}
@@ -109,8 +111,10 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	 * The Fragment's UI is just a simple text view showing its instance number.
 	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_image_list, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.fragment_image_list, container,
+				false);
 		// set image
 		imageView = (ImageView) v.findViewById(R.id.myImage);
 		return v;
@@ -145,15 +149,16 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 		// task is finished, release reference
 		task = null;
 		if (result == null) {
-			((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_loading_file, path);
+			((PanoptesActivity) getActivity()).showErrorMsg(
+					R.string.error_loading_file, path);
 			return;
 		}
 		// put content in view
 		if (imageView != null) {
 			try {
 				// get image at correct size
-				image = PanoptesHelper.decodeSampledBitmap(result, (int) scrRect.width(), (int) scrRect.height(),
-						optimlvl);
+				image = result.decodeAsBitmap((int) scrRect.width(),
+						(int) scrRect.height(), optimlvl);
 				// resize data to optimize memory
 				imgRect = new RectF(0, 0, image.getWidth(), image.getHeight());
 				// Compute matrix
@@ -176,7 +181,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 			@Override
 			public void run() {
 				if (getActivity() != null)
-					((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_outofmemory);
+					((PanoptesActivity) getActivity())
+							.showErrorMsg(R.string.error_outofmemory);
 			}
 		});
 
@@ -188,7 +194,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	@Override
 	public void onGetProgressUpdate(Long... values) {
 		final int splashRes;
-		float val = ((float) values[0]) / ((float) values[1]) * PanoptesConstants.ONPROGRESS_STEPS;
+		float val = ((float) values[0]) / ((float) values[1])
+				* PanoptesConstants.ONPROGRESS_STEPS;
 		// identify image to draw
 		if (val < 1.0f) {
 			splashRes = R.drawable.splash_0;
@@ -204,7 +211,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
-				// This gets executed on the UI thread so it can safely modify Views
+				// This gets executed on the UI thread so it can safely modify
+				// Views
 				imageView.getLayoutParams().width = 120;
 				imageView.getLayoutParams().height = 120;
 				imageView.setImageResource(splashRes);
@@ -233,7 +241,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	/**
 	 * Rotate the matrix
 	 * 
-	 * @param angle angle to rotate
+	 * @param angle
+	 *            angle to rotate
 	 */
 	private void rotateMatrix(float angle) {
 		int pivX = (int) (imgRect.width() / 2);
@@ -244,7 +253,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	/**
 	 * Rotate the image view
 	 * 
-	 * @param angle angle to rotate
+	 * @param angle
+	 *            angle to rotate
 	 */
 	private void rotateImage(float angle) {
 		// rotate the matrix
