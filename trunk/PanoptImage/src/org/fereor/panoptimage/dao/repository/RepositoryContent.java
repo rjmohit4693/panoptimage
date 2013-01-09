@@ -23,7 +23,7 @@ public abstract class RepositoryContent {
 	 * @param reqHeight
 	 * @return
 	 */
-	protected double calculateInSampleSize(int optimlvl, BitmapFactory.Options options, int reqWidth, int reqHeight) {
+	protected static double calculateInSampleSize(int optimlvl, BitmapFactory.Options options, int reqWidth, int reqHeight) {
 		// Raw height and width of image
 		final int height = options.outHeight;
 		final int width = options.outWidth;
