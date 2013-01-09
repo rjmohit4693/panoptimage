@@ -15,22 +15,7 @@ public class ByteRepositoryContent extends RepositoryContent {
 	 *            array of bytes
 	 */
 	public ByteRepositoryContent(byte[] array) {
-		this.setBytes(array);
-	}
-
-	/**
-	 * @return the bytes
-	 */
-	public byte[] getBytes() {
-		return bytes;
-	}
-
-	/**
-	 * @param bytes
-	 *            the bytes to set
-	 */
-	public void setBytes(byte[] bytes) {
-		this.bytes = bytes;
+		this.bytes = array;
 	}
 
 	@Override

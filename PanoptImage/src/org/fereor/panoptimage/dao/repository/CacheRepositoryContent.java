@@ -10,21 +10,6 @@ public class CacheRepositoryContent extends RepositoryContent {
 	private File content;
 
 	public CacheRepositoryContent(File content) {
-		this.setContent(content);
-	}
-
-	/**
-	 * @return the content
-	 */
-	public File getContent() {
-		return content;
-	}
-
-	/**
-	 * @param content
-	 *            the content to set
-	 */
-	public void setContent(File content) {
 		this.content = content;
 	}
 
@@ -48,14 +33,14 @@ public class CacheRepositoryContent extends RepositoryContent {
 		// Get bitmap size
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(getContent().getAbsolutePath(), options);
+		BitmapFactory.decodeFile(content.getAbsolutePath(), options);
 		// Calculate inSampleSize
 		options.inSampleSize = (int) Math.pow(2d,
 				calculateInSampleSize(optimlvl, options, reqWidth, reqHeight));
 		// Decode bitmap with inSampleSize set
 		options.inJustDecodeBounds = false;
-		Bitmap bmp = BitmapFactory.decodeFile(getContent()
-				.getAbsolutePath(), options);
+		Bitmap bmp = BitmapFactory.decodeFile(content.getAbsolutePath(),
+				options);
 		// cached file is no more needed : destroy it
 		destroy();
 		return bmp;
