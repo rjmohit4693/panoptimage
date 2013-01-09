@@ -55,7 +55,7 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 	@Override
 	protected void onProgressUpdate(Long... values) {
 		super.onProgressUpdate(values);
-		if (listenerRef != null && listenerRef.get() != null)
+		if (listenerRef != null && listenerRef.get() != null && !isCancelled())
 			listenerRef.get().onGetProgressUpdate(values);
 	}
 
@@ -66,7 +66,7 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 
 	@Override
 	protected void onPostExecute(RepositoryContent result) {
-		if (listenerRef != null && listenerRef.get() != null)
+		if (listenerRef != null && listenerRef.get() != null && !isCancelled())
 			listenerRef.get().onPostGet(result);
 	}
 }

@@ -49,7 +49,7 @@ public class RepositoryExistsAsync extends AsyncTask<RepositoryLoaderDao<?>, Int
 
 	@Override
 	protected void onPostExecute(Boolean result) {
-		if (listenerRef != null)
+		if (listenerRef != null && !isCancelled())
 			listenerRef.get().onPostExists(result);
 	}
 
@@ -62,7 +62,7 @@ public class RepositoryExistsAsync extends AsyncTask<RepositoryLoaderDao<?>, Int
 	@Override
 	protected void onProgressUpdate(Integer... values) {
 		super.onProgressUpdate(values);
-		if (listenerRef != null)
+		if (listenerRef != null && !isCancelled())
 			listenerRef.get().onExistsProgressUpdate(values[0]);
 	}
 

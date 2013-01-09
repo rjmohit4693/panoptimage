@@ -66,6 +66,10 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 
 	@Override
 	public void onPostDir(List<String> rawdir) {
+		if (getActivity() == null) {
+			// fragment is no more in the activity (screen has rotated) : return
+			return;
+		}
 		ArrayList<String> directories = new ArrayList<String>();
 		// Include .. to the list
 		if (!isRoot()) {
@@ -100,7 +104,7 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 	public void onOEM(Throwable t) {
 		((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_outofmemory);
 	}
-	
+
 	/**
 	 * @return the root
 	 */
