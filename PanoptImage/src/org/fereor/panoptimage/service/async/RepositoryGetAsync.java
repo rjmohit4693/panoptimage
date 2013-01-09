@@ -28,21 +28,21 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 	/** path to get */
 	private String path;
 	/** listener for this task */
-	WeakReference<RepositoryGetListener<Long, RepositoryContent>> listener;
+	private WeakReference<RepositoryGetListener<Long, RepositoryContent>> listenerRef;
 
 	public RepositoryGetAsync(RepositoryGetListener<Long, RepositoryContent> listener, String path) {
 		this.path = path;
-		this.listener = new WeakReference<RepositoryGetListener<Long, RepositoryContent>>(listener);
+		this.listenerRef = new WeakReference<RepositoryGetListener<Long, RepositoryContent>>(listener);
 	}
 
 	@Override
 	protected RepositoryContent doInBackground(RepositoryLoaderDao<?>... repo) {
 
-		if (listener != null && listener.get() != null) {
+		if (listenerRef != null && listenerRef.get() != null) {
 			try {
-				return repo[0].get(path, listener.get());
+				return repo[0].get(path, listenerRef.get());
 			} catch (OutOfMemoryError oem) {
-				listener.get().onOEM(oem);
+				listenerRef.get().onOEM(oem);
 			} catch (PanoptimageFileNotFoundException e) {
 				return null;
 			} catch (PanoptimageException e) {
@@ -55,8 +55,8 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 	@Override
 	protected void onProgressUpdate(Long... values) {
 		super.onProgressUpdate(values);
-		if (listener != null && listener.get() != null)
-			listener.get().onGetProgressUpdate(values);
+		if (listenerRef != null && listenerRef.get() != null)
+			listenerRef.get().onGetProgressUpdate(values);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class RepositoryGetAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 
 	@Override
 	protected void onPostExecute(RepositoryContent result) {
-		if (listener != null && listener.get() != null)
-			listener.get().onPostGet(result);
+		if (listenerRef != null && listenerRef.get() != null)
+			listenerRef.get().onPostGet(result);
 	}
 }

@@ -15,6 +15,8 @@
 
 package org.fereor.panoptimage.service.async;
 
+import java.lang.ref.WeakReference;
+
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 
 import android.os.AsyncTask;
@@ -28,11 +30,11 @@ public class RepositoryExistsAsync extends AsyncTask<RepositoryLoaderDao<?>, Int
 	/** regular expression for the dir command */
 	private String path;
 	/** listener for this task */
-	RepositoryExistsListener<Integer, Boolean> listener;
+	private WeakReference<RepositoryExistsListener<Integer, Boolean>> listenerRef;
 
 	public RepositoryExistsAsync(RepositoryExistsListener<Integer, Boolean> listener, String path) {
 		this.path = path;
-		this.listener = listener;
+		this.listenerRef = new WeakReference<RepositoryExistsListener<Integer, Boolean>>(listener);
 	}
 
 	@Override
@@ -47,18 +49,21 @@ public class RepositoryExistsAsync extends AsyncTask<RepositoryLoaderDao<?>, Int
 
 	@Override
 	protected void onPostExecute(Boolean result) {
-		listener.onPostExists(result);
+		if (listenerRef != null)
+			listenerRef.get().onPostExists(result);
 	}
 
 	@Override
 	protected void onPreExecute() {
-		listener.onPreExists();
+		if (listenerRef != null)
+			listenerRef.get().onPreExists();
 	}
 
 	@Override
 	protected void onProgressUpdate(Integer... values) {
 		super.onProgressUpdate(values);
-		listener.onExistsProgressUpdate(values[0]);
+		if (listenerRef != null)
+			listenerRef.get().onExistsProgressUpdate(values[0]);
 	}
 
 }
