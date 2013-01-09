@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU General Public License
 // along with panoptimage.  If not, see <http://www.gnu.org/licenses/>
 
-package org.fereor.panoptimage.service.async;
+package org.fereor.panoptimage.dao.async;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
