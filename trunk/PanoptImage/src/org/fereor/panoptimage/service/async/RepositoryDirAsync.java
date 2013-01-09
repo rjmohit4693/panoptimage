@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.service.async;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
@@ -24,27 +25,34 @@ import android.os.AsyncTask;
 
 /**
  * Class to browse content of a directory
+ * 
  * @author "arnaud.p.fereor"
- *
+ * 
  */
-public class RepositoryDirAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, List<String>> {
+public class RepositoryDirAsync extends
+		AsyncTask<RepositoryLoaderDao<?>, Long, List<String>> {
 	/** regular expression for the dir command */
 	private String regexp;
 	/** listener for this task */
-	RepositoryDirListener<Long, List<String>> listener;
+	private WeakReference<RepositoryDirListener<Long, List<String>>> listenerRef;
 
-	public RepositoryDirAsync(RepositoryDirListener<Long, List<String>> listener, String regexp) {
+	public RepositoryDirAsync(
+			RepositoryDirListener<Long, List<String>> listener, String regexp) {
 		this.regexp = regexp;
-		this.listener = listener;
+		this.listenerRef = new WeakReference<RepositoryDirListener<Long, List<String>>>(
+				listener);
 	}
 
 	@Override
 	protected List<String> doInBackground(RepositoryLoaderDao<?>... repo) {
-		try {
-			return repo[0].dir(regexp, listener);
-		} catch (PanoptimageFileNotFoundException e) {
-			return null;
+		if (listenerRef.get() != null) {
+			try {
+				return repo[0].dir(regexp, listenerRef.get());
+			} catch (PanoptimageFileNotFoundException e) {
+				return null;
+			}
 		}
+		return null;
 	}
 
 	@Override
@@ -54,18 +62,21 @@ public class RepositoryDirAsync extends AsyncTask<RepositoryLoaderDao<?>, Long, 
 
 	@Override
 	protected void onPostExecute(List<String> result) {
-		listener.onPostDir(result);
+		if (listenerRef != null)
+			listenerRef.get().onPostDir(result);
 	}
 
 	@Override
 	protected void onPreExecute() {
-		listener.onPreDir();
+		if (listenerRef != null)
+			listenerRef.get().onPreDir();
 	}
 
 	@Override
 	protected void onProgressUpdate(Long... values) {
 		super.onProgressUpdate(values);
-		listener.onDirProgressUpdate(values[0]);
+		if (listenerRef != null)
+			listenerRef.get().onDirProgressUpdate(values[0]);
 	}
 
 }
