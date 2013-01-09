@@ -17,10 +17,10 @@ package org.fereor.panoptimage.activity.image;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
+import org.fereor.panoptimage.dao.async.RepositoryGetAsync;
+import org.fereor.panoptimage.dao.async.RepositoryGetListener;
 import org.fereor.panoptimage.dao.repository.RepositoryContent;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
-import org.fereor.panoptimage.service.async.RepositoryGetAsync;
-import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 

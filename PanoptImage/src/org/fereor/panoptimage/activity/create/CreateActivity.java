@@ -22,14 +22,14 @@ import java.util.concurrent.Callable;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
+import org.fereor.panoptimage.dao.async.RepositoryExistsAsync;
+import org.fereor.panoptimage.dao.async.RepositoryExistsListener;
 import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.dao.repository.WebdavRepositoryDao;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
-import org.fereor.panoptimage.service.async.RepositoryExistsAsync;
-import org.fereor.panoptimage.service.async.RepositoryExistsListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;

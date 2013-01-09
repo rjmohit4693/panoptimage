@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
+import org.fereor.panoptimage.dao.async.RepositoryDirAsync;
+import org.fereor.panoptimage.dao.async.RepositoryDirListener;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderFactory;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
@@ -28,8 +30,6 @@ import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.service.HomePagerParamService;
-import org.fereor.panoptimage.service.async.RepositoryDirAsync;
-import org.fereor.panoptimage.service.async.RepositoryDirListener;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;

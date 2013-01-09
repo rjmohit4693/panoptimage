@@ -13,25 +13,31 @@
 // You should have received a copy of the GNU General Public License
 // along with panoptimage.  If not, see <http://www.gnu.org/licenses/>
 
-package org.fereor.panoptimage.service.async;
+package org.fereor.panoptimage.dao.async;
 
+import org.fereor.davdroid.DavDroidListener;
 
-public interface RepositoryExistsListener<Progress, Result> {
-
+public class DavDroidGetListener<T, U> implements DavDroidListener<T> {
+	RepositoryGetListener<T, U> parent;
+	private float steps;
 	/**
-	 * Mark progress update in dir
-	 * @param values
+	 * Default constructor
+	 * @param parent parent listener
 	 */
-	void onExistsProgressUpdate(Progress... values);
+	public DavDroidGetListener(RepositoryGetListener<T, U> parent, float steps) {
+		super();
+		this.parent = parent;
+		this.steps = steps;
+	}
 
-	/**
-	 * Mark result at end of execution
-	 * @param result
-	 */
-	void onPostExists(Result result);
+	@Override
+	public void onProgress(T... values) {
+		parent.onGetProgressUpdate(values);
+	}
 
-	/**
-	 * Mark result before execution
-	 */
-	void onPreExists();
+	@Override
+	public float nbSteps() {
+		return steps;
+	}
+
 }

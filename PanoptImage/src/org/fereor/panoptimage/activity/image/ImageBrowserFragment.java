@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.activity.PanoptesActivity;
-import org.fereor.panoptimage.service.async.RepositoryDirListener;
+import org.fereor.panoptimage.dao.async.RepositoryDirListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
 
 import android.os.Bundle;

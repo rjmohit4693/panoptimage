@@ -20,10 +20,10 @@ import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.List;
 
+import org.fereor.panoptimage.dao.async.RepositoryDirListener;
+import org.fereor.panoptimage.dao.async.RepositoryGetListener;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.model.LocalParam;
-import org.fereor.panoptimage.service.async.RepositoryDirListener;
-import org.fereor.panoptimage.service.async.RepositoryGetListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.RegexpFilenameFilter;
 

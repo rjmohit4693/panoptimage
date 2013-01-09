@@ -13,31 +13,25 @@
 // You should have received a copy of the GNU General Public License
 // along with panoptimage.  If not, see <http://www.gnu.org/licenses/>
 
-package org.fereor.panoptimage.service.async;
+package org.fereor.panoptimage.dao.async;
 
 
-public interface RepositoryGetListener<Progress, Result> {
+public interface RepositoryExistsListener<Progress, Result> {
+
 	/**
 	 * Mark progress update in dir
-	 * 
 	 * @param values
 	 */
-	void onGetProgressUpdate(Progress... values);
+	void onExistsProgressUpdate(Progress... values);
 
 	/**
-	 * Mark result finished
-	 * 
+	 * Mark result at end of execution
 	 * @param result
 	 */
-	void onPostGet(Result result);
+	void onPostExists(Result result);
 
 	/**
-	 * Mark before get is launched
+	 * Mark result before execution
 	 */
-	void onPreGet();
-
-	/**
-	 * OutOfMemory Error happened
-	 */
-	void onOEM(Throwable t);
+	void onPreExists();
 }
