@@ -38,6 +38,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.support.v4.view.ViewPager.PageTransformer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -45,8 +47,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class ImageActivity extends PanoptesActivity implements OnItemClickListener,
-		RepositoryDirListener<Long, List<String>> {
+public class ImageActivity extends PanoptesActivity implements OnPageChangeListener, OnItemClickListener,
+		RepositoryDirListener<Long, List<String>>, PageTransformer {
 	private static final String SAVESTATE_CURRENTITEM = "org.fereor.panoptimage.activity.image.ImageActivity.currentItem";
 	private static final String SAVESTATE_CURRENTPATH = "org.fereor.panoptimage.activity.image.ImageActivity.currentPath";
 	private RepositoryLoaderDao<?> repoBrowser;
@@ -85,6 +87,8 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 			pager = (ViewPager) findViewById(R.id.imagepager);
 			pager.setAdapter(adapter);
 			pager.setOffscreenPageLimit(1);
+			pager.setOnPageChangeListener(this);
+			pager.setPageTransformer(true, this);
 			savedState = savedInstanceState;
 			// restore state if needed
 			if (savedState != null) {
@@ -151,15 +155,11 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	 * Show/Hide navigation buttons
 	 */
 	private void showButtons(boolean status) {
-		// buttonVisible = status;
-		// findViewById(R.id.back).setVisibility(
-		// status ? View.VISIBLE : View.INVISIBLE);
-		// findViewById(R.id.image_clockwise).setVisibility(
-		// status ? View.VISIBLE : View.INVISIBLE);
-		// findViewById(R.id.image_counterclockwise).setVisibility(
-		// status ? View.VISIBLE : View.INVISIBLE);
-		// findViewById(R.id.browse).setVisibility(
-		// status ? View.VISIBLE : View.INVISIBLE);
+		buttonVisible = status;
+		findViewById(R.id.back).setVisibility(status ? View.VISIBLE : View.INVISIBLE);
+		findViewById(R.id.image_clockwise).setVisibility(status ? View.VISIBLE : View.INVISIBLE);
+		findViewById(R.id.image_counterclockwise).setVisibility(status ? View.VISIBLE : View.INVISIBLE);
+		findViewById(R.id.browse).setVisibility(status ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	@Override
@@ -208,6 +208,57 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 	@Override
 	public void onOEM(Throwable t) {
 		showErrorMsg(R.string.error_outofmemory);
+	}
+
+	// -------------------------------------------------------------------------
+	// Methods for PageChange Listener
+	// -------------------------------------------------------------------------
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// nothing
+
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+		// nothing
+
+	}
+
+	@Override
+	public void onPageSelected(int arg0) {
+		showButtons(false);
+	}
+
+	// -------------------------------------------------------------------------
+	// Methods for PageTransformer Listener
+	// -------------------------------------------------------------------------
+	@Override
+	public void transformPage(View page, float position) {
+		// Use APIs supported by API level 11 (Android 3.0) and up
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			// Default values
+			float scaleFactor = 1;
+			float rotation = 0;
+			float alpha = 1;
+			// for page coming from the right
+			if (position > 0) {
+				scaleFactor = 1 - position;
+				rotation = 90 * position;
+				alpha = 1 - position;
+			}
+			// for page coming from the left
+			else if (position < 0){
+				scaleFactor = 1 + position;
+				rotation = 90 * position;
+				alpha = 1 + position;
+			}
+
+			ViewWrapperCompat.getInstance().setAlpha(page, alpha);
+			ViewWrapperCompat.getInstance().setScaleX(page, scaleFactor);
+			ViewWrapperCompat.getInstance().setScaleY(page, scaleFactor);
+			ViewWrapperCompat.getInstance().setRotationY(page, rotation);
+		}
 	}
 
 	// -------------------------------------------------------------------------
@@ -264,8 +315,6 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 
 	@Override
 	public void onItemClick(AdapterView<?> lView, View v, int position, long id) {
-		// hide buttons
-		showButtons(false);
 		// hide panel
 		hideBrowserPanel();
 		Object item = lView.getAdapter().getItem(position);
@@ -278,7 +327,7 @@ public class ImageActivity extends PanoptesActivity implements OnItemClickListen
 		}
 		pager = (ViewPager) findViewById(R.id.imagepager);
 		pager.setAdapter(adapter);
-		pager.setOffscreenPageLimit(0);
+		pager.setOffscreenPageLimit(1);
 		Toast.makeText(this, item.toString(), Toast.LENGTH_LONG).show();
 		// change to directory selected
 		repoBrowser.cd(item.toString());
