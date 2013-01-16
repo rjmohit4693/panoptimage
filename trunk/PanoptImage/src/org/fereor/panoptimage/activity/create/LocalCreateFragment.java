@@ -15,12 +15,15 @@
 
 package org.fereor.panoptimage.activity.create;
 
+import java.io.File;
+
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.LocalParam;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,8 +75,9 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 			pathField.setText(content.getPath());
 			setKeyEditable(false);
 		} else {
+			File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 			nameField.setText("");
-			pathField.setText("");
+			pathField.setText(path == null ? "" : path.getAbsolutePath());
 			setKeyEditable(true);
 		}
 	}
