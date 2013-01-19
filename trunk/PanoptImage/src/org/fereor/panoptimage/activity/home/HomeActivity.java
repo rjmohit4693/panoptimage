@@ -106,6 +106,7 @@ public class HomeActivity extends PanoptesActivity {
 		getMenuInflater().inflate(R.menu.activity_home, menu);
 		return true;
 	}
+
 	@Override
 	protected void displayTooltips() {
 		showTooltip(R.id.tooltip_create);
