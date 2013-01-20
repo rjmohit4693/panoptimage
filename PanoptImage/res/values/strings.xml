@@ -74,6 +74,7 @@
     <string name="create_webdav_path">Path</string>
     <string name="create_webdav_path_hint">Ex: /mypath</string>
     <string name="create_webdav_save">Save</string>
+    <string name="create_webdav_foundsites">Found %d sites</string>
 
     <!-- Error messages -->
     <string name="error_header">Error: %s</string>
