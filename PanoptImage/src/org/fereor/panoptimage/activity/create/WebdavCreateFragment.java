@@ -116,6 +116,30 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		pathField.setText(path);
 	}
 
+	/**
+	 * Sets the server ip
+	 * @param ip
+	 */
+	public void setServer(String ip) {
+		serverField.setText(ip);
+	}
+
+	/**
+	 * Sets the server port
+	 * @param ip
+	 */
+	public void setPort(int port) {
+		portField.setText(port);
+	}
+
+	/**
+	 * Sets the server protocol
+	 * @param ip
+	 */
+	public void setProtocol(WebdavProtocols protocol) {
+		//TODO protocolField.(ip);
+	}
+
 	@Override
 	public WebdavParam readParam() {
 		// create content if null

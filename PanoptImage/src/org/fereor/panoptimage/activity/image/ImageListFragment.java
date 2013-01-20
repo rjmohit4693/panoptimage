@@ -16,13 +16,13 @@
 package org.fereor.panoptimage.activity.image;
 
 import org.fereor.panoptimage.R;
-import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.dao.async.RepositoryGetAsync;
 import org.fereor.panoptimage.dao.async.RepositoryGetListener;
 import org.fereor.panoptimage.dao.repository.RepositoryContent;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
+import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -144,7 +144,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 		// task is finished, release reference
 		task = null;
 		if (result == null) {
-			((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_loading_file, path);
+			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_loading_file, path);
 			return;
 		}
 		// put content in view
@@ -174,7 +174,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 			@Override
 			public void run() {
 				if (getActivity() != null)
-					((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_outofmemory);
+					PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_outofmemory);
 			}
 		});
 

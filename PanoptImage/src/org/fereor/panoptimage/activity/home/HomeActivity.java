@@ -31,6 +31,7 @@ import org.fereor.panoptimage.model.WebdavParam;
 import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
+import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,7 +71,7 @@ public class HomeActivity extends PanoptesActivity {
 			} else {
 			}
 		} catch (SQLException e) {
-			showErrorMsg(e);
+			PanoptimageMsg.showErrorMsg(this, e);
 		}
 	}
 
@@ -94,7 +95,7 @@ public class HomeActivity extends PanoptesActivity {
 				pager.setAdapter(adapter);
 				adapter.notifyDataSetChanged();
 			} catch (SQLException e) {
-				showErrorMsg(e);
+				PanoptimageMsg.showErrorMsg(this, e);
 			}
 		}
 
@@ -128,7 +129,7 @@ public class HomeActivity extends PanoptesActivity {
 	public void onImageClicked(View view) {
 		int location = pager.getCurrentItem();
 		if (location >= content.size()) {
-			showErrorMsg(getString(R.string.error_unknown));
+			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_unknown));
 			return;
 		}
 
@@ -141,7 +142,7 @@ public class HomeActivity extends PanoptesActivity {
 		// check network availability
 		if (curparam.getParam().needNetwork() && !isNetworkAvailable()) {
 			// Network is not available. Inform and return
-			showErrorMsg(getString(R.string.error_nonetwork));
+			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
 			return;
 		}
 

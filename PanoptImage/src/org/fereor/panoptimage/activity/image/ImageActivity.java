@@ -33,6 +33,7 @@ import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
+import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -79,7 +80,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 			// check network availability
 			if (param.getParam().needNetwork() && !isNetworkAvailable()) {
 				// Network is not available. Inform and return
-				showErrorMsg(getString(R.string.error_nonetwork));
+				PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
 				return;
 			}
 			// set temporary adapter
@@ -98,11 +99,11 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 			task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
 			task.execute(repoBrowser);
 		} catch (PanoptimageFileNotFoundException e) {
-			showErrorMsg(R.string.error_filenotfound, e.getLocation());
+			PanoptimageMsg.showErrorMsg(this, R.string.error_filenotfound, e.getLocation());
 		} catch (PanoptesUnknownParamException e) {
-			showErrorMsg(getString(R.string.error_unknown_param));
+			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_unknown_param));
 		} catch (PanoptimageNoNetworkException e) {
-			showErrorMsg(getString(R.string.error_nonetwork));
+			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
 		}
 	}
 
@@ -207,7 +208,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 
 	@Override
 	public void onOEM(Throwable t) {
-		showErrorMsg(R.string.error_outofmemory);
+		PanoptimageMsg.showErrorMsg(this, R.string.error_outofmemory);
 	}
 
 	// -------------------------------------------------------------------------
