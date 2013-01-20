@@ -17,11 +17,9 @@ package org.fereor.panoptimage.activity;
 
 import java.sql.SQLException;
 
-import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.dao.db.DatabaseHelper;
 import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.model.Config;
-import org.fereor.panoptimage.util.PanoptesConstants;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -29,11 +27,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
@@ -202,57 +198,4 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	public boolean isTooltipVisible() {
 		return tooltipvisible;
 	}
-
-	// -------------------------------------------------------------------------
-	// Methods for Messages
-	// -------------------------------------------------------------------------
-	/**
-	 * Display an error message
-	 * 
-	 * @param e
-	 */
-	public void showErrorMsg(int stringRes, Object... args) {
-		String msg = String.format(getString(stringRes), args);
-		showErrorMsg(msg);
-	}
-
-	/**
-	 * Display an error message
-	 * 
-	 * @param e
-	 */
-	public void showErrorMsg(Exception e) {
-		showErrorMsg(e.toString());
-	}
-
-	/**
-	 * Display an error message
-	 * 
-	 * @param e
-	 */
-	public void showInfoMsg(int stringRes, Object... args) {
-		String msg = getString(stringRes, args);
-		showInfoMsg(msg);
-	}
-
-	/**
-	 * Display a message
-	 * 
-	 * @param msg message to display
-	 */
-	public void showInfoMsg(String msg) {
-		Log.d(PanoptesConstants.TAGNAME, "Info:" + msg);
-		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-	}
-
-	/**
-	 * Display an error message
-	 * 
-	 * @param e
-	 */
-	public void showErrorMsg(String msg) {
-		Log.d(PanoptesConstants.TAGNAME, "Error:" + msg);
-		Toast.makeText(this, getString(R.string.error_header, msg), Toast.LENGTH_LONG).show();
-	}
-
 }

@@ -20,9 +20,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.fereor.panoptimage.R;
-import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.dao.async.RepositoryDirListener;
 import org.fereor.panoptimage.util.PanoptesHelper;
+import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -102,7 +102,7 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 
 	@Override
 	public void onOEM(Throwable t) {
-		((PanoptesActivity) getActivity()).showErrorMsg(R.string.error_outofmemory);
+		PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_outofmemory);
 	}
 
 	/**

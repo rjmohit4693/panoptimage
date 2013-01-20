@@ -25,6 +25,7 @@ import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
+import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -55,7 +56,7 @@ public class ConfigActivity extends PanoptesActivity {
 			fillFields();
 		} catch (SQLException e) {
 			Log.e(PanoptesConstants.TAGNAME, "Cannot load config : " + e.toString());
-			showErrorMsg(R.string.error_load_cfg, e.toString());
+			PanoptimageMsg.showErrorMsg(this, R.string.error_load_cfg, e.toString());
 		}
 
 	}
@@ -82,10 +83,10 @@ public class ConfigActivity extends PanoptesActivity {
 			readFields();
 			saveConfig(data);
 		} catch (Exception e) {
-			showErrorMsg(R.string.error_save_cfg, e.toString());
+			PanoptimageMsg.showErrorMsg(this, R.string.error_save_cfg, e.toString());
 			return;
 		}
-		showInfoMsg(R.string.param_message_saved);
+		PanoptimageMsg.showInfoMsg(this, R.string.param_message_saved);
 		DatabaseStatus.getInstance().markConfigSaved();
 	}
 

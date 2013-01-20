@@ -33,6 +33,8 @@ import org.fereor.panoptimage.model.WebdavParam;
 import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
+import org.fereor.panoptimage.util.PanoptimageMsg;
+import org.fereor.panoptimage.util.network.HotSite;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -142,13 +144,13 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 
 			}
 		} catch (Exception e) {
-			showErrorMsg(e);
+			PanoptimageMsg.showErrorMsg(this, e);
 		}
 
 		// Refresh the spinner
 		populateSpinner();
 		// show message
-		showInfoMsg(String.format(getString(R.string.create_message_saved), param.getKey()));
+		PanoptimageMsg.showInfoMsg(this, getString(R.string.create_message_saved, param.getKey()));
 	}
 
 	/**
@@ -187,12 +189,12 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 
 			}
 		} catch (Exception e) {
-			showErrorMsg(e);
+			PanoptimageMsg.showErrorMsg(this, e);
 		}
 		// Refresh the spinner
 		populateSpinner();
 		// show message
-		showInfoMsg(String.format(getString(R.string.create_message_deleted), param.getKey()));
+		PanoptimageMsg.showInfoMsg(this, getString(R.string.create_message_deleted, param.getKey()));
 	}
 
 	/**
@@ -209,7 +211,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		// Test network availability
 		if (param.needNetwork() && !isNetworkAvailable()) {
 			// Network is not available. Inform and return
-			showErrorMsg(getString(R.string.error_nonetwork));
+			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
 			return;
 		}
 
@@ -219,7 +221,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 				RepositoryExistsAsync task = new RepositoryExistsAsync(this, PanoptesHelper.SLASH);
 				task.execute(new WebdavRepositoryDao((WebdavParam) param, getFilesDir()));
 			} catch (PanoptimageNoNetworkException e) {
-				showErrorMsg(getString(R.string.error_nonetwork));
+				PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
 				return;
 			}
 		}
@@ -271,6 +273,55 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		}
 	}
 
+	/**
+	 * Action on the Browse button
+	 * 
+	 * @param v view clicked
+	 */
+	public void doScan(View v) {
+		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doScan");
+		// Check network
+		if (!isNetworkAvailable()) {
+			PanoptimageMsg.showInfoMsg(this, R.string.error_nonetwork);
+			return;
+		}
+		// create the scan fragment and put it
+		CreateScanFragment fragment = new CreateScanFragment();
+		getSupportFragmentManager().beginTransaction().add(R.id.scan_fragment, fragment).commit();
+	}
+
+	/**
+	 * Action on validate button
+	 * 
+	 * @param v view clicked
+	 */
+	public void doScanValidate(View v) {
+		CreateScanFragment scanFragment = (CreateScanFragment) getSupportFragmentManager().findFragmentById(
+				R.id.scan_fragment);
+		if (scanFragment != null && scanFragment.isDone()) {
+			HotSite site = scanFragment.getSelectedHotSite();
+			getSupportFragmentManager().beginTransaction().remove(scanFragment).commit();
+			// do something with site selected
+			if(displayFragment instanceof WebdavCreateFragment){
+				WebdavCreateFragment f = (WebdavCreateFragment)displayFragment;
+				f.setServer(site.getHost().getHostAddress());
+				f.setPort(site.getPort());
+			}
+		}
+	}
+
+	/**
+	 * Action on cancel button
+	 * 
+	 * @param v view clicked
+	 */
+	public void doScanCancel(View v) {
+		Fragment browseFragment = getSupportFragmentManager().findFragmentById(R.id.scan_fragment);
+		if (browseFragment != null) {
+			getSupportFragmentManager().beginTransaction().remove(browseFragment).commit();
+		}
+	}
+
 	// -------------------------------------------------------------------------
 	// Methods of interface OnItemSelectedListener
 	// -------------------------------------------------------------------------
@@ -302,9 +353,9 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 			getSupportFragmentManager().beginTransaction().replace(R.id.create_fragment, displayFragment).commit();
 			displayFragment.onRefresh();
 		} catch (InstantiationException e) {
-			showErrorMsg(e);
+			PanoptimageMsg.showErrorMsg(this, e);
 		} catch (IllegalAccessException e) {
-			showErrorMsg(e);
+			PanoptimageMsg.showErrorMsg(this, e);
 		}
 	}
 
@@ -329,9 +380,9 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	@Override
 	public void onPostExists(Boolean result) {
 		if (result) {
-			showInfoMsg(getString(R.string.error_okserver));
+			PanoptimageMsg.showInfoMsg(this, getString(R.string.error_okserver));
 		} else {
-			showInfoMsg(getString(R.string.error_noserver));
+			PanoptimageMsg.showInfoMsg(this, getString(R.string.error_noserver));
 		}
 	}
 
@@ -403,7 +454,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 				}
 			}
 		} catch (SQLException e) {
-			showErrorMsg(e);
+			PanoptimageMsg.showErrorMsg(this, e);
 		}
 
 		// populate the spinner with default values
@@ -412,5 +463,4 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		// Apply the adapter to the spinner
 		selector.setAdapter(adapter);
 	}
-
 }

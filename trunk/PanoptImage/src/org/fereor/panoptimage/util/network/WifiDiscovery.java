@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.util.network;
 
+import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -27,8 +28,6 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 
 public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implements DiscoveryListener {
-	/** list of ports to scan */
-	private int[] ports;
 	/** Executor for all async tasks to handle */
 	private ExecutorService executor;
 	/** DHCP information */
@@ -37,6 +36,10 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 	List<HotSite> sites;
 	/** Size of loop */
 	private Long loopsize;
+	/** mximum size */
+	private long max;
+	/** Listener */
+	private WeakReference<ScanListener> listener;
 
 	/**
 	 * Constructor
@@ -44,8 +47,9 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 	 * @param wifi wifi manager to gather network information
 	 * @param p list of ports to scan
 	 */
-	public WifiDiscovery(WifiManager wifi, int poolsize, int... p) {
-		this.ports = p;
+	public WifiDiscovery(ScanListener lsn, WifiManager wifi, int poolsize, int... p) {
+		// Prepare listener
+		this.listener = new WeakReference<ScanListener>(lsn);
 		// Create the thread executor
 		executor = Executors.newFixedThreadPool(poolsize);
 		// Prepare DHCP info
@@ -54,7 +58,7 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 		sites = new ArrayList<HotSite>();
 		// get max number of addresses
 		byte[] nomask = intToInetBytes(~dhcp.netmask);
-		long max = 0xffffffff & nomask[0] + 0xffffff & nomask[1] + 0xffff & nomask[2] + 0xff & nomask[3];
+		max = 0xffffffff & nomask[0] + 0xffffff & nomask[1] + 0xffff & nomask[2] + 0xff & nomask[3];
 		loopsize = max;
 		// init discovery
 		for (int adi = 0; adi < max; adi++) {
@@ -63,7 +67,7 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 				int addr = (dhcp.ipAddress & dhcp.netmask) | (adi & 0xff) << 24 | (adi >> 8 & 0xff) << 16
 						| (adi >> 16 & 0xff) << 8;
 				InetAddress target = InetAddress.getByAddress(intToInetBytes(addr));
-				DiscoveryTask t = new DiscoveryTask(this, ports);
+				DiscoveryTask t = new DiscoveryTask(this, p);
 				t.executeOnExecutor(executor, target);
 			} catch (UnknownHostException e) {
 				// Host is unknown : just ignore it
@@ -90,6 +94,10 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 			if (ad != null) {
 				sites.addAll(ad);
 			}
+			if (listener != null && listener.get() != null) {
+				listener.get().onScanProgress(max, max - loopsize);
+			}
+
 		}
 	}
 
@@ -98,6 +106,9 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 		super.onPostExecute(result);
 		executor.shutdown();
 		executor = null;
+		if (listener != null && listener.get() != null) {
+			listener.get().onScanFinished(result);
+		}
 	}
 
 	// -------------------------------------------
