@@ -70,6 +70,16 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp" />
 
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scan_fragment"
+        android:layout_width="@dimen/create_browse"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignTop="@+id/create_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp" />
+
     <TextView
         android:id="@+id/tooltip_back"
         android:layout_width="@dimen/tooltip_width"
