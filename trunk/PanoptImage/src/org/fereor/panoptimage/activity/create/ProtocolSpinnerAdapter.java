@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavProtocols> {
+public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavProtocolIcon> {
 	
 	/** parent activity */
 	private Activity container;
@@ -37,7 +37,7 @@ public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavProtocols> {
 	 * @param
 	 */
 	public ProtocolSpinnerAdapter(Activity context,
-			int textViewResourceId, WebdavProtocols[] data) {
+			int textViewResourceId, WebdavProtocolIcon[] data) {
 		super(context, textViewResourceId, data);
 		this.container = context;
 	}
@@ -45,7 +45,7 @@ public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavProtocols> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		TextView v = (TextView) super.getView(position, convertView, parent);
-		WebdavProtocols item = getItem(position);
+		WebdavProtocolIcon item = getItem(position);
 		v.setText(item.toString());
 		v.setCompoundDrawablesWithIntrinsicBounds(item.icon(), 0, 0, 0);
 		v.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
@@ -61,7 +61,7 @@ public class ProtocolSpinnerAdapter extends ArrayAdapter<WebdavProtocols> {
 		}
 
 		// get item to display
-		WebdavProtocols item = getItem(position);
+		WebdavProtocolIcon item = getItem(position);
 
 		if (item != null) {
 			// Parse the data from each object and set it.

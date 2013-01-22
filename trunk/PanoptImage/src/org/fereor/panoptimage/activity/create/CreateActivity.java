@@ -15,6 +15,7 @@
 
 package org.fereor.panoptimage.activity.create;
 
+import java.net.InetAddress;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,10 @@ import org.fereor.panoptimage.util.PanoptesHelper;
 import org.fereor.panoptimage.util.PanoptesTypeEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 import org.fereor.panoptimage.util.network.HotSite;
+import org.fereor.panoptimage.util.network.WifiDiscovery;
 
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -285,9 +289,23 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 			PanoptimageMsg.showInfoMsg(this, R.string.error_nonetwork);
 			return;
 		}
-		// create the scan fragment and put it
-		CreateScanFragment fragment = new CreateScanFragment();
-		getSupportFragmentManager().beginTransaction().add(R.id.scan_fragment, fragment).commit();
+		
+		try {
+			WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+			InetAddress ad = InetAddress.getByAddress(WifiDiscovery.intToInetBytes(wifi.getDhcpInfo().ipAddress));
+			// Check if IP is local (if not, scan is dangerous)
+			if (!ad.isSiteLocalAddress()) {
+				PanoptimageMsg.showInfoMsg(this, R.string.error_wifionly);
+				return;
+			}
+			// create the scan fragment and put it
+			CreateScanFragment fragment = new CreateScanFragment();
+			getSupportFragmentManager().beginTransaction().add(R.id.scan_fragment, fragment).commit();
+		} catch (Exception e) {
+			PanoptimageMsg.showInfoMsg(this, R.string.error_wifionly);
+			return;
+		}
+
 	}
 
 	/**
@@ -298,14 +316,19 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	public void doScanValidate(View v) {
 		CreateScanFragment scanFragment = (CreateScanFragment) getSupportFragmentManager().findFragmentById(
 				R.id.scan_fragment);
-		if (scanFragment != null && scanFragment.isDone()) {
+		// Check if loading not finished
+		if (scanFragment != null && scanFragment.isDone() && !scanFragment.isDetached()) {
 			HotSite site = scanFragment.getSelectedHotSite();
-			getSupportFragmentManager().beginTransaction().remove(scanFragment).commit();
-			// do something with site selected
-			if(displayFragment instanceof WebdavCreateFragment){
-				WebdavCreateFragment f = (WebdavCreateFragment)displayFragment;
-				f.setServer(site.getHost().getHostAddress());
-				f.setPort(site.getPort());
+			// test if an item is selected
+			if (site != null) {
+				getSupportFragmentManager().beginTransaction().remove(scanFragment).commit();
+				// do something with site selected
+				if (displayFragment instanceof WebdavCreateFragment) {
+					WebdavCreateFragment f = (WebdavCreateFragment) displayFragment;
+					f.setServer(site.getHost().getHostAddress());
+					f.setPort(site.getPort());
+					f.setProtocol(WebdavProtocolIcon.findIcon(site.getPort()));
+				}
 			}
 		}
 	}
