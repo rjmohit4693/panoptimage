@@ -21,7 +21,7 @@
         android:layout_alignBaseline="@+id/create_scan_image"
         android:layout_toRightOf="@+id/create_scan_image"
         android:paddingTop="@dimen/padding_medium"
-        android:text="@string/loading"
+        android:text="@string/scanning"
         android:textSize="@dimen/textsize" />
 
     <ListView

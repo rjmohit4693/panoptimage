@@ -4,7 +4,7 @@
     <dimen name="textsize">25sp</dimen>
     <dimen name="editsize">20sp</dimen>
     <dimen name="spinnersize">20sp</dimen>
-    <dimen name="rowsize">60sp</dimen>
+    <dimen name="rowsize">25sp</dimen>
     <dimen name="about_margin">-100sp</dimen>
     <dimen name="about_textwidth">650dp</dimen>
     <dimen name="tooltip_textsize">30sp</dimen>

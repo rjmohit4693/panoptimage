@@ -80,6 +80,17 @@
         android:onClick="doScan" />
 
     <TextView
+        android:id="@+id/tooltip_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/create_webdav_ip_value"
+        android:layout_toRightOf="@+id/create_webdav_scan"
+        android:gravity="left"
+        android:text="@string/tooltip_create_scan"
+        android:textSize="@dimen/tooltip_textsize"
+        android:visibility="invisible" />
+
+    <TextView
         android:id="@+id/create_webdav_port"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -165,28 +176,6 @@
         android:background="@drawable/ic_textview"
         android:hint="@string/create_webdav_base_hint"
         android:textSize="@dimen/editsize" />
-
-    <Button
-        android:id="@+id/create_webdav_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_webdav_base_value"
-        android:layout_gravity="center"
-        android:layout_marginBottom="5dp"
-        android:layout_toRightOf="@+id/create_webdav_base_value"
-        android:background="@drawable/test"
-        android:onClick="doTestServer" />
-
-    <TextView
-        android:id="@+id/tooltip_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_base_value"
-        android:layout_toRightOf="@+id/create_webdav_test"
-        android:gravity="left"
-        android:text="@string/tooltip_create_test"
-        android:textSize="@dimen/tooltip_textsize"
-        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/create_webdav_path"
