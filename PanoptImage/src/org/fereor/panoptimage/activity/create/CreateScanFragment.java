@@ -31,6 +31,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,7 +42,7 @@ import android.widget.TextView;
  * 
  * @author "arnaud.p.fereor"
  */
-public class CreateScanFragment extends Fragment implements ScanListener {
+public class CreateScanFragment extends Fragment implements ScanListener, OnItemClickListener {
 	/** mark reference of list view to update it */
 	private ListView lv = null;
 	/** mark reference for loading message */
@@ -51,6 +53,8 @@ public class CreateScanFragment extends Fragment implements ScanListener {
 	private Handler handler = new Handler();
 	/** set to true when scan is done */
 	private boolean done = false;
+	/** list of result */
+	private HotSite selection = null;
 
 	/**
 	 * The Fragment's UI is a
@@ -61,6 +65,7 @@ public class CreateScanFragment extends Fragment implements ScanListener {
 		lv = (ListView) v.findViewById(R.id.create_scan_list);
 		img = (ImageView) v.findViewById(R.id.create_scan_image);
 		msg = (TextView) v.findViewById(R.id.create_scan_text);
+		lv.setOnItemClickListener(this);
 		// lauch async scan
 		lauchScan();
 		return v;
@@ -74,10 +79,10 @@ public class CreateScanFragment extends Fragment implements ScanListener {
 		try {
 			WifiManager wifi = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
 			WifiDiscovery task = new WifiDiscovery(this, wifi, PanoptesConstants.THREAD_POOL_SIZE,
-					PanoptesConstants.WEBDAV_PORTS);
+					WebdavProtocolIcon.WEBDAV_PORTS);
 			task.execute();
 		} catch (Exception e) {
-			
+
 		}
 	}
 
@@ -87,18 +92,25 @@ public class CreateScanFragment extends Fragment implements ScanListener {
 	 * @return path selected (formatted)
 	 */
 	public HotSite getSelectedHotSite() {
-		return (HotSite)lv.getSelectedItem();
+		lv.setOnItemClickListener(null);
+		return selection;
 	}
 
-
-	/** 
+	/**
 	 * Inform that search scanning is finished
+	 * 
 	 * @return
 	 */
 	public boolean isDone() {
 		return done;
 	}
-	
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+		// extract selected item
+		selection = (HotSite) parent.getAdapter().getItem(position);
+	}
+
 	// -------------------------------------------------------------------------
 	// Methods of interface ScanListener
 	// -------------------------------------------------------------------------
@@ -121,21 +133,26 @@ public class CreateScanFragment extends Fragment implements ScanListener {
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
-				// This gets executed on the UI thread so it can safely modify Views
-				img.setImageResource(splashRes);
+				if (getActivity() != null) {
+					// This gets executed on the UI thread so it can safely modify Views
+					img.setImageResource(splashRes);
+				}
 			}
 		});
 	}
 
 	@Override
 	public void onScanFinished(List<HotSite> result) {
-		// set result in header
-		img.setImageResource(R.drawable.splash_4);
-		msg.setText(getActivity().getString(R.string.create_webdav_foundsites, result.size()));
-		// fill list with results
-		WebdavScanAdapter adapter = new WebdavScanAdapter(getActivity(), R.layout.listrow_scan,
-				R.id.create_row_message, result);
-		lv.setAdapter(adapter);
+		// Check validity of fragment
+		if (getActivity() != null) {
+			// set result in header
+			img.setImageResource(R.drawable.splash_4);
+			msg.setText(getActivity().getString(R.string.create_webdav_foundsites, result.size()));
+			// fill list with results
+			WebdavScanAdapter adapter = new WebdavScanAdapter(getActivity(), R.layout.listrow_scan,
+					R.id.create_row_message, result);
+			lv.setAdapter(adapter);
+		}
 		this.done = true;
 	}
 }

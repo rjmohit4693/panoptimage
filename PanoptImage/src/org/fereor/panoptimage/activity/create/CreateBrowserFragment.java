@@ -91,35 +91,38 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 
 	@Override
 	public void onPostDir(List<String> rawdir) {
-		// Manage null value (Not Found)
-		if (rawdir == null) {
-			msg.setText(getActivity().getString(R.string.error_filenotfound, repoBrowser.getformatedPath()));
-			repoBrowser.cd(PanoptesHelper.DDOT);
-		} else {
-			// Include .. to the list
-			ArrayList<String> directories = new ArrayList<String>();
-			if (!repoBrowser.isRoot()) {
-				directories.add(PanoptesHelper.DDOT);
-			}
-			if (rawdir != null) {
-				// sort rawdir
-				Collections.sort(rawdir);
-				for (String it : rawdir) {
-					if (!it.isEmpty()) {
-						directories.add(it);
+		// Check if fragment is still active
+		if (getActivity() != null) {
+			// Manage null value (Not Found)
+			if (rawdir == null) {
+				msg.setText(getActivity().getString(R.string.error_filenotfound, repoBrowser.getformatedPath()));
+				repoBrowser.cd(PanoptesHelper.DDOT);
+			} else {
+				// Include .. to the list
+				ArrayList<String> directories = new ArrayList<String>();
+				if (!repoBrowser.isRoot()) {
+					directories.add(PanoptesHelper.DDOT);
+				}
+				if (rawdir != null) {
+					// sort rawdir
+					Collections.sort(rawdir);
+					for (String it : rawdir) {
+						if (!it.isEmpty()) {
+							directories.add(it);
+						}
 					}
 				}
+				// get content for the list
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.listrow_browse,
+						R.id.create_row_message, directories);
+				lv.setAdapter(adapter);
+				// Change message
+				msg.setText(repoBrowser.getformatedPath());
 			}
-			// get content for the list
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.listrow_browse,
-					R.id.create_row_message, directories);
-			lv.setAdapter(adapter);
-			// Change message
-			msg.setText(repoBrowser.getformatedPath());
-		}
 
-		// set listener
-		lv.setOnItemClickListener(this);
+			// set listener
+			lv.setOnItemClickListener(this);
+		}
 	}
 
 	@Override

@@ -28,6 +28,18 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 
 public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implements DiscoveryListener {
+	/**
+	 * Convert an address to readable format
+	 * 
+	 * @param hostAddress
+	 * @return
+	 */
+	public static byte[] intToInetBytes(int hostAddress) {
+		byte[] addressBytes = { (byte) (0xff & hostAddress), (byte) (0xff & (hostAddress >> 8)),
+				(byte) (0xff & (hostAddress >> 16)), (byte) (0xff & (hostAddress >> 24)) };
+		return addressBytes;
+	}
+
 	/** Executor for all async tasks to handle */
 	private ExecutorService executor;
 	/** DHCP information */
@@ -114,15 +126,4 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 	// -------------------------------------------
 	// private methods
 	// -------------------------------------------
-	/**
-	 * Convert an address to readable format
-	 * 
-	 * @param hostAddress
-	 * @return
-	 */
-	private byte[] intToInetBytes(int hostAddress) {
-		byte[] addressBytes = { (byte) (0xff & hostAddress), (byte) (0xff & (hostAddress >> 8)),
-				(byte) (0xff & (hostAddress >> 16)), (byte) (0xff & (hostAddress >> 24)) };
-		return addressBytes;
-	}
 }

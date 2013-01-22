@@ -17,15 +17,36 @@ package org.fereor.panoptimage.activity.create;
 
 import org.fereor.panoptimage.R;
 
-public enum WebdavProtocols {
+public enum WebdavProtocolIcon {
 	HTTP(
 			R.drawable.ic_protocol_http),
 	HTTPS(
 			R.drawable.ic_protocol_https);
 
+	// list of Webdav ports
+	public static int[] WEBDAV_PORTS = { 80, 8080, 8081, 8082, 8083, 8084, 8085, 8086, 8087, 8088, 8089, 8090, 8888,
+			443, 1443, 2443, 3443, 4443, 5443, 6443, 7443, 8443, 9443 };
+	public static int SECURED_PORT = 443;
+
+	/**
+	 * Resolve the icon according to a port number
+	 * 
+	 * @param port port
+	 * @return icon object
+	 */
+	public static final WebdavProtocolIcon findIcon(int port) {
+		// find icon to display
+		WebdavProtocolIcon icon = HTTP;
+		if (Integer.toString(port).contains(Integer.toString(SECURED_PORT))) {
+			icon = HTTPS;
+		}
+		return icon;
+	}
+
+	/** icon to display */
 	private int icon;
 
-	private WebdavProtocols(int icon) {
+	private WebdavProtocolIcon(int icon) {
 		this.icon = icon;
 	}
 
@@ -35,7 +56,7 @@ public enum WebdavProtocols {
 
 	public static int indexOf(String key) {
 		int pos = 0;
-		for (WebdavProtocols value : values()) {
+		for (WebdavProtocolIcon value : values()) {
 			if (value.toString().equalsIgnoreCase(key)) {
 				return pos;
 			}

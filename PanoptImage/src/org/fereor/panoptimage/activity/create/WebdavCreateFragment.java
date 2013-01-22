@@ -59,7 +59,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		pathField = (EditText) getView().findViewById(R.id.create_webdav_path_value);
 		// populate the spinner
 		ProtocolSpinnerAdapter adapter = new ProtocolSpinnerAdapter(getActivity(), R.layout.round_spinner_item,
-				WebdavProtocols.values());
+				WebdavProtocolIcon.values());
 		adapter.setDropDownViewResource(R.layout.spinner_protocol);
 		protocolField.setAdapter(adapter);
 		// Mark that the view has been created
@@ -89,7 +89,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		if (content != null) {
 			// fill fields
 			nameField.setText(content.getKey());
-			protocolField.setSelection(WebdavProtocols.indexOf(content.getProtocol()));
+			protocolField.setSelection(WebdavProtocolIcon.indexOf(content.getProtocol()));
 			serverField.setText(content.getServer());
 			portField.setText(content.getPort());
 			baseField.setText(content.getBase());
@@ -107,7 +107,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 
 	@Override
 	protected void displayTooltips() {
-		showTooltip(R.id.tooltip_test, R.id.create_webdav_test);
+		showTooltip(R.id.tooltip_test, R.id.create_webdav_scan);
 		showTooltip(R.id.tooltip_browse, R.id.create_webdav_browse);
 	}
 
@@ -129,15 +129,15 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 	 * @param ip
 	 */
 	public void setPort(int port) {
-		portField.setText(port);
+		portField.setText(Integer.toString(port));
 	}
 
 	/**
 	 * Sets the server protocol
 	 * @param ip
 	 */
-	public void setProtocol(WebdavProtocols protocol) {
-		//TODO protocolField.(ip);
+	public void setProtocol(WebdavProtocolIcon protocol) {
+		protocolField.setSelection(WebdavProtocolIcon.indexOf(protocol.toString()));
 	}
 
 	@Override

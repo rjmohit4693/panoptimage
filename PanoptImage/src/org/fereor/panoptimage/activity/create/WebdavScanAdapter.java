@@ -17,8 +17,6 @@ package org.fereor.panoptimage.activity.create;
 
 import java.util.List;
 
-import org.fereor.panoptimage.R;
-import org.fereor.panoptimage.util.PanoptesConstants;
 import org.fereor.panoptimage.util.network.HotSite;
 
 import android.app.Activity;
@@ -28,10 +26,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class WebdavScanAdapter extends ArrayAdapter<HotSite> {
-
-	/** parent activity */
-	private Activity container;
-
 	/**
 	 * Default constructor
 	 * 
@@ -41,7 +35,6 @@ public class WebdavScanAdapter extends ArrayAdapter<HotSite> {
 	 */
 	public WebdavScanAdapter(Activity context, int resource, int textViewResourceId, List<HotSite> data) {
 		super(context, resource, textViewResourceId, data);
-		this.container = context;
 	}
 
 	@Override
@@ -49,14 +42,10 @@ public class WebdavScanAdapter extends ArrayAdapter<HotSite> {
 		TextView v = (TextView) super.getView(position, convertView, parent);
 		HotSite site = getItem(position);
 		// find icon to display
-		int icon = WebdavProtocols.HTTP.icon();
-		if (Integer.toString(site.getPort()).contains(Integer.toString(PanoptesConstants.SECURED_PORT))) {
-			icon = WebdavProtocols.HTTPS.icon();
-		}
+		WebdavProtocolIcon iconobj = WebdavProtocolIcon.findIcon(site.getPort());
 		// draw line with text and icon
 		v.setText(site.getHost().getHostAddress());
-		v.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
-		v.setTextSize(container.getResources().getDimension(R.dimen.spinnersize));
+		v.setCompoundDrawablesWithIntrinsicBounds(iconobj.icon(), 0, 0, 0);
 		return v;
 	}
 }
