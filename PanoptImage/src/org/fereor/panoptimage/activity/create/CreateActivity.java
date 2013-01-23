@@ -31,9 +31,9 @@ import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
-import org.fereor.panoptimage.util.PanoptesConstants;
-import org.fereor.panoptimage.util.PanoptesHelper;
-import org.fereor.panoptimage.util.PanoptesTypeEnum;
+import org.fereor.panoptimage.util.PanoptimageConstants;
+import org.fereor.panoptimage.util.PanoptimageHelper;
+import org.fereor.panoptimage.util.PanoptimageTypeEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 import org.fereor.panoptimage.util.network.HotSite;
 import org.fereor.panoptimage.util.network.WifiDiscovery;
@@ -107,7 +107,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param view
 	 */
 	public void doBack(View view) {
-		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doBack");
+		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:doBack");
 		finish();
 	}
 
@@ -117,7 +117,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param view
 	 */
 	public void doSave(View view) {
-		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doSave");
+		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:doSave");
 		// get the param displayed
 		final CreateParam param = displayFragment.readParam();
 		// if param key is not set, do not save
@@ -163,7 +163,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param view
 	 */
 	public void doRecycle(View view) {
-		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doRecycle");
+		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:doRecycle");
 		final CreateParam param = displayFragment.readParam();
 		// if param key is not set, do not save
 		if (param == null || param.getKey() == null || param.getKey().trim().isEmpty())
@@ -207,7 +207,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param v view clicked
 	 */
 	public void doTestServer(View v) {
-		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doTestServer");
+		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:doTestServer");
 		final CreateParam param = displayFragment.readParam();
 		if (param == null || param.getKey() == null || param.getKey().trim().isEmpty())
 			return;
@@ -222,7 +222,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		// test availability according to type of param
 		if (param instanceof WebdavParam) {
 			try {
-				RepositoryExistsAsync task = new RepositoryExistsAsync(this, PanoptesHelper.SLASH);
+				RepositoryExistsAsync task = new RepositoryExistsAsync(this, PanoptimageHelper.SLASH);
 				task.execute(new WebdavRepositoryDao((WebdavParam) param, getFilesDir()));
 			} catch (PanoptimageNoNetworkException e) {
 				PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
@@ -237,14 +237,14 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param v view clicked
 	 */
 	public void doBrowse(View v) {
-		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doBrowse");
+		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:doBrowse");
 
 		final CreateParam param = displayFragment.readParam();
 
 		// create the browse fragment and put it
 		CreateBrowserFragment fragment = new CreateBrowserFragment();
 		Bundle data = new Bundle();
-		data.putSerializable(PanoptesConstants.CREATE_BUNDLE_PARAM, param);
+		data.putSerializable(PanoptimageConstants.CREATE_BUNDLE_PARAM, param);
 		fragment.setArguments(data);
 
 		getSupportFragmentManager().beginTransaction().add(R.id.browser_fragment, fragment).commit();
@@ -283,7 +283,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param v view clicked
 	 */
 	public void doScan(View v) {
-		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:doScan");
+		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:doScan");
 		// Check network
 		if (!isNetworkAvailable()) {
 			PanoptimageMsg.showInfoMsg(this, R.string.error_nonetwork);
@@ -358,19 +358,19 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 */
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		// An item was selected.
-		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:onItemSelected");
+		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:onItemSelected");
 		try {
-			displayFragment = PanoptesTypeEnum.EMPTY.instance();
-			if (pos < PanoptesTypeEnum.values().length) {
+			displayFragment = PanoptimageTypeEnum.EMPTY.instance();
+			if (pos < PanoptimageTypeEnum.values().length) {
 				// case New... is chosen
-				displayFragment = PanoptesTypeEnum.values()[pos].instance();
+				displayFragment = PanoptimageTypeEnum.values()[pos].instance();
 				displayParam = null;
 			} else if ((displayParam = findLocalParamAt(pos)) != null) {
 				// case local param is chosen
-				displayFragment = PanoptesTypeEnum.LOCAL.instance();
+				displayFragment = PanoptimageTypeEnum.LOCAL.instance();
 			} else if ((displayParam = findWebdavParamAt(pos)) != null) {
 				// case webdav param is chosen
-				displayFragment = PanoptesTypeEnum.WEBDAV.instance();
+				displayFragment = PanoptimageTypeEnum.WEBDAV.instance();
 			}
 			displayFragment.setParam(displayParam);
 			getSupportFragmentManager().beginTransaction().replace(R.id.create_fragment, displayFragment).commit();
@@ -389,7 +389,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 */
 	public void onNothingSelected(AdapterView<?> parent) {
 		// Another interface callback
-		Log.d(PanoptesConstants.TAGNAME, "CreateActivity:onNothingSelected");
+		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:onNothingSelected");
 	}
 
 	// -------------------------------------------------------------------------
@@ -425,10 +425,10 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 */
 	private LocalParam findLocalParamAt(int pos) {
 		// locals are first
-		if (pos < PanoptesTypeEnum.values().length || pos >= PanoptesTypeEnum.values().length + locals.size()) {
+		if (pos < PanoptimageTypeEnum.values().length || pos >= PanoptimageTypeEnum.values().length + locals.size()) {
 			return null;
 		}
-		return (LocalParam) locals.get(pos - PanoptesTypeEnum.values().length);
+		return (LocalParam) locals.get(pos - PanoptimageTypeEnum.values().length);
 	}
 
 	/**
@@ -439,10 +439,10 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 */
 	private WebdavParam findWebdavParamAt(int pos) {
 		// webdav are next
-		if (pos < PanoptesTypeEnum.values().length + locals.size()) {
+		if (pos < PanoptimageTypeEnum.values().length + locals.size()) {
 			return null;
 		}
-		return (WebdavParam) webdavs.get(pos - PanoptesTypeEnum.values().length - locals.size());
+		return (WebdavParam) webdavs.get(pos - PanoptimageTypeEnum.values().length - locals.size());
 	}
 
 	/**
@@ -453,9 +453,9 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		Spinner selector = (Spinner) findViewById(R.id.create_selection);
 		selector.setOnItemSelectedListener(this);
 		// populate the spinner with default values
-		List<Pair<CharSequence, PanoptesTypeEnum>> data = new ArrayList<Pair<CharSequence, PanoptesTypeEnum>>();
-		for (PanoptesTypeEnum cur : PanoptesTypeEnum.values()) {
-			data.add(new Pair<CharSequence, PanoptesTypeEnum>(getString(cur.key()), cur));
+		List<Pair<CharSequence, PanoptimageTypeEnum>> data = new ArrayList<Pair<CharSequence, PanoptimageTypeEnum>>();
+		for (PanoptimageTypeEnum cur : PanoptimageTypeEnum.values()) {
+			data.add(new Pair<CharSequence, PanoptimageTypeEnum>(getString(cur.key()), cur));
 		}
 		try {
 			// extract configs
@@ -467,13 +467,13 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 			// populate the spinner with local values
 			for (CreateParam local : locals) {
 				if (local.getKey() != null) {
-					data.add(new Pair<CharSequence, PanoptesTypeEnum>(local.getKey(), PanoptesTypeEnum.LOCAL));
+					data.add(new Pair<CharSequence, PanoptimageTypeEnum>(local.getKey(), PanoptimageTypeEnum.LOCAL));
 				}
 			}
 			// populate the spinner with webdav values
 			for (CreateParam webdav : webdavs) {
 				if (webdav.getKey() != null) {
-					data.add(new Pair<CharSequence, PanoptesTypeEnum>(webdav.getKey(), PanoptesTypeEnum.WEBDAV));
+					data.add(new Pair<CharSequence, PanoptimageTypeEnum>(webdav.getKey(), PanoptimageTypeEnum.WEBDAV));
 				}
 			}
 		} catch (SQLException e) {

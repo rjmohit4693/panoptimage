@@ -18,7 +18,7 @@ package org.fereor.panoptimage.activity.home;
 import java.util.List;
 
 import org.fereor.panoptimage.service.HomePagerParamService;
-import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptimageConstants;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -63,7 +63,7 @@ public class HomePagerAdapter extends FragmentStatePagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		Log.d(PanoptesConstants.TAGNAME, "HomePagerAdapter:getItem:" + position);
+		Log.d(PanoptimageConstants.TAGNAME, "HomePagerAdapter:getItem:" + position);
 		if (data == null)
 			return null;
 		return HomeListFragment.newInstance(data.get(position));

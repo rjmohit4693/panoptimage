@@ -22,7 +22,7 @@ import org.fereor.panoptimage.dao.async.RepositoryDirListener;
 import org.fereor.panoptimage.dao.async.RepositoryGetListener;
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
-import org.fereor.panoptimage.util.PanoptesHelper;
+import org.fereor.panoptimage.util.PanoptimageHelper;
 
 /**
  * Interface able to analyze the content of a repository
@@ -56,19 +56,19 @@ public abstract class RepositoryLoaderDao<T> {
 		// test param values
 		if (path == null || path.length() == 0) {
 			return;
-		} else if (PanoptesHelper.DOT.equals(path.trim())) {
+		} else if (PanoptimageHelper.DOT.equals(path.trim())) {
 			// test param values
 			return;
-		} else if (PanoptesHelper.DDOT.equals(path.trim()) && currentPath.size() != 0) {
+		} else if (PanoptimageHelper.DDOT.equals(path.trim()) && currentPath.size() != 0) {
 			// if currentpath is not empty and .. is required
 			currentPath.remove(currentPath.size() - 1);
-		} else if (!path.trim().contains(PanoptesHelper.SLASH)) {
+		} else if (!path.trim().contains(PanoptimageHelper.SLASH)) {
 			// if currentpath does not contain a /, add it
 			currentPath.add(path.trim());
 		} else {
 			// recursive cd
-			String subpath = path.substring(0, path.indexOf(PanoptesHelper.SLASH));
-			String postpath = path.substring(path.indexOf(PanoptesHelper.SLASH) + 1, path.length());
+			String subpath = path.substring(0, path.indexOf(PanoptimageHelper.SLASH));
+			String postpath = path.substring(path.indexOf(PanoptimageHelper.SLASH) + 1, path.length());
 			cd(subpath);
 			cd(postpath);
 		}
@@ -80,7 +80,7 @@ public abstract class RepositoryLoaderDao<T> {
 	 * @return path formatted
 	 */
 	public String getformatedPath() {
-		return PanoptesHelper.formatPath(currentPath);
+		return PanoptimageHelper.formatPath(currentPath);
 	}
 
 	/**

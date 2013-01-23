@@ -57,7 +57,7 @@ public class PanoptimageMsg {
 	 * @param msg message to display
 	 */
 	public static void showInfoMsg(Context ctx, String msg) {
-		Log.d(PanoptesConstants.TAGNAME, "Info:" + msg);
+		Log.d(PanoptimageConstants.TAGNAME, "Info:" + msg);
 		Toast.makeText(ctx, msg, Toast.LENGTH_LONG).show();
 	}
 
@@ -67,7 +67,7 @@ public class PanoptimageMsg {
 	 * @param e
 	 */
 	public static void showErrorMsg(Context ctx, String msg) {
-		Log.d(PanoptesConstants.TAGNAME, "Error:" + msg);
+		Log.d(PanoptimageConstants.TAGNAME, "Error:" + msg);
 		Toast.makeText(ctx, ctx.getString(R.string.error_header, msg), Toast.LENGTH_LONG).show();
 	}
 

@@ -24,7 +24,7 @@ import android.util.Log;
  * 
  * @author "arnaud.p.fereor"
  */
-public class PanoptesHelper {
+public class PanoptimageHelper {
 	public static final String DOT = ".";
 	public static final String DDOT = "..";
 	public static final String SLASH = "/";
@@ -157,6 +157,6 @@ public class PanoptesHelper {
 		}
 		String key = keyStr.toString();
 		String res = resultStr.toString();
-		Log.d(PanoptesConstants.TAGNAME, key + "-" + res);
+		Log.d(PanoptimageConstants.TAGNAME, key + "-" + res);
 	}
 }
