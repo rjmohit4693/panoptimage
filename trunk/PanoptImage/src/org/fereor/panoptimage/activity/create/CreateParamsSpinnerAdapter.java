@@ -18,7 +18,7 @@ package org.fereor.panoptimage.activity.create;
 import java.util.List;
 
 import org.fereor.panoptimage.R;
-import org.fereor.panoptimage.util.PanoptesTypeEnum;
+import org.fereor.panoptimage.util.PanoptimageTypeEnum;
 
 import android.app.Activity;
 import android.util.Pair;
@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class CreateParamsSpinnerAdapter extends ArrayAdapter<Pair<CharSequence, PanoptesTypeEnum>> {
+public class CreateParamsSpinnerAdapter extends ArrayAdapter<Pair<CharSequence, PanoptimageTypeEnum>> {
 	
 	/** parent activity */
 	private Activity container;
@@ -40,7 +40,7 @@ public class CreateParamsSpinnerAdapter extends ArrayAdapter<Pair<CharSequence, 
 	 * @param textViewResourceId
 	 * @param
 	 */
-	public CreateParamsSpinnerAdapter(Activity context, List<Pair<CharSequence, PanoptesTypeEnum>> data,
+	public CreateParamsSpinnerAdapter(Activity context, List<Pair<CharSequence, PanoptimageTypeEnum>> data,
 			int textViewResourceId) {
 		super(context, textViewResourceId, data);
 		this.container = context;
@@ -64,7 +64,7 @@ public class CreateParamsSpinnerAdapter extends ArrayAdapter<Pair<CharSequence, 
 		}
 
 		// get item to display
-		Pair<CharSequence, PanoptesTypeEnum> item = getItem(position);
+		Pair<CharSequence, PanoptimageTypeEnum> item = getItem(position);
 
 		if (item != null) {
 			// Parse the data from each object and set it.

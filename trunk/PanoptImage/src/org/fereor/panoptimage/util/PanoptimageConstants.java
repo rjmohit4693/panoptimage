@@ -24,7 +24,7 @@ import org.fereor.panoptimage.model.WebdavParam;
  * 
  * @author "arnaud.p.fereor"
  */
-public interface PanoptesConstants {
+public interface PanoptimageConstants {
 	// List of classes available for ORM
 	public static final Class<?>[] DATABASE_CLASSES = new Class[] { Config.class, WebdavParam.class, LocalParam.class };
 	// Tag for logs

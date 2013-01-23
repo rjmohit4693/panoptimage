@@ -23,7 +23,7 @@ import org.fereor.panoptimage.activity.PanoptesActivity;
 import org.fereor.panoptimage.dao.db.DatabaseHelper;
 import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.model.Config;
-import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptimageConstants;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 
@@ -44,7 +44,7 @@ public class ConfigActivity extends PanoptesActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d(PanoptesConstants.TAGNAME, "ConfigActivity:onCreate");
+		Log.d(PanoptimageConstants.TAGNAME, "ConfigActivity:onCreate");
 		// set Content view
 		setContentView(R.layout.activity_config);
 		// Fill memory optim options
@@ -55,7 +55,7 @@ public class ConfigActivity extends PanoptesActivity {
 			loadConfig();
 			fillFields();
 		} catch (SQLException e) {
-			Log.e(PanoptesConstants.TAGNAME, "Cannot load config : " + e.toString());
+			Log.e(PanoptimageConstants.TAGNAME, "Cannot load config : " + e.toString());
 			PanoptimageMsg.showErrorMsg(this, R.string.error_load_cfg, e.toString());
 		}
 
@@ -67,7 +67,7 @@ public class ConfigActivity extends PanoptesActivity {
 	 * @param view
 	 */
 	public void doBack(View view) {
-		Log.d(PanoptesConstants.TAGNAME, "ConfigActivity:doBack");
+		Log.d(PanoptimageConstants.TAGNAME, "ConfigActivity:doBack");
 		finish();
 	}
 
@@ -77,7 +77,7 @@ public class ConfigActivity extends PanoptesActivity {
 	 * @param view
 	 */
 	public void doSave(View view) {
-		Log.d(PanoptesConstants.TAGNAME, "ConfigActivity:doSave");
+		Log.d(PanoptimageConstants.TAGNAME, "ConfigActivity:doSave");
 		try {
 			// save data from fields
 			readFields();
@@ -93,7 +93,7 @@ public class ConfigActivity extends PanoptesActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Log.d(PanoptesConstants.TAGNAME, "ConfigActivity:onDestroy");
+		Log.d(PanoptimageConstants.TAGNAME, "ConfigActivity:onDestroy");
 		// Release the helper when done.
 		if (databaseHelper != null) {
 			OpenHelperManager.releaseHelper();

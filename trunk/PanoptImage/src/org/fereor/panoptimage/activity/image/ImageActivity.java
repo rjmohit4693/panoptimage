@@ -30,8 +30,8 @@ import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.service.HomePagerParamService;
-import org.fereor.panoptimage.util.PanoptesConstants;
-import org.fereor.panoptimage.util.PanoptesHelper;
+import org.fereor.panoptimage.util.PanoptimageConstants;
+import org.fereor.panoptimage.util.PanoptimageHelper;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 
@@ -70,13 +70,13 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 		prepareCache();
 		// Get the message from the intent
 		Intent intent = getIntent();
-		HomePagerParamService param = (HomePagerParamService) intent.getParcelableExtra(PanoptesConstants.MSG_HOME);
+		HomePagerParamService param = (HomePagerParamService) intent.getParcelableExtra(PanoptimageConstants.MSG_HOME);
 		// hide panel
 		hideBrowserPanel();
 		try {
 			// Retrieve content
 			repoBrowser = RepositoryLoaderFactory.createInstance(param, new File(getFilesDir(),
-					PanoptesConstants.CACHE_DIR));
+					PanoptimageConstants.CACHE_DIR));
 			// check network availability
 			if (param.getParam().needNetwork() && !isNetworkAvailable()) {
 				// Network is not available. Inform and return
@@ -96,7 +96,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 				repoBrowser.cd(savedState.getString(SAVESTATE_CURRENTPATH));
 			}
 			// Launch loading task
-			task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
+			task = new RepositoryDirAsync(this, PanoptimageHelper.REGEXP_ALLIMAGES);
 			task.execute(repoBrowser);
 		} catch (PanoptimageFileNotFoundException e) {
 			PanoptimageMsg.showErrorMsg(this, R.string.error_filenotfound, e.getLocation());
@@ -110,7 +110,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		Log.d(PanoptesConstants.TAGNAME, "onSaveInstanceState");
+		Log.d(PanoptimageConstants.TAGNAME, "onSaveInstanceState");
 		outState.putString(SAVESTATE_CURRENTPATH, repoBrowser.getformatedPath());
 		outState.putInt(SAVESTATE_CURRENTITEM, pager.getCurrentItem());
 	}
@@ -157,10 +157,26 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 	 */
 	private void showButtons(boolean status) {
 		buttonVisible = status;
+		// set visibility
 		findViewById(R.id.back).setVisibility(status ? View.VISIBLE : View.INVISIBLE);
 		findViewById(R.id.image_clockwise).setVisibility(status ? View.VISIBLE : View.INVISIBLE);
 		findViewById(R.id.image_counterclockwise).setVisibility(status ? View.VISIBLE : View.INVISIBLE);
 		findViewById(R.id.browse).setVisibility(status ? View.VISIBLE : View.INVISIBLE);
+		// set alpha
+		setAlphaButtons(1.0f);
+	}
+
+	/**
+	 * Show/Hide navigation buttons
+	 */
+	private void setAlphaButtons(float alpha) {
+		// Check android version before setting alpha
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			ViewWrapperCompat.getInstance().setAlpha(findViewById(R.id.back), alpha);
+			ViewWrapperCompat.getInstance().setAlpha(findViewById(R.id.image_clockwise), alpha);
+			ViewWrapperCompat.getInstance().setAlpha(findViewById(R.id.image_counterclockwise), alpha);
+			ViewWrapperCompat.getInstance().setAlpha(findViewById(R.id.browse), alpha);
+		}
 	}
 
 	@Override
@@ -249,7 +265,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 				alpha = 1 - position;
 			}
 			// for page coming from the left
-			else if (position < 0){
+			else if (position < 0) {
 				scaleFactor = 1 + position;
 				rotation = 90 * position;
 				alpha = 1 + position;
@@ -259,6 +275,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 			ViewWrapperCompat.getInstance().setScaleX(page, scaleFactor);
 			ViewWrapperCompat.getInstance().setScaleY(page, scaleFactor);
 			ViewWrapperCompat.getInstance().setRotationY(page, rotation);
+			setAlphaButtons(alpha);
 		}
 	}
 
@@ -299,7 +316,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 		ImageBrowserFragment browseFragment = (ImageBrowserFragment) getSupportFragmentManager().findFragmentById(
 				R.id.browser_fragment);
 		browseFragment.setRoot(repoBrowser.isRoot());
-		RepositoryDirAsync task = new RepositoryDirAsync(browseFragment, PanoptesHelper.REGEXP_DIRECTORY);
+		RepositoryDirAsync task = new RepositoryDirAsync(browseFragment, PanoptimageHelper.REGEXP_DIRECTORY);
 		task.execute(repoBrowser);
 		showBrowserPanel();
 	}
@@ -332,7 +349,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 		Toast.makeText(this, item.toString(), Toast.LENGTH_LONG).show();
 		// change to directory selected
 		repoBrowser.cd(item.toString());
-		RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_ALLIMAGES);
+		RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptimageHelper.REGEXP_ALLIMAGES);
 		task.execute(repoBrowser);
 	}
 
@@ -403,7 +420,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 	 */
 	private void prepareCache() {
 		// check if cache exists
-		File cachedir = new File(getFilesDir(), PanoptesConstants.CACHE_DIR);
+		File cachedir = new File(getFilesDir(), PanoptimageConstants.CACHE_DIR);
 		if (!cachedir.exists()) {
 			cachedir.mkdirs();
 		}
@@ -414,7 +431,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 	 */
 	private void clearCache() {
 		// check if cache exists
-		File cachedir = new File(getFilesDir(), PanoptesConstants.CACHE_DIR);
+		File cachedir = new File(getFilesDir(), PanoptimageConstants.CACHE_DIR);
 		if (cachedir.exists()) {
 			for (File f : cachedir.listFiles()) {
 				f.delete();

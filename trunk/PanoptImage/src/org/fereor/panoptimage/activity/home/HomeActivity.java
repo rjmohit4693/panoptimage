@@ -29,8 +29,8 @@ import org.fereor.panoptimage.model.EmptyParam;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
 import org.fereor.panoptimage.service.HomePagerParamService;
-import org.fereor.panoptimage.util.PanoptesConstants;
-import org.fereor.panoptimage.util.PanoptesTypeEnum;
+import org.fereor.panoptimage.util.PanoptimageConstants;
+import org.fereor.panoptimage.util.PanoptimageTypeEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.content.Intent;
@@ -53,7 +53,7 @@ public class HomeActivity extends PanoptesActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onCreate");
+		Log.d(PanoptimageConstants.TAGNAME, "HomeActivity:onCreate");
 		// go on
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
@@ -78,13 +78,13 @@ public class HomeActivity extends PanoptesActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onSaveInstanceState");
+		Log.d(PanoptimageConstants.TAGNAME, "HomeActivity:onSaveInstanceState");
 		outState.putInt(SAVESTATE_CURRENTITEM, pager.getCurrentItem());
 	}
 
 	@Override
 	protected void onResume() {
-		Log.d(PanoptesConstants.TAGNAME, "HomeActivity:onResume");
+		Log.d(PanoptimageConstants.TAGNAME, "HomeActivity:onResume");
 		// If database is updated, refresh content
 		if (!isLocalParamUptodate() || !isWebdavParamUptodate()) {
 			try {
@@ -148,7 +148,7 @@ public class HomeActivity extends PanoptesActivity {
 
 		// pass information to the image page
 		Intent intent = new Intent(this, ImageActivity.class);
-		intent.putExtra(PanoptesConstants.MSG_HOME, curparam);
+		intent.putExtra(PanoptimageConstants.MSG_HOME, curparam);
 		startActivity(intent);
 	}
 
@@ -159,21 +159,21 @@ public class HomeActivity extends PanoptesActivity {
 
 	/** Called when the user clicks the Create button */
 	public void doCreate(View view) {
-		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showCreate");
+		Log.i(PanoptimageConstants.TAGNAME, "HomeActivity:showCreate");
 		Intent intent = new Intent(this, CreateActivity.class);
 		startActivity(intent);
 	}
 
 	/** Called when the user clicks the Config button */
 	public void doConfig(View view) {
-		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showConfig");
+		Log.i(PanoptimageConstants.TAGNAME, "HomeActivity:showConfig");
 		Intent intent = new Intent(this, ConfigActivity.class);
 		startActivity(intent);
 	}
 
 	/** Called when the user clicks the About button */
 	public void doAbout(View view) {
-		Log.i(PanoptesConstants.TAGNAME, "HomeActivity:showAbout");
+		Log.i(PanoptimageConstants.TAGNAME, "HomeActivity:showAbout");
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
 	}
@@ -190,19 +190,19 @@ public class HomeActivity extends PanoptesActivity {
 		// populate the spinner with default values
 		List<HomePagerParamService> data = new ArrayList<HomePagerParamService>();
 		// Add the default view (home page)
-		data.add(new HomePagerParamService(new EmptyParam(), getString(R.string.message), PanoptesTypeEnum.EMPTY.icon()));
+		data.add(new HomePagerParamService(new EmptyParam(), getString(R.string.message), PanoptimageTypeEnum.EMPTY.icon()));
 
 		// populate the scroll with local values
 		for (LocalParam local : getHelper().getLocalParamDao().queryForAll()) {
 			if (local.getKey() != null) {
-				data.add(new HomePagerParamService(local, local.getKey(), PanoptesTypeEnum.LOCAL.icon()));
+				data.add(new HomePagerParamService(local, local.getKey(), PanoptimageTypeEnum.LOCAL.icon()));
 			}
 		}
 		markLocalRead();
 		// populate the scroll with webdav values
 		for (WebdavParam webdav : getHelper().getWebdavParamDao().queryForAll()) {
 			if (webdav.getKey() != null) {
-				data.add(new HomePagerParamService(webdav, webdav.getKey(), PanoptesTypeEnum.WEBDAV.icon()));
+				data.add(new HomePagerParamService(webdav, webdav.getKey(), PanoptimageTypeEnum.WEBDAV.icon()));
 			}
 		}
 		markWebdavRead();

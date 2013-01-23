@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.dao.async.RepositoryDirListener;
-import org.fereor.panoptimage.util.PanoptesHelper;
+import org.fereor.panoptimage.util.PanoptimageHelper;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.os.Bundle;
@@ -73,7 +73,7 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 		ArrayList<String> directories = new ArrayList<String>();
 		// Include .. to the list
 		if (!isRoot()) {
-			directories.add(PanoptesHelper.DDOT);
+			directories.add(PanoptimageHelper.DDOT);
 		}
 		if (rawdir != null) {
 			// sort rawdir

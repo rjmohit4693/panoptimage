@@ -22,7 +22,7 @@ import org.fereor.panoptimage.activity.create.LocalCreateFragment;
 import org.fereor.panoptimage.activity.create.WebdavCreateFragment;
 import org.fereor.panoptimage.model.CreateParam;
 
-public enum PanoptesTypeEnum {
+public enum PanoptimageTypeEnum {
 	/**
 	 * List of available fragments for the Create activity
 	 */
@@ -71,7 +71,7 @@ public enum PanoptesTypeEnum {
 	 * @param layout ID for the fragment layout
 	 * @param fragmentClass Class for the fragment to create it
 	 */
-	private PanoptesTypeEnum(int id, int spinnerText, int layout, int icon, int iconxs,
+	private PanoptimageTypeEnum(int id, int spinnerText, int layout, int icon, int iconxs,
 			Class<? extends CreateFragment<? extends CreateParam>> fragmentClass) {
 		this.id = id;
 		this.key = spinnerText;

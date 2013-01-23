@@ -21,7 +21,7 @@ import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
-import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptimageConstants;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -65,14 +65,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db, ConnectionSource source) {
-		Log.d(PanoptesConstants.TAGNAME, "DatabaseHelper:onCreate");
+		Log.d(PanoptimageConstants.TAGNAME, "DatabaseHelper:onCreate");
 		try {
 			// create tables in database
-			for (Class<?> nextClass : PanoptesConstants.DATABASE_CLASSES) {
+			for (Class<?> nextClass : PanoptimageConstants.DATABASE_CLASSES) {
 				TableUtils.createTable(connectionSource, nextClass);
 			}
 		} catch (SQLException e) {
-			Log.e(PanoptesConstants.TAGNAME, "Can't create database", e);
+			Log.e(PanoptimageConstants.TAGNAME, "Can't create database", e);
 			throw new RuntimeException(e);
 		}
 
@@ -80,22 +80,22 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, ConnectionSource source, int oldVersion, int newVersion) {
-		Log.d(PanoptesConstants.TAGNAME, "DatabaseHelper:onUpgrade");
+		Log.d(PanoptimageConstants.TAGNAME, "DatabaseHelper:onUpgrade");
 		try {
 			// Drop all tables
-			for (Class<?> nextClass : PanoptesConstants.DATABASE_CLASSES) {
+			for (Class<?> nextClass : PanoptimageConstants.DATABASE_CLASSES) {
 				TableUtils.dropTable(connectionSource, nextClass, true);
 			}
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
-			Log.e(PanoptesConstants.TAGNAME, "Can't drop databases", e);
+			Log.e(PanoptimageConstants.TAGNAME, "Can't drop databases", e);
 		}
 	}
 
 	@Override
 	public void onOpen(SQLiteDatabase db) {
-		Log.d(PanoptesConstants.TAGNAME, "DatabaseHelper:onOpen");
+		Log.d(PanoptimageConstants.TAGNAME, "DatabaseHelper:onOpen");
 		super.onOpen(db);
 		// Initialize DAOs
 		try {
@@ -103,7 +103,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			getLocalParamDao();
 			getConfigDao();
 		} catch (SQLException e) {
-			Log.e(PanoptesConstants.TAGNAME, "Can't open databases", e);
+			Log.e(PanoptimageConstants.TAGNAME, "Can't open databases", e);
 		}
 	}
 

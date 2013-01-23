@@ -20,7 +20,7 @@ import org.fereor.panoptimage.dao.async.RepositoryGetAsync;
 import org.fereor.panoptimage.dao.async.RepositoryGetListener;
 import org.fereor.panoptimage.dao.repository.RepositoryContent;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
-import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptimageConstants;
 import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 
@@ -169,7 +169,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 
 	@Override
 	public void onOEM(Throwable t) {
-		Log.d(PanoptesConstants.TAGNAME, t.toString());
+		Log.d(PanoptimageConstants.TAGNAME, t.toString());
 		handler.post(new Runnable() {
 			@Override
 			public void run() {
@@ -186,7 +186,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 	@Override
 	public void onGetProgressUpdate(Long... values) {
 		final int splashRes;
-		float val = ((float) values[0]) / ((float) values[1]) * PanoptesConstants.ONPROGRESS_STEPS;
+		float val = ((float) values[0]) / ((float) values[1]) * PanoptimageConstants.ONPROGRESS_STEPS;
 		// identify image to draw
 		if (val < 1.0f) {
 			splashRes = R.drawable.splash_0;

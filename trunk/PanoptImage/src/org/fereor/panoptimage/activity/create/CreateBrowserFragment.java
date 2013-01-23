@@ -28,9 +28,9 @@ import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.service.HomePagerParamService;
-import org.fereor.panoptimage.util.PanoptesConstants;
-import org.fereor.panoptimage.util.PanoptesHelper;
-import org.fereor.panoptimage.util.PanoptesTypeEnum;
+import org.fereor.panoptimage.util.PanoptimageConstants;
+import org.fereor.panoptimage.util.PanoptimageHelper;
+import org.fereor.panoptimage.util.PanoptimageTypeEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.os.Bundle;
@@ -67,7 +67,7 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 		lv = (ListView) v.findViewById(R.id.create_browse_list);
 		msg = (TextView) v.findViewById(R.id.create_browse_message);
 		if (getArguments() != null) {
-			CreateParam param = (CreateParam) getArguments().getSerializable(PanoptesConstants.CREATE_BUNDLE_PARAM);
+			CreateParam param = (CreateParam) getArguments().getSerializable(PanoptimageConstants.CREATE_BUNDLE_PARAM);
 			try {
 				setRepository(param);
 			} catch (PanoptesUnknownParamException e) {
@@ -96,12 +96,12 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 			// Manage null value (Not Found)
 			if (rawdir == null) {
 				msg.setText(getActivity().getString(R.string.error_filenotfound, repoBrowser.getformatedPath()));
-				repoBrowser.cd(PanoptesHelper.DDOT);
+				repoBrowser.cd(PanoptimageHelper.DDOT);
 			} else {
 				// Include .. to the list
 				ArrayList<String> directories = new ArrayList<String>();
 				if (!repoBrowser.isRoot()) {
-					directories.add(PanoptesHelper.DDOT);
+					directories.add(PanoptimageHelper.DDOT);
 				}
 				if (rawdir != null) {
 					// sort rawdir
@@ -164,12 +164,12 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 		// get the path of the current repository and reset it
 		String basepath = param.getPath();
 		if (basepath.isEmpty()) {
-			basepath = PanoptesHelper.SLASH;
+			basepath = PanoptimageHelper.SLASH;
 		}
 		param.setPath("");
 		// create repo browser
 		HomePagerParamService service = new HomePagerParamService(param, getString(R.string.message),
-				PanoptesTypeEnum.EMPTY.icon());
+				PanoptimageTypeEnum.EMPTY.icon());
 		repoBrowser = RepositoryLoaderFactory.createInstance(service, getActivity().getFilesDir());
 		// put the content to the repository
 		repoBrowser.cd(basepath);
@@ -179,7 +179,7 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 	 * Lauch the async task for directory browsing
 	 */
 	private void lauchDir() {
-		RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptesHelper.REGEXP_DIRECTORY);
+		RepositoryDirAsync task = new RepositoryDirAsync(this, PanoptimageHelper.REGEXP_DIRECTORY);
 		task.execute(repoBrowser);
 	}
 }

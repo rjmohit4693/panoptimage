@@ -24,7 +24,7 @@ import org.fereor.panoptimage.dao.async.RepositoryDirListener;
 import org.fereor.panoptimage.dao.async.RepositoryGetListener;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.model.LocalParam;
-import org.fereor.panoptimage.util.PanoptesHelper;
+import org.fereor.panoptimage.util.PanoptimageHelper;
 import org.fereor.panoptimage.util.RegexpFilenameFilter;
 
 /**
@@ -40,8 +40,8 @@ public class LocalRepositoryDao extends RepositoryLoaderDao<LocalParam> {
 	 */
 	public LocalRepositoryDao(LocalParam param) {
 		super(param);
-		if (!param.getPath().endsWith(PanoptesHelper.SLASH)) {
-			this.root = param.getPath() + PanoptesHelper.SLASH;
+		if (!param.getPath().endsWith(PanoptimageHelper.SLASH)) {
+			this.root = param.getPath() + PanoptimageHelper.SLASH;
 		} else {
 			this.root = param.getPath();
 		}
@@ -51,7 +51,7 @@ public class LocalRepositoryDao extends RepositoryLoaderDao<LocalParam> {
 	public List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn)
 			throws PanoptimageFileNotFoundException {
 		// browse directory location
-		String location = PanoptesHelper.formatPath(root, currentPath, PanoptesHelper.SLASH);
+		String location = PanoptimageHelper.formatPath(root, currentPath, PanoptimageHelper.SLASH);
 		File locationFile = new File(location);
 		FilenameFilter filter = new RegexpFilenameFilter(regexp);
 		String[] result = locationFile.list(filter);
@@ -66,7 +66,7 @@ public class LocalRepositoryDao extends RepositoryLoaderDao<LocalParam> {
 	@Override
 	public RepositoryContent get(String filename, RepositoryGetListener<Long, RepositoryContent> lsn) {
 		// read content file
-		File currentDir = new File(PanoptesHelper.formatPath(root, currentPath));
+		File currentDir = new File(PanoptimageHelper.formatPath(root, currentPath));
 		File locationFile = new File(currentDir, filename);
 
 		return new FileRepositoryContent(locationFile);
@@ -76,13 +76,13 @@ public class LocalRepositoryDao extends RepositoryLoaderDao<LocalParam> {
 	@Override
 	public boolean exists(String path) {
 		// read content file
-		File currentDir = new File(PanoptesHelper.formatPath(root, currentPath, path));
+		File currentDir = new File(PanoptimageHelper.formatPath(root, currentPath, path));
 		return currentDir.exists();
 	}
 
 	@Override
 	public boolean isDirectory(String path) {
-		File currentDir = new File(PanoptesHelper.formatPath(root, currentPath, path));
+		File currentDir = new File(PanoptimageHelper.formatPath(root, currentPath, path));
 		return currentDir.isDirectory();
 	}
 

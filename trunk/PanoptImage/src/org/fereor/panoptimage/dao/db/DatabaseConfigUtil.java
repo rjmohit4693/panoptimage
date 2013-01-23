@@ -15,7 +15,7 @@
 
 package org.fereor.panoptimage.dao.db;
 
-import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptimageConstants;
 
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 
@@ -26,6 +26,6 @@ import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
  */
 public class DatabaseConfigUtil extends OrmLiteConfigUtil {
 	public static void main(String[] args) throws Exception {
-		writeConfigFile("ormlite_config.txt", PanoptesConstants.DATABASE_CLASSES);
+		writeConfigFile("ormlite_config.txt", PanoptimageConstants.DATABASE_CLASSES);
 	}
 }

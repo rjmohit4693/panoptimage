@@ -17,7 +17,7 @@ package org.fereor.panoptimage.activity.home;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.service.HomePagerParamService;
-import org.fereor.panoptimage.util.PanoptesTypeEnum;
+import org.fereor.panoptimage.util.PanoptimageTypeEnum;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -62,7 +62,7 @@ public class HomeListFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		imgid = getArguments() != null ? getArguments().getInt(BUNDLE_IMGID) : PanoptesTypeEnum.EMPTY.icon();
+		imgid = getArguments() != null ? getArguments().getInt(BUNDLE_IMGID) : PanoptimageTypeEnum.EMPTY.icon();
 		msg = getArguments() != null ? getArguments().getString(BUNDLE_MSG) : "";
 	}
 

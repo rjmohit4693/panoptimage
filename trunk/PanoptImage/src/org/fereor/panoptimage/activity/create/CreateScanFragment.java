@@ -18,7 +18,7 @@ package org.fereor.panoptimage.activity.create;
 import java.util.List;
 
 import org.fereor.panoptimage.R;
-import org.fereor.panoptimage.util.PanoptesConstants;
+import org.fereor.panoptimage.util.PanoptimageConstants;
 import org.fereor.panoptimage.util.network.HotSite;
 import org.fereor.panoptimage.util.network.ScanListener;
 import org.fereor.panoptimage.util.network.WifiDiscovery;
@@ -78,7 +78,7 @@ public class CreateScanFragment extends Fragment implements ScanListener, OnItem
 		// try to get wifi manager
 		try {
 			WifiManager wifi = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
-			WifiDiscovery task = new WifiDiscovery(this, wifi, PanoptesConstants.THREAD_POOL_SIZE,
+			WifiDiscovery task = new WifiDiscovery(this, wifi, PanoptimageConstants.THREAD_POOL_SIZE,
 					WebdavProtocolIcon.WEBDAV_PORTS);
 			task.execute();
 		} catch (Exception e) {
@@ -117,7 +117,7 @@ public class CreateScanFragment extends Fragment implements ScanListener, OnItem
 	@Override
 	public void onScanProgress(float max, float progress) {
 		final int splashRes;
-		float val = progress / max * PanoptesConstants.ONPROGRESS_STEPS;
+		float val = progress / max * PanoptimageConstants.ONPROGRESS_STEPS;
 		// identify image to draw
 		if (val < 1.0f) {
 			splashRes = R.drawable.splash_0;

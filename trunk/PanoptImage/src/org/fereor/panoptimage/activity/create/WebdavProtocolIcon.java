@@ -26,6 +26,7 @@ public enum WebdavProtocolIcon {
 	// list of Webdav ports
 	public static int[] WEBDAV_PORTS = { 80, 8080, 8081, 8082, 8083, 8084, 8085, 8086, 8087, 8088, 8089, 8090, 8888,
 			443, 1443, 2443, 3443, 4443, 5443, 6443, 7443, 8443, 9443 };
+	public static int STANDARD_PORT = 80;
 	public static int SECURED_PORT = 443;
 
 	/**

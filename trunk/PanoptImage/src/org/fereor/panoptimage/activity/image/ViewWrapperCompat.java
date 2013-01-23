@@ -89,7 +89,7 @@ public class ViewWrapperCompat {
 	 * @param alpha
 	 */
 	public void setAlpha(View v, float alpha) {
-		if (ViewSetAlpha != null) {
+		if (ViewSetAlpha != null && v != null) {
 			try {
 				ViewSetAlpha.invoke(v, alpha);
 			} catch (Exception e) {
@@ -105,7 +105,7 @@ public class ViewWrapperCompat {
 	 * @param scaleX
 	 */
 	public void setScaleX(View v, float scaleX) {
-		if (ViewSetScaleX != null) {
+		if (ViewSetScaleX != null && v != null) {
 			try {
 				ViewSetScaleX.invoke(v, scaleX);
 			} catch (Exception e) {
@@ -122,7 +122,7 @@ public class ViewWrapperCompat {
 	 * @param scaleY
 	 */
 	public void setScaleY(View v, float scaleY) {
-		if (ViewSetScaleY != null) {
+		if (ViewSetScaleY != null && v != null) {
 			try {
 				ViewSetScaleY.invoke(v, scaleY);
 			} catch (Exception e) {
@@ -139,7 +139,7 @@ public class ViewWrapperCompat {
 	 * @param rotationX
 	 */
 	public void setRotationX(View v, float rotationX) {
-		if (ViewSetRotationX != null) {
+		if (ViewSetRotationX != null && v != null) {
 			try {
 				ViewSetRotationX.invoke(v, rotationX);
 			} catch (Exception e) {
@@ -156,7 +156,7 @@ public class ViewWrapperCompat {
 	 * @param rotationY
 	 */
 	public void setRotationY(View v, float rotationY) {
-		if (ViewSetRotationY != null) {
+		if (ViewSetRotationY != null && v != null) {
 			try {
 				ViewSetRotationY.invoke(v, rotationY);
 			} catch (Exception e) {
@@ -173,7 +173,7 @@ public class ViewWrapperCompat {
 	 * @param pivotX
 	 */
 	public void setPivotX(View v, float pivotX) {
-		if (ViewSetPivotX != null) {
+		if (ViewSetPivotX != null && v != null) {
 			try {
 				ViewSetPivotX.invoke(v, pivotX);
 			} catch (Exception e) {
@@ -190,7 +190,7 @@ public class ViewWrapperCompat {
 	 * @param pivotY
 	 */
 	public void setPivotY(View v, float pivotY) {
-		if (ViewSetPivotY != null) {
+		if (ViewSetPivotY != null && v != null) {
 			try {
 				ViewSetPivotY.invoke(v, pivotY);
 			} catch (Exception e) {
