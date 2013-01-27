@@ -25,6 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import javax.net.ssl.SSLPeerUnverifiedException;
+
 import org.apache.http.HttpHost;
 import org.fereor.davdroid.DavDroid;
 import org.fereor.davdroid.DavDroidFactory;
@@ -36,6 +38,7 @@ import org.fereor.panoptimage.dao.async.RepositoryDirListener;
 import org.fereor.panoptimage.dao.async.RepositoryGetListener;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
+import org.fereor.panoptimage.exception.PanoptimagePeerUnverifiedException;
 import org.fereor.panoptimage.model.WebdavParam;
 import org.fereor.panoptimage.util.PanoptimageConstants;
 import org.fereor.panoptimage.util.PanoptimageHelper;
@@ -87,7 +90,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 		// create Webdav link
 		try {
 			dav = DavDroidFactory.init(host, param.getUser(), param.getPwd());
-		} catch (XmlPullParserException e) {
+		} catch (Exception e) {
 			throw new PanoptimageNoNetworkException(param.getServer());
 		}
 	}
@@ -98,7 +101,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 		try {
 			// prepare request
 			String val = PanoptimageHelper.formatPath(root, currentPath);
-			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
+			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), null, param.getServer(),
+					Integer.parseInt(param.getPort()), val, null, null);
 			String asciiPath = uri.toASCIIString();
 			if (asciiPath.endsWith(PanoptimageHelper.SLASH)) {
 				asciiPath = asciiPath.substring(0, asciiPath.length() - 1);
@@ -110,7 +114,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			Iterator<String> result = dav.dir(asciiPath, regexp);
 			while (result.hasNext()) {
 				// remove base path from Webdav answer
-				URL pathuri = new URL(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), result.next());
+				URL pathuri = new URL(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(),Integer.parseInt(param.getPort()), result.next());
 				String path = pathuri.toString();
 				ret.add(PanoptimageHelper.decodeUrl(path.substring(len + 1)));
 			}
@@ -119,6 +123,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			throw new PanoptimageFileNotFoundException(e.toString());
 		} catch (StringIndexOutOfBoundsException e) {
 			throw new PanoptimageFileNotFoundException(e.toString());
+		} catch (SSLPeerUnverifiedException e) {
+			throw new PanoptimagePeerUnverifiedException(e.toString());
 		} catch (IOException e) {
 			throw new PanoptimageFileNotFoundException(e.toString());
 		} catch (XmlPullParserException e) {
@@ -180,5 +186,4 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 	public boolean showSplashWhileLoading() {
 		return false;
 	}
-
 }
