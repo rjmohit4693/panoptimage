@@ -51,6 +51,25 @@
         android:layout_toRightOf="@+id/param_center" />
 
     <TextView
+        android:id="@+id/param_showtuto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/param_showtip"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/param_center"
+        android:text="@string/param_showtuto"
+        android:textSize="@dimen/textsize" />
+
+    <CheckBox
+        android:id="@+id/param_showtuto_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/param_showtuto"
+        android:layout_marginBottom="-10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/param_center" />
+
+    <TextView
         android:id="@+id/param_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -61,8 +80,8 @@
         android:id="@+id/param_memory_optim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/param_showtip"
-        android:layout_below="@+id/param_showtip"
+        android:layout_alignRight="@+id/param_showtuto"
+        android:layout_below="@+id/param_showtuto"
         android:layout_marginTop="29dp"
         android:text="@string/param_memory_optim"
         android:textSize="@dimen/textsize"  />
