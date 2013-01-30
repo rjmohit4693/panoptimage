@@ -62,6 +62,8 @@
     <string name="create_webdav_name_hint">Shortcut name</string>
     <string name="create_webdav_protocol">Protocol</string>
     <string name="create_webdav_protocol_hint">Ex: http</string>
+    <string name="create_webdav_trustall">Trust all SSL Certs.</string>
+    <string name="create_webdav_trustall_hint">Default: true</string>
     <string name="create_webdav_ip">Server</string>
     <string name="create_webdav_ip_hint">Ex: 192.168.0.1</string>
     <string name="create_webdav_port">Port</string>
@@ -92,6 +94,7 @@
     <string name="error_wifionly">Scan available on WiFi only</string>
     <string name="error_outofmemory">Out of memory</string>
     <string name="error_noserver">Server not found</string>
+    <string name="error_peerunverified">Untrusted certificate</string>
     <string name="error_okserver">Server reached</string>
     <string name="error_nopath">Path not found on server</string>
     <string name="error_okpath">Path found !</string>
