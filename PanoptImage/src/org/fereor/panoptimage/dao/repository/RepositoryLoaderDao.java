@@ -22,6 +22,7 @@ import org.fereor.panoptimage.dao.async.RepositoryDirListener;
 import org.fereor.panoptimage.dao.async.RepositoryGetListener;
 import org.fereor.panoptimage.exception.PanoptimageException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
+import org.fereor.panoptimage.exception.PanoptimagePeerUnverifiedException;
 import org.fereor.panoptimage.util.PanoptimageHelper;
 
 /**
@@ -97,9 +98,10 @@ public abstract class RepositoryLoaderDao<T> {
 	 * 
 	 * @param regexp regular expression to match to search for files
 	 * @return list of child locations
+	 * @throws PanoptimagePeerUnverifiedException 
 	 */
 	public abstract List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn)
-			throws PanoptimageFileNotFoundException;
+			throws PanoptimageFileNotFoundException, PanoptimagePeerUnverifiedException;
 
 	/**
 	 * Get the content of a repository location

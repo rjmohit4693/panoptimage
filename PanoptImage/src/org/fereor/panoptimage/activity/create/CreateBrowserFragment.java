@@ -26,6 +26,7 @@ import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderFactory;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
+import org.fereor.panoptimage.exception.PanoptimagePeerUnverifiedException;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.util.PanoptimageConstants;
@@ -76,6 +77,9 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 			} catch (PanoptimageNoNetworkException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (PanoptimagePeerUnverifiedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		// lauch async task
@@ -95,7 +99,13 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 		if (getActivity() != null) {
 			// Manage null value (Not Found)
 			if (rawdir == null) {
-				msg.setText(getActivity().getString(R.string.error_filenotfound, repoBrowser.getformatedPath()));
+				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound);
+				repoBrowser.cd(PanoptimageHelper.DDOT);
+			} else if (rawdir.contains(PanoptimageConstants.ERROR_FILE_NOT_FOUND)) {
+				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound);
+				repoBrowser.cd(PanoptimageHelper.DDOT);
+			} else if (rawdir.contains(PanoptimageConstants.ERROR_PEER_UNVERIFIED)) {
+				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_peerunverified);
 				repoBrowser.cd(PanoptimageHelper.DDOT);
 			} else {
 				// Include .. to the list
@@ -159,8 +169,10 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 	 * @param param parameters to prepare the repository
 	 * @throws PanoptesUnknownParamException
 	 * @throws PanoptimageNoNetworkException
+	 * @throws PanoptimagePeerUnverifiedException
 	 */
-	private void setRepository(CreateParam param) throws PanoptesUnknownParamException, PanoptimageNoNetworkException {
+	private void setRepository(CreateParam param) throws PanoptesUnknownParamException, PanoptimageNoNetworkException,
+			PanoptimagePeerUnverifiedException {
 		// get the path of the current repository and reset it
 		String basepath = param.getPath();
 		if (basepath.isEmpty()) {

@@ -28,6 +28,7 @@ import org.fereor.panoptimage.dao.repository.RepositoryLoaderFactory;
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
+import org.fereor.panoptimage.exception.PanoptimagePeerUnverifiedException;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.util.PanoptimageConstants;
@@ -104,6 +105,8 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_unknown_param));
 		} catch (PanoptimageNoNetworkException e) {
 			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
+		} catch (PanoptimagePeerUnverifiedException e) {
+			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_peerunverified));
 		}
 	}
 
@@ -197,21 +200,34 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 	}
 
 	@Override
-	public void onPostDir(List<String> result) {
+	public void onPostDir(List<String> rawdir) {
 		// task is finished, release reference
 		task = null;
 		try {
-			// set adapter
-			adapter = new ImagePagerAdapter(repoBrowser, getSupportFragmentManager(), optim);
-			adapter.setImageList(result);
-			pager = (ViewPager) findViewById(R.id.imagepager);
-			pager.setAdapter(adapter);
-			if (savedState != null) {
-				pager.setCurrentItem(savedState.getInt(SAVESTATE_CURRENTITEM));
-				savedState = null;
+			// Check results
+			if (rawdir == null) {
+				PanoptimageMsg.showErrorMsg(this, R.string.error_filenotfound);
+				repoBrowser.cd(PanoptimageHelper.DDOT);
+			} else if (rawdir.contains(PanoptimageConstants.ERROR_FILE_NOT_FOUND)) {
+				PanoptimageMsg.showErrorMsg(this, R.string.error_filenotfound);
+				repoBrowser.cd(PanoptimageHelper.DDOT);
+			} else if (rawdir.contains(PanoptimageConstants.ERROR_PEER_UNVERIFIED)) {
+				PanoptimageMsg.showErrorMsg(this, R.string.error_peerunverified);
+				repoBrowser.cd(PanoptimageHelper.DDOT);
+			} else {
+				// set adapter
+				adapter = new ImagePagerAdapter(repoBrowser, getSupportFragmentManager(), optim);
+				adapter.setImageList(rawdir);
+				pager = (ViewPager) findViewById(R.id.imagepager);
+				pager.setAdapter(adapter);
+				if (savedState != null) {
+					pager.setCurrentItem(savedState.getInt(SAVESTATE_CURRENTITEM));
+					savedState = null;
+				}
+				pager.setOffscreenPageLimit(1);
+				adapter.notifyDataSetChanged();
+
 			}
-			pager.setOffscreenPageLimit(1);
-			adapter.notifyDataSetChanged();
 		} catch (IllegalStateException ise) {
 			// dirty mean to prevent exception when screen rotates
 		}

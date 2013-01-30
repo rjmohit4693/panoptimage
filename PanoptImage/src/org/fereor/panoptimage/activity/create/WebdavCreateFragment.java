@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -31,6 +32,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 	private WebdavParam content;
 	private EditText nameField;
 	private Spinner protocolField;
+	private CheckBox trustallField;
 	private EditText serverField;
 	private EditText portField;
 	private EditText baseField;
@@ -53,6 +55,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		// Get fields to update
 		nameField = (EditText) getView().findViewById(R.id.create_webdav_name_value);
 		protocolField = (Spinner) getView().findViewById(R.id.create_webdav_protocol_value);
+		trustallField = (CheckBox) getView().findViewById(R.id.create_webdav_trustall_value);
 		serverField = (EditText) getView().findViewById(R.id.create_webdav_ip_value);
 		portField = (EditText) getView().findViewById(R.id.create_webdav_port_value);
 		baseField = (EditText) getView().findViewById(R.id.create_webdav_base_value);
@@ -90,6 +93,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			// fill fields
 			nameField.setText(content.getKey());
 			protocolField.setSelection(WebdavProtocolIcon.indexOf(content.getProtocol()));
+			trustallField.setChecked(content.isTrustall());
 			serverField.setText(content.getServer());
 			portField.setText(content.getPort());
 			baseField.setText(content.getBase());
@@ -98,6 +102,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			// reset fields
 			nameField.setText("");
 			protocolField.setSelection(0);
+			trustallField.setChecked(false);
 			serverField.setText("");
 			portField.setText("");
 			baseField.setText("");
@@ -153,6 +158,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		}
 		// update values
 		content.setProtocol(protocolField.getSelectedItem().toString());
+		content.setTrustall(trustallField.isChecked());
 		content.setServer(serverField.getText().toString());
 		content.setPort(portField.getText().toString());
 		content.setBase(baseField.getText().toString());

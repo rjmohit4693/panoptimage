@@ -28,6 +28,7 @@ import org.fereor.panoptimage.dao.async.RepositoryExistsListener;
 import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.dao.repository.WebdavRepositoryDao;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
+import org.fereor.panoptimage.exception.PanoptimagePeerUnverifiedException;
 import org.fereor.panoptimage.model.CreateParam;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
@@ -226,6 +227,9 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 				task.execute(new WebdavRepositoryDao((WebdavParam) param, getFilesDir()));
 			} catch (PanoptimageNoNetworkException e) {
 				PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
+				return;
+			} catch (PanoptimagePeerUnverifiedException e) {
+				PanoptimageMsg.showErrorMsg(this, getString(R.string.error_peerunverified));
 				return;
 			}
 		}

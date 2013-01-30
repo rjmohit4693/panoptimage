@@ -15,7 +15,7 @@
 
 package org.fereor.panoptimage.exception;
 
-public class PanoptimagePeerUnverifiedException extends PanoptimageFileNotFoundException {
+public class PanoptimagePeerUnverifiedException extends PanoptimageException {
 
 	/**
 	 * Default constructor

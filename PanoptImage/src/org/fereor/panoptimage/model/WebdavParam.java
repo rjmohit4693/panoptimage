@@ -21,10 +21,11 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = WebdavParam.WEBDAVPARAM_TABLE_NAME)
 public class WebdavParam extends CreateParam {
 	/** serial UID */
-	private static final long serialVersionUID = -5094232537424280861L;
+	private static final long serialVersionUID = 8507596925071090753L;
 	public static final String WEBDAVPARAM_TABLE_NAME = "webdavparam";
 	public static final String WEBDAVPARAM_KEY = "key";
 	public static final String WEBDAVPARAM_PROTOCOL = "protocol";
+	public static final String WEBDAVPARAM_TRUSTALL = "trustall";
 	public static final String WEBDAVPARAM_SERVER = "server";
 	public static final String WEBDAVPARAM_PORT = "port";
 	public static final String WEBDAVPARAM_USER = "user";
@@ -36,6 +37,8 @@ public class WebdavParam extends CreateParam {
 	private String key;
 	@DatabaseField(columnName = WEBDAVPARAM_PROTOCOL)
 	private String protocol;
+	@DatabaseField(columnName = WEBDAVPARAM_TRUSTALL)
+	private boolean trustall;
 	@DatabaseField(columnName = WEBDAVPARAM_SERVER)
 	private String server;
 	@DatabaseField(columnName = WEBDAVPARAM_PORT)
@@ -124,5 +127,19 @@ public class WebdavParam extends CreateParam {
 	@Override
 	public boolean needNetwork() {
 		return true;
+	}
+
+	/**
+	 * @return the trustall
+	 */
+	public boolean isTrustall() {
+		return trustall;
+	}
+
+	/**
+	 * @param trustall the trustall to set
+	 */
+	public void setTrustall(boolean trustall) {
+		this.trustall = trustall;
 	}
 }
