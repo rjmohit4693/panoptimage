@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.fereor.panoptimage.R;
 import org.fereor.panoptimage.dao.async.RepositoryDirListener;
+import org.fereor.panoptimage.util.PanoptimageConstants;
 import org.fereor.panoptimage.util.PanoptimageHelper;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 
@@ -75,7 +76,14 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 		if (!isRoot()) {
 			directories.add(PanoptimageHelper.DDOT);
 		}
-		if (rawdir != null) {
+		// Check results
+		if (rawdir == null) {
+			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound);
+		} else if (rawdir.contains(PanoptimageConstants.ERROR_FILE_NOT_FOUND)) {
+			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound);
+		} else if (rawdir.contains(PanoptimageConstants.ERROR_PEER_UNVERIFIED)) {
+			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_peerunverified);
+		} else {
 			// sort rawdir
 			Collections.sort(rawdir);
 			for (String it : rawdir) {

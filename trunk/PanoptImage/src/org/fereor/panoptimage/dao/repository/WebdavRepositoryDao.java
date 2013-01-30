@@ -62,7 +62,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 	 * 
 	 * @param param
 	 */
-	public WebdavRepositoryDao(WebdavParam param, File cachedir) throws PanoptimageNoNetworkException {
+	public WebdavRepositoryDao(WebdavParam param, File cachedir) throws PanoptimageNoNetworkException, PanoptimagePeerUnverifiedException {
 		super(param);
 		this.cachedir = cachedir;
 		// set root path
@@ -89,7 +89,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 		HttpHost host = new HttpHost(param.getServer(), port, param.getProtocol().toLowerCase(Locale.FRANCE));
 		// create Webdav link
 		try {
-			dav = DavDroidFactory.init(host, param.getUser(), param.getPwd());
+			dav = DavDroidFactory.init(host, param.isTrustall(), param.getUser(), param.getPwd());
 		} catch (Exception e) {
 			throw new PanoptimageNoNetworkException(param.getServer());
 		}
@@ -97,7 +97,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 
 	@Override
 	public List<String> dir(String regexp, RepositoryDirListener<Long, List<String>> lsn)
-			throws PanoptimageFileNotFoundException {
+			throws PanoptimageFileNotFoundException, PanoptimagePeerUnverifiedException {
 		try {
 			// prepare request
 			String val = PanoptimageHelper.formatPath(root, currentPath);
@@ -114,7 +114,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			Iterator<String> result = dav.dir(asciiPath, regexp);
 			while (result.hasNext()) {
 				// remove base path from Webdav answer
-				URL pathuri = new URL(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(),Integer.parseInt(param.getPort()), result.next());
+				URL pathuri = new URL(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(),
+						Integer.parseInt(param.getPort()), result.next());
 				String path = pathuri.toString();
 				ret.add(PanoptimageHelper.decodeUrl(path.substring(len + 1)));
 			}

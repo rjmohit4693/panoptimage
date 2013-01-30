@@ -16,10 +16,13 @@
 package org.fereor.panoptimage.dao.async;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 import java.util.List;
 
 import org.fereor.panoptimage.dao.repository.RepositoryLoaderDao;
 import org.fereor.panoptimage.exception.PanoptimageFileNotFoundException;
+import org.fereor.panoptimage.exception.PanoptimagePeerUnverifiedException;
+import org.fereor.panoptimage.util.PanoptimageConstants;
 
 import android.os.AsyncTask;
 
@@ -49,7 +52,9 @@ public class RepositoryDirAsync extends
 			try {
 				return repo[0].dir(regexp, listenerRef.get());
 			} catch (PanoptimageFileNotFoundException e) {
-				return null;
+				return Arrays.asList(PanoptimageConstants.ERROR_FILE_NOT_FOUND);
+			} catch (PanoptimagePeerUnverifiedException e) {
+				return Arrays.asList(PanoptimageConstants.ERROR_PEER_UNVERIFIED);
 			}
 		}
 		return null;

@@ -19,6 +19,7 @@ import java.io.File;
 
 import org.fereor.panoptimage.exception.PanoptesUnknownParamException;
 import org.fereor.panoptimage.exception.PanoptimageNoNetworkException;
+import org.fereor.panoptimage.exception.PanoptimagePeerUnverifiedException;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
 import org.fereor.panoptimage.service.HomePagerParamService;
@@ -30,11 +31,12 @@ public class RepositoryLoaderFactory {
 	 * @return
 	 * @throws PanoptesUnknownParamException
 	 * @throws PanoptimageNoNetworkException
+	 * @throws PanoptimagePeerUnverifiedException 
 	 * @throws
 	 */
 	public static RepositoryLoaderDao<?> createInstance(
 			HomePagerParamService content, File cachedir)
-			throws PanoptesUnknownParamException, PanoptimageNoNetworkException {
+			throws PanoptesUnknownParamException, PanoptimageNoNetworkException, PanoptimagePeerUnverifiedException {
 		// case of type LocalParam
 		if (content.getParam() instanceof LocalParam)
 			return new LocalRepositoryDao((LocalParam) content.getParam());
