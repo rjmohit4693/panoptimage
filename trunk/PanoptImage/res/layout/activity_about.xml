@@ -87,6 +87,33 @@
         tools:context=".AboutActivity" />
 
     <TextView
+        android:id="@+id/about12"
+        android:layout_width="@dimen/about_textwidth"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/about_title"
+        android:layout_below="@+id/about_gpl"
+        android:layout_marginLeft="@dimen/about_margin"
+        android:linksClickable="true"
+        android:padding="@dimen/padding_medium"
+        android:text="@string/about12"
+        android:textSize="@dimen/textsize"
+        tools:context=".AboutActivity" />
+
+    <TextView
+        android:id="@+id/about_source"
+        android:layout_width="@dimen/about_textwidth"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/about_title"
+        android:layout_below="@+id/about12"
+        android:layout_marginLeft="@dimen/about_margin"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:padding="@dimen/padding_medium"
+        android:text="@string/about_source"
+        android:textSize="@dimen/textsize"
+        tools:context=".AboutActivity" />
+
+    <TextView
         android:id="@+id/tooltip_back"
         android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"

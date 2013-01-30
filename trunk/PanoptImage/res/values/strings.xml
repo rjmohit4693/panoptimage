@@ -29,6 +29,7 @@
     <string name="param_proxy_pwd">Password</string>
     <string name="param_proxy_pwd_hint">Your password</string>
     <string name="param_showtip">Show Tips</string>
+    <string name="param_showtuto">Show Tutorials</string>
     <string name="param_memory_optim">Memory optimization</string>
     <string name="param_memory_auto">Auto</string>
     <string name="param_memory_2">Level 2</string>
@@ -92,12 +93,12 @@
     <string name="error_filenotfound">Path not found: %s</string>
     <string name="error_nonetwork">Network not available</string>
     <string name="error_wifionly">Scan available on WiFi only</string>
-    <string name="error_outofmemory">Out of memory</string>
+    <string name="error_outofmemory">Out of memory. Change the memory settings in configuration screen</string>
     <string name="error_noserver">Server not found</string>
-    <string name="error_peerunverified">Untrusted certificate</string>
+    <string name="error_peerunverified">Error : Untrusted certificate</string>
     <string name="error_okserver">Server reached</string>
     <string name="error_nopath">Path not found on server</string>
-    <string name="error_okpath">Path found !</string>
+    <string name="error_okpath">Path found</string>
 
     <!-- About messages -->
     <string name="about_title">About Panoptimage</string>
@@ -106,7 +107,7 @@
     <string name="about3">This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</string>
     <string name="about4">To get a copy of the GNU public license, visit</string>
     <string name="about_gpl">http://www.gnu.org/licenses/</string>
-    <string name="about12">To get the sources of the program, visit</string>
+    <string name="about12">To get the sources, visit</string>
     <string name="about_source">http://code.google.com/p/panoptimage/</string>
 
     <!-- Tooltip messages -->
