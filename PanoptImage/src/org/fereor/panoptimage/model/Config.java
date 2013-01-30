@@ -26,6 +26,7 @@ public class Config {
 	// public static final String CONFIG_PROXY_IP = "proxy_ip";
 	// public static final String CONFIG_PROXY_PORT = "proxy_port";
 	public static final String CONFIG_SHOWTIP = "showtip";
+	public static final String CONFIG_SHOWTUTO = "showtuto";
 	public static final String CONFIG_MEMOPTIM = "memoptim";
 	@DatabaseField(id = true, columnName = CONFIG_KEY)
 	private String key;
@@ -35,6 +36,8 @@ public class Config {
 	// private int proxyPort;
 	@DatabaseField(columnName = CONFIG_SHOWTIP)
 	private boolean showtip;
+	@DatabaseField(columnName = CONFIG_SHOWTUTO)
+	private boolean showtuto;
 	@DatabaseField(columnName = CONFIG_MEMOPTIM)
 	private int memoptim;
 
@@ -88,6 +91,20 @@ public class Config {
 	 */
 	public void setMemoptim(int memoptim) {
 		this.memoptim = memoptim;
+	}
+
+	/**
+	 * @return the showtuto
+	 */
+	public boolean isShowtuto() {
+		return showtuto;
+	}
+
+	/**
+	 * @param showtuto the showtuto to set
+	 */
+	public void setShowtuto(boolean showtuto) {
+		this.showtuto = showtuto;
 	}
 
 }

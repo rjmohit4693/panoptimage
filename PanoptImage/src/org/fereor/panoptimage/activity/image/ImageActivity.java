@@ -189,6 +189,20 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 		showTooltip(R.id.tooltip_rotate_clockwise);
 		showTooltip(R.id.tooltip_rotate_counterclockwise);
 	}
+	
+	/**
+	 * Hide tooltips temporarily
+	 */
+	protected void hideTooltips() {
+		hideTooltip(R.id.tooltip_browse);
+		hideTooltip(R.id.tooltip_back);
+		hideTooltip(R.id.tooltip_rotate_clockwise);
+		hideTooltip(R.id.tooltip_rotate_counterclockwise);
+	}
+
+	@Override
+	protected void displayTutorials() {
+	}
 
 	// -------------------------------------------------------------------------
 	// Methods for Dir listener
@@ -261,6 +275,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 	@Override
 	public void onPageSelected(int arg0) {
 		showButtons(false);
+		hideTooltips();
 	}
 
 	// -------------------------------------------------------------------------

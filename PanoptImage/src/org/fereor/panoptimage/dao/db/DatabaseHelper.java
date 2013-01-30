@@ -43,7 +43,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private static final String DATABASE_NAME = "panoptes.db";
 	// any time you make changes to your database objects, you may have to
 	// increase the database version
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 
 	// the DAO object we use to access the Player table
 	private Dao<Config, String> configDao = null;
@@ -53,7 +53,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	// the DAO object we use to access the LocalParam table
 	private Dao<LocalParam, String> localParamDao = null;
-	
+
 	/**
 	 * Constructor : initialize everything
 	 * 
@@ -71,6 +71,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			for (Class<?> nextClass : PanoptimageConstants.DATABASE_CLASSES) {
 				TableUtils.createTable(connectionSource, nextClass);
 			}
+			intializeDb();
 		} catch (SQLException e) {
 			Log.e(PanoptimageConstants.TAGNAME, "Can't create database", e);
 			throw new RuntimeException(e);
@@ -88,6 +89,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			}
 			// after we drop the old databases, we create the new ones
 			onCreate(db, connectionSource);
+			intializeDb();
 		} catch (SQLException e) {
 			Log.e(PanoptimageConstants.TAGNAME, "Can't drop databases", e);
 		}
@@ -144,6 +146,23 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			configDao = getDao(Config.class);
 		}
 		return configDao;
+	}
+
+	/**
+	 * Initialize the content of the database
+	 */
+	public void intializeDb() {
+		try {
+			// Initialize Config
+			Config defaultConfig  = new Config();
+			defaultConfig.setKey(Config.DEFAULT_KEY);
+			defaultConfig.setShowtuto(true);
+			defaultConfig.setMemoptim(0);
+			defaultConfig.setShowtip(false);
+			getConfigDao().createIfNotExists(defaultConfig);
+		} catch (SQLException e) {
+			// Cannot intialize DB, go on
+		}
 	}
 
 	/**

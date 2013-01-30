@@ -124,6 +124,8 @@ public class ConfigActivity extends PanoptesActivity {
 		// data.setProxyPort(Integer.parseInt(proxyPort.getText().toString()));
 		CheckBox showtip = (CheckBox) findViewById(R.id.param_showtip_value);
 		data.setShowtip(showtip.isChecked());
+		CheckBox showtuto = (CheckBox) findViewById(R.id.param_showtuto_value);
+		data.setShowtuto(showtuto.isChecked());
 		Spinner memoptims = (Spinner) findViewById(R.id.param_memory_optim_value);
 		PanoptimageMemoryOptimEnum optim = (PanoptimageMemoryOptimEnum) memoptims.getSelectedItem();
 		data.setMemoptim(optim.key());
@@ -142,6 +144,8 @@ public class ConfigActivity extends PanoptesActivity {
 		// Show tip
 		CheckBox showtip = (CheckBox) findViewById(R.id.param_showtip_value);
 		showtip.setChecked(data.isShowtip());
+		CheckBox showtuto = (CheckBox) findViewById(R.id.param_showtuto_value);
+		showtuto.setChecked(data.isShowtuto());
 		// memory optimization
 		Spinner memoptims = (Spinner) findViewById(R.id.param_memory_optim_value);
 		memoptims.setSelection(PanoptimageMemoryOptimEnum.findPosition(data.getMemoptim()));
@@ -179,6 +183,10 @@ public class ConfigActivity extends PanoptesActivity {
 	protected void displayTooltips() {
 		showTooltip(R.id.tooltip_save);
 		showTooltip(R.id.tooltip_back);
+	}
+
+	@Override
+	protected void displayTutorials() {
 	}
 
 }
