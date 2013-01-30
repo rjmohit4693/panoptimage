@@ -45,4 +45,8 @@ public class AboutActivity extends PanoptesActivity {
 		showTooltip(R.id.tooltip_back);  
 	}
 
+	@Override
+	protected void displayTutorials() {
+	}
+
 }

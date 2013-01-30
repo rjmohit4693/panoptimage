@@ -117,6 +117,22 @@ public class HomeActivity extends PanoptesActivity {
 		showTooltip(R.id.tooltip_slide);
 	}
 
+	@Override
+	protected void displayTutorials() {
+		try {
+			long nbres = getHelper().getLocalParamDao().countOf() + getHelper().getWebdavParamDao().countOf();
+			// Check if a config has been created
+			if (nbres == 0) {
+				showTutorial(R.id.tooltip_create);
+			} else {
+				showTutorial(R.id.tooltip_slide);
+			}
+		} catch (SQLException e) {
+			// No tutorial
+		}
+
+	}
+
 	// -------------------------------------------------------------------------
 	// Methods for Action buttons
 	// -------------------------------------------------------------------------
@@ -190,7 +206,8 @@ public class HomeActivity extends PanoptesActivity {
 		// populate the spinner with default values
 		List<HomePagerParamService> data = new ArrayList<HomePagerParamService>();
 		// Add the default view (home page)
-		data.add(new HomePagerParamService(new EmptyParam(), getString(R.string.message), PanoptimageTypeEnum.EMPTY.icon()));
+		data.add(new HomePagerParamService(new EmptyParam(), getString(R.string.message), PanoptimageTypeEnum.EMPTY
+				.icon()));
 
 		// populate the scroll with local values
 		for (LocalParam local : getHelper().getLocalParamDao().queryForAll()) {

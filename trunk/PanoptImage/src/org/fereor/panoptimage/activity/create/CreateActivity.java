@@ -99,6 +99,22 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		showTooltip(R.id.tooltip_recycle);
 	}
 
+	@Override
+	protected void displayTutorials() {
+		try {
+			long nbres = getHelper().getLocalParamDao().countOf() + getHelper().getWebdavParamDao().countOf();
+			// Check if a config has been created
+			if (nbres == 0) {
+			} else {
+				showTutorial(R.id.tooltip_back);
+				showTooltip(R.id.tooltip_save);
+				showTooltip(R.id.tooltip_recycle);
+			}
+		} catch (SQLException e) {
+			// No tutorial
+		}
+	}
+
 	// -------------------------------------------------------------------------
 	// Methods for Action buttons
 	// -------------------------------------------------------------------------
@@ -293,7 +309,7 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 			PanoptimageMsg.showInfoMsg(this, R.string.error_nonetwork);
 			return;
 		}
-		
+
 		try {
 			WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 			InetAddress ad = InetAddress.getByAddress(WifiDiscovery.intToInetBytes(wifi.getDhcpInfo().ipAddress));

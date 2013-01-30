@@ -46,6 +46,8 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	protected Typeface tooltipfont;
 	/** tooltip visibility */
 	protected boolean tooltipvisible = false;
+	/** tutorial visibility */
+	private boolean tutorialvisible;
 
 	// -------------------------------------------------------------------------
 	// Methods for DB access
@@ -75,14 +77,19 @@ public abstract class PanoptesActivity extends FragmentActivity {
 			data = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
 			if (data != null) {
 				tooltipvisible = data.isShowtip();
+				tutorialvisible = data.isShowtuto();
 			} else {
 				tooltipvisible = false;
+				tutorialvisible = true;
 			}
 			displayTooltips();
+			displayTutorials();
 		} catch (SQLException e) {
 			// config not available, hide tooltips
 			tooltipvisible = false;
+			tutorialvisible = true;
 			displayTooltips();
+			displayTutorials();
 		}
 		super.onResume();
 	}
@@ -115,6 +122,11 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	protected abstract void displayTooltips();
 
 	/**
+	 * Show tooltips
+	 */
+	protected abstract void displayTutorials();
+
+	/**
 	 * Show tooltips displayed
 	 */
 	protected void showTooltip(int tid) {
@@ -129,6 +141,27 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	 * Hide tooltips displayed
 	 */
 	protected void hideTooltip(int tid) {
+		TextView txt;
+		// Identify texts to display
+		txt = (TextView) findViewById(tid);
+		txt.setVisibility(View.INVISIBLE);
+	}
+
+	/**
+	 * Show tooltips displayed
+	 */
+	protected void showTutorial(int tid) {
+		TextView txt;
+		// Identify texts to display
+		txt = (TextView) findViewById(tid);
+		txt.setTypeface(tooltipfont);
+		txt.setVisibility(tutorialvisible ? View.VISIBLE : View.INVISIBLE);
+	}
+
+	/**
+	 * Hide tooltips displayed
+	 */
+	protected void hideTutorial(int tid) {
 		TextView txt;
 		// Identify texts to display
 		txt = (TextView) findViewById(tid);
