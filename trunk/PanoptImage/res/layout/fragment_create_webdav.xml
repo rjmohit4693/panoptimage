@@ -48,6 +48,25 @@
         android:textSize="@dimen/editsize" />
 
     <TextView
+        android:id="@+id/create_webdav_trustall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/create_webdav_trustall_value"
+        android:layout_gravity="right|center_vertical"
+        android:layout_toLeftOf="@+id/create_webdav_trustall_value"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/create_webdav_trustall"
+        android:textSize="@dimen/textsize" />
+
+    <CheckBox
+        android:id="@+id/create_webdav_trustall_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/create_webdav_protocol_value"
+        android:layout_below="@+id/create_webdav_protocol_value" />
+
+    <TextView
         android:id="@+id/create_webdav_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,8 +81,8 @@
         android:id="@+id/create_webdav_ip_value"
         android:layout_width="@dimen/create_edittext"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_protocol_value"
-        android:layout_below="@+id/create_webdav_protocol_value"
+        android:layout_alignLeft="@+id/create_webdav_trustall_value"
+        android:layout_below="@+id/create_webdav_trustall_value"
         android:background="@drawable/ic_textview"
         android:hint="@string/create_webdav_ip_hint"
         android:textSize="@dimen/editsize" />
