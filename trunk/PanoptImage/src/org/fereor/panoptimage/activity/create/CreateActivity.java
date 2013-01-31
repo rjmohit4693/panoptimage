@@ -124,7 +124,6 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 	 * @param view
 	 */
 	public void doBack(View view) {
-		Log.d(PanoptimageConstants.TAGNAME, "CreateActivity:doBack");
 		finish();
 	}
 
@@ -152,7 +151,6 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 						return null;
 					}
 				});
-
 			} else if (param instanceof WebdavParam) {
 				getHelper().getWebdavParamDao().callBatchTasks(new Callable<Void>() {
 					public Void call() throws SQLException {
@@ -162,7 +160,6 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 						return null;
 					}
 				});
-
 			}
 		} catch (Exception e) {
 			PanoptimageMsg.showErrorMsg(this, e);
@@ -172,6 +169,8 @@ public class CreateActivity extends PanoptesActivity implements OnItemSelectedLi
 		populateSpinner();
 		// show message
 		PanoptimageMsg.showInfoMsg(this, getString(R.string.create_message_saved, param.getKey()));
+		// Update tutorials
+		displayTutorials();
 	}
 
 	/**

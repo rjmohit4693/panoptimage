@@ -47,7 +47,7 @@ public abstract class PanoptesActivity extends FragmentActivity {
 	/** tooltip visibility */
 	protected boolean tooltipvisible = false;
 	/** tutorial visibility */
-	private boolean tutorialvisible;
+	protected boolean tutorialvisible;
 
 	// -------------------------------------------------------------------------
 	// Methods for DB access

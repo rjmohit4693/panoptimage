@@ -30,17 +30,18 @@ import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
 import org.fereor.panoptimage.service.HomePagerParamService;
 import org.fereor.panoptimage.util.PanoptimageConstants;
-import org.fereor.panoptimage.util.PanoptimageTypeEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
+import org.fereor.panoptimage.util.PanoptimageTypeEnum;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
-public class HomeActivity extends PanoptesActivity {
+public class HomeActivity extends PanoptesActivity implements OnPageChangeListener {
 	private static final String SAVESTATE_CURRENTITEM = "org.fereor.panoptimage.activity.home.HomeActivity.currentItem";
 
 	/** Adapter for the pager */
@@ -64,6 +65,7 @@ public class HomeActivity extends PanoptesActivity {
 			adapter.setData(content);
 			pager = (ViewPager) findViewById(R.id.pager);
 			pager.setAdapter(adapter);
+			pager.setOnPageChangeListener(this);
 			// restore state if needed
 			if (savedInstanceState != null) {
 				pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
@@ -119,6 +121,10 @@ public class HomeActivity extends PanoptesActivity {
 
 	@Override
 	protected void displayTutorials() {
+		if (tooltipvisible) {
+			// tooltip is preminent on tutorial
+			return;
+		}
 		try {
 			long nbres = getHelper().getLocalParamDao().countOf() + getHelper().getWebdavParamDao().countOf();
 			// Check if a config has been created
@@ -192,6 +198,35 @@ public class HomeActivity extends PanoptesActivity {
 		Log.i(PanoptimageConstants.TAGNAME, "HomeActivity:showAbout");
 		Intent intent = new Intent(this, AboutActivity.class);
 		startActivity(intent);
+	}
+
+	// -------------------------------------------------------------------------
+	// Methods for PageChange Listener
+	// -------------------------------------------------------------------------
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+		// nothing
+
+	}
+
+	@Override
+	public void onPageScrolled(int idx, float arg1, int arg2) {
+		// nothing
+	}
+
+	@Override
+	public void onPageSelected(int idx) {
+		if (tooltipvisible) {
+			// tooltip is preminent on tutorial
+			return;
+		}
+		if (idx != 0) {
+			hideTutorial(R.id.tooltip_slide);
+			showTutorial(R.id.tooltip_press);
+		} else {
+			showTutorial(R.id.tooltip_slide);
+			hideTutorial(R.id.tooltip_press);
+		}
 	}
 
 	// -------------------------------------------------------------------------
