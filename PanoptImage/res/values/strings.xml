@@ -111,16 +111,17 @@
     <string name="about_source">http://code.google.com/p/panoptimage/</string>
 
     <!-- Tooltip messages -->
-    <string name="tooltip_home_create">Click here to create new links</string>
+    <string name="tooltip_home_create">Press here to create new links</string>
     <string name="tooltip_home_back">Close application here</string>
     <string name="tooltip_home_about">Licence information</string>
-    <string name="tooltip_home_config">Click here for configuration</string>
-    <string name="tooltip_home_slide">Slide left or right to display links</string>
-    <string name="tooltip_config_back">Close (discard changes)</string>
+    <string name="tooltip_home_config">Press here to configure</string>
+    <string name="tooltip_home_slide">Slide left or right to display shortcuts</string>
+    <string name="tooltip_home_press">Press to display your images</string>
+    <string name="tooltip_config_back">Close panel</string>
     <string name="tooltip_config_save">Save configuration changes</string>
-    <string name="tooltip_create_back">Close (discard changes)</string>
+    <string name="tooltip_create_back">Close panel</string>
     <string name="tooltip_create_recycle">Delete selected link</string>
-    <string name="tooltip_create_save">Save link</string>
+    <string name="tooltip_create_save">Save shortcut</string>
     <string name="tooltip_create_scan">Scan network</string>
     <string name="tooltip_create_browse">Browse repository</string>
     <string name="tooltip_about_back">Close panel</string>
