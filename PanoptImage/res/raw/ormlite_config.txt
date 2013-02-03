@@ -1,5 +1,5 @@
 #
-# generated on 2013/01/30 10:11:50
+# generated on 2013/02/01 09:40:07
 #
 # --table-start--
 dataClass=org.fereor.panoptimage.model.Config
@@ -21,6 +21,10 @@ columnName=showtuto
 # --field-start--
 fieldName=memoptim
 columnName=memoptim
+# --field-end--
+# --field-start--
+fieldName=lastview
+columnName=lastview
 # --field-end--
 # --table-fields-end--
 # --table-end--
