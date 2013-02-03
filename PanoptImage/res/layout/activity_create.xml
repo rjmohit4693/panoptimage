@@ -3,34 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/back"
-        android:onClick="doBack" />
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="false"
-        android:background="@drawable/save"
-        android:onClick="doSave" />
-
-    <Button
-        android:id="@+id/recycle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/recycle"
-        android:onClick="doRecycle" />
-
     <Spinner
         android:id="@+id/create_selection"
         android:layout_width="wrap_content"
@@ -39,8 +11,8 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/spinner_selector"
         android:drawSelectorOnTop="true"
-        android:textSize="@dimen/editsize"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dropdown"
+        android:textSize="@dimen/editsize" />
 
     <TextView
         android:id="@+id/create_title"
@@ -51,7 +23,7 @@
         android:text="@string/create_title"
         android:textSize="@dimen/titlesize" />
 
-   <FrameLayout
+    <FrameLayout
         android:id="@+id/create_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -112,5 +84,33 @@
         android:text="@string/tooltip_create_recycle"
         android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/back"
+        android:onClick="doBack" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="false"
+        android:background="@drawable/save"
+        android:onClick="doSave" />
+
+    <Button
+        android:id="@+id/recycle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/recycle"
+        android:onClick="doRecycle" />
 
 </RelativeLayout>
