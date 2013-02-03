@@ -12,6 +12,7 @@
     <dimen name="padding_medium">4dp</dimen>
     <dimen name="padding_large">8dp</dimen>
     <dimen name="image_browse">250dp</dimen>
+    <dimen name="image_home">150dp</dimen>
     <dimen name="image_scan">50dp</dimen>
     <dimen name="create_browse">200dp</dimen>
     <dimen name="create_edittext">150dp</dimen>
