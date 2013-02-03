@@ -57,7 +57,7 @@
         android:layout_toLeftOf="@+id/back"
         android:gravity="right"
         android:text="@string/tooltip_image_back"
-        android:textSize="30sp"
+        android:textSize="@dimen/tooltip_textsize"
         android:visibility="invisible" />
 
     <TextView
