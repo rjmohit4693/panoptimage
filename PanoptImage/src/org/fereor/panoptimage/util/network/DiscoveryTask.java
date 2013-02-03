@@ -16,19 +16,17 @@
 package org.fereor.panoptimage.util.network;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-import android.os.AsyncTask;
-
-public class DiscoveryTask extends AsyncTask<InetAddress, Void, List<HotSite>> {
+public class DiscoveryTask implements Callable<List<HotSite>> {
 	/** timeout for network discovery */
 	private static final int TIMEOUT = 1000;
-	/** Listener when discover */
-	private WeakReference<DiscoveryListener> listener;
+	/** IP address to scan */
+	private InetAddress ip;
 	/** List of ports to scan */
 	private int[] ports;
 
@@ -38,23 +36,23 @@ public class DiscoveryTask extends AsyncTask<InetAddress, Void, List<HotSite>> {
 	 * @param lsn listener
 	 * @param ports list of ports to test
 	 */
-	public DiscoveryTask(DiscoveryListener lsn, int... ports) {
-		this.listener = new WeakReference<DiscoveryListener>(lsn);
+	public DiscoveryTask(InetAddress ip, int... ports) {
 		this.ports = ports;
+		this.ip = ip;
 	}
 
 	@Override
-	protected List<HotSite> doInBackground(InetAddress... ip) {
+	public List<HotSite> call() {
 		List<HotSite> result = new ArrayList<HotSite>(ports.length);
 		// test address
 		try {
-			if (ip[0].isReachable(TIMEOUT)) {
+			if (ip.isReachable(TIMEOUT)) {
 				for (int port : ports) {
 					// try to open a socket to the host on the given port
 					Socket so = null;
 					try {
-						so = new Socket(ip[0], port);
-						result.add(new HotSite(ip[0], port));
+						so = new Socket(ip, port);
+						result.add(new HotSite(ip, port));
 					} catch (IOException ioe) {
 						// port is not responding, not available
 					} finally {
@@ -75,14 +73,5 @@ public class DiscoveryTask extends AsyncTask<InetAddress, Void, List<HotSite>> {
 			// Timeout was reached
 			return null;
 		}
-	}
-
-	@Override
-	protected void onPostExecute(List<HotSite> result) {
-		super.onPostExecute(result);
-		if (listener == null || listener.get() == null) {
-			return;
-		}
-		listener.get().addressFound(result);
 	}
 }

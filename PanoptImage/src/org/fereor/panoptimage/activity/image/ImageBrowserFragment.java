@@ -45,6 +45,8 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 	private ListView lv = null;
 	/** mark reference for loading message */
 	private TextView msg = null;
+	/** current path */
+	private String path = null;
 	/** mark if the root directory is displayed */
 	private boolean root = false;
 
@@ -78,9 +80,9 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 		}
 		// Check results
 		if (rawdir == null) {
-			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound);
+			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound, path);
 		} else if (rawdir.contains(PanoptimageConstants.ERROR_FILE_NOT_FOUND)) {
-			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound);
+			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound, path);
 		} else if (rawdir.contains(PanoptimageConstants.ERROR_PEER_UNVERIFIED)) {
 			PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_peerunverified);
 		} else {
@@ -125,5 +127,19 @@ public class ImageBrowserFragment extends Fragment implements RepositoryDirListe
 	 */
 	public void setRoot(boolean root) {
 		this.root = root;
+	}
+
+	/**
+	 * @return the path
+	 */
+	public String getPath() {
+		return path;
+	}
+
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
+		this.path = path;
 	}
 }

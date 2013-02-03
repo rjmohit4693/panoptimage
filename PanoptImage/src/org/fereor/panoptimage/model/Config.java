@@ -28,6 +28,8 @@ public class Config {
 	public static final String CONFIG_SHOWTIP = "showtip";
 	public static final String CONFIG_SHOWTUTO = "showtuto";
 	public static final String CONFIG_MEMOPTIM = "memoptim";
+	public static final String CONFIG_LASTVIEW = "lastview";
+
 	@DatabaseField(id = true, columnName = CONFIG_KEY)
 	private String key;
 	// @DatabaseField(columnName = CONFIG_PROXY_IP)
@@ -40,6 +42,8 @@ public class Config {
 	private boolean showtuto;
 	@DatabaseField(columnName = CONFIG_MEMOPTIM)
 	private int memoptim;
+	@DatabaseField(columnName = CONFIG_LASTVIEW)
+	private String lastview;
 
 	/**
 	 * Empty constructor (mandatory for ORMLite)
@@ -105,6 +109,20 @@ public class Config {
 	 */
 	public void setShowtuto(boolean showtuto) {
 		this.showtuto = showtuto;
+	}
+
+	/**
+	 * @return the lastview
+	 */
+	public String getLastview() {
+		return lastview;
+	}
+
+	/**
+	 * @param lastview the lastview to set
+	 */
+	public void setLastview(String lastview) {
+		this.lastview = lastview;
 	}
 
 }

@@ -220,10 +220,10 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 		try {
 			// Check results
 			if (rawdir == null) {
-				PanoptimageMsg.showErrorMsg(this, R.string.error_filenotfound);
+				PanoptimageMsg.showErrorMsg(this, R.string.error_filenotfound, repoBrowser.getformatedPath());
 				repoBrowser.cd(PanoptimageHelper.DDOT);
 			} else if (rawdir.contains(PanoptimageConstants.ERROR_FILE_NOT_FOUND)) {
-				PanoptimageMsg.showErrorMsg(this, R.string.error_filenotfound);
+				PanoptimageMsg.showErrorMsg(this, R.string.error_filenotfound, repoBrowser.getformatedPath());
 				repoBrowser.cd(PanoptimageHelper.DDOT);
 			} else if (rawdir.contains(PanoptimageConstants.ERROR_PEER_UNVERIFIED)) {
 				PanoptimageMsg.showErrorMsg(this, R.string.error_peerunverified);
@@ -306,7 +306,6 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 			ViewWrapperCompat.getInstance().setScaleX(page, scaleFactor);
 			ViewWrapperCompat.getInstance().setScaleY(page, scaleFactor);
 			ViewWrapperCompat.getInstance().setRotationY(page, rotation);
-			setAlphaButtons(alpha);
 		}
 	}
 
@@ -347,6 +346,7 @@ public class ImageActivity extends PanoptesActivity implements OnPageChangeListe
 		ImageBrowserFragment browseFragment = (ImageBrowserFragment) getSupportFragmentManager().findFragmentById(
 				R.id.browser_fragment);
 		browseFragment.setRoot(repoBrowser.isRoot());
+		browseFragment.setPath(repoBrowser.getformatedPath());
 		RepositoryDirAsync task = new RepositoryDirAsync(browseFragment, PanoptimageHelper.REGEXP_DIRECTORY);
 		task.execute(repoBrowser);
 		showBrowserPanel();

@@ -44,7 +44,7 @@ public class WebdavScanAdapter extends ArrayAdapter<HotSite> {
 		// find icon to display
 		WebdavProtocolIcon iconobj = WebdavProtocolIcon.findIcon(site.getPort());
 		// draw line with text and icon
-		v.setText(site.getHost().getHostAddress());
+		v.setText(site.getHost().getHostAddress()+ ":" + site.getPort());
 		v.setCompoundDrawablesWithIntrinsicBounds(iconobj.icon(), 0, 0, 0);
 		return v;
 	}

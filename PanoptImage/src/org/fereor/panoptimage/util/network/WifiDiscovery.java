@@ -19,15 +19,19 @@ import java.lang.ref.WeakReference;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 
-public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implements DiscoveryListener {
+public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> {
+	private static int SLEEP = 100;
 	/**
 	 * Convert an address to readable format
 	 * 
@@ -52,6 +56,8 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 	private long max;
 	/** Listener */
 	private WeakReference<ScanListener> listener;
+	/** list of underlying tasks */
+	private List<Future<List<HotSite>>> res;
 
 	/**
 	 * Constructor
@@ -73,44 +79,63 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 		max = 0xffffffff & nomask[0] + 0xffffff & nomask[1] + 0xffff & nomask[2] + 0xff & nomask[3];
 		loopsize = max;
 		// init discovery
+		Collection<DiscoveryTask> tasks = new ArrayList<DiscoveryTask>();
 		for (int adi = 0; adi < max; adi++) {
 			try {
 				// Identify address to check
 				int addr = (dhcp.ipAddress & dhcp.netmask) | (adi & 0xff) << 24 | (adi >> 8 & 0xff) << 16
 						| (adi >> 16 & 0xff) << 8;
 				InetAddress target = InetAddress.getByAddress(intToInetBytes(addr));
-				DiscoveryTask t = new DiscoveryTask(this, p);
-				t.executeOnExecutor(executor, target);
+				tasks.add(new DiscoveryTask(target, p));
 			} catch (UnknownHostException e) {
 				// Host is unknown : just ignore it
 			}
+		}
+		try {
+			res = executor.invokeAll(tasks);
+		} catch (InterruptedException e) {
+			res = null;
 		}
 	}
 
 	@Override
 	protected List<HotSite> doInBackground(Void... params) {
-		while (loopsize > 0) {
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
+		if (res != null) {
+			// check result of all sub tasks
+			boolean finished = false;
+			while (!finished) {
+				finished = true;
+				for (Future<List<HotSite>> f : res) {
+					if (f.isDone()) {
+						loopsize--;
+						try {
+							// get data found
+							List<HotSite> ad = f.get();
+							if (ad != null) {
+								sites.addAll(ad);
+							}
+						} catch (InterruptedException e) {
+							// Ignore
+						} catch (ExecutionException e) {
+							// Ignore
+						}
+						if (listener != null && listener.get() != null) {
+							listener.get().onScanProgress(max, max - loopsize);
+						}
+					} else {
+						finished = false;
+					}
+				}
+				// sleep for a while
+				try {
+					Thread.sleep(SLEEP);
+				} catch (InterruptedException e) {
+				}
 			}
+
+			return sites;
 		}
-
-		return sites;
-	}
-
-	@Override
-	public void addressFound(List<HotSite> ad) {
-		synchronized (loopsize) {
-			loopsize--;
-			if (ad != null) {
-				sites.addAll(ad);
-			}
-			if (listener != null && listener.get() != null) {
-				listener.get().onScanProgress(max, max - loopsize);
-			}
-
-		}
+		return null;
 	}
 
 	@Override
@@ -122,8 +147,4 @@ public class WifiDiscovery extends AsyncTask<Void, Long, List<HotSite>> implemen
 			listener.get().onScanFinished(result);
 		}
 	}
-
-	// -------------------------------------------
-	// private methods
-	// -------------------------------------------
 }

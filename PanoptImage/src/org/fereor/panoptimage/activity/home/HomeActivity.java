@@ -25,6 +25,7 @@ import org.fereor.panoptimage.activity.about.AboutActivity;
 import org.fereor.panoptimage.activity.config.ConfigActivity;
 import org.fereor.panoptimage.activity.create.CreateActivity;
 import org.fereor.panoptimage.activity.image.ImageActivity;
+import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.model.EmptyParam;
 import org.fereor.panoptimage.model.LocalParam;
 import org.fereor.panoptimage.model.WebdavParam;
@@ -66,6 +67,7 @@ public class HomeActivity extends PanoptesActivity implements OnPageChangeListen
 			pager = (ViewPager) findViewById(R.id.pager);
 			pager.setAdapter(adapter);
 			pager.setOnPageChangeListener(this);
+			pager.setCurrentItem(findLastContent());
 			// restore state if needed
 			if (savedInstanceState != null) {
 				pager.setCurrentItem(savedInstanceState.getInt(SAVESTATE_CURRENTITEM));
@@ -87,6 +89,7 @@ public class HomeActivity extends PanoptesActivity implements OnPageChangeListen
 	@Override
 	protected void onResume() {
 		Log.d(PanoptimageConstants.TAGNAME, "HomeActivity:onResume");
+		displayTutorials();
 		// If database is updated, refresh content
 		if (!isLocalParamUptodate() || !isWebdavParamUptodate()) {
 			try {
@@ -96,6 +99,7 @@ public class HomeActivity extends PanoptesActivity implements OnPageChangeListen
 				adapter.setData(content);
 				pager.setAdapter(adapter);
 				adapter.notifyDataSetChanged();
+				pager.setCurrentItem(findLastContent());
 			} catch (SQLException e) {
 				PanoptimageMsg.showErrorMsg(this, e);
 			}
@@ -167,7 +171,15 @@ public class HomeActivity extends PanoptesActivity implements OnPageChangeListen
 			PanoptimageMsg.showErrorMsg(this, getString(R.string.error_nonetwork));
 			return;
 		}
-
+		// Save param displayed
+		try {
+			Config data = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
+			if (data != null) {
+				data.setLastview(curparam.getParam().getKey());
+				getHelper().getConfigDao().createOrUpdate(data);
+			}
+		} catch (SQLException e) {
+		}
 		// pass information to the image page
 		Intent intent = new Intent(this, ImageActivity.class);
 		intent.putExtra(PanoptimageConstants.MSG_HOME, curparam);
@@ -260,4 +272,32 @@ public class HomeActivity extends PanoptesActivity implements OnPageChangeListen
 		markWebdavRead();
 		return data;
 	}
+
+	/**
+	 * Get the last content opened
+	 */
+	private int findLastContent() {
+		// Read param displayed
+		try {
+			Config data = getHelper().getConfigDao().queryForId(Config.DEFAULT_KEY);
+			if (data != null) {
+				String loc = data.getLastview();
+				if (loc == null) {
+					return 0;
+				}
+				// Search a matching value
+				int idx = 0;
+				for (HomePagerParamService ct : content) {
+					if (loc.equals(ct.getParam().getKey())) {
+						return idx;
+					}
+					idx++;
+				}
+			}
+		} catch (SQLException e) {
+		}
+		// default value : show default page
+		return 0;
+	}
+
 }
