@@ -55,7 +55,6 @@ public class HomeActivity extends PanoptesActivity implements OnPageChangeListen
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		Log.d(PanoptimageConstants.TAGNAME, "HomeActivity:onCreate");
 		// go on
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
@@ -82,13 +81,11 @@ public class HomeActivity extends PanoptesActivity implements OnPageChangeListen
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		Log.d(PanoptimageConstants.TAGNAME, "HomeActivity:onSaveInstanceState");
 		outState.putInt(SAVESTATE_CURRENTITEM, pager.getCurrentItem());
 	}
 
 	@Override
 	protected void onResume() {
-		Log.d(PanoptimageConstants.TAGNAME, "HomeActivity:onResume");
 		displayTutorials();
 		// If database is updated, refresh content
 		if (!isLocalParamUptodate() || !isWebdavParamUptodate()) {
