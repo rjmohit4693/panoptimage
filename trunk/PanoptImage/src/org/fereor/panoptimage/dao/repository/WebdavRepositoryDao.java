@@ -62,7 +62,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 	 * 
 	 * @param param
 	 */
-	public WebdavRepositoryDao(WebdavParam param, File cachedir) throws PanoptimageNoNetworkException, PanoptimagePeerUnverifiedException {
+	public WebdavRepositoryDao(WebdavParam param, File cachedir) throws PanoptimageNoNetworkException,
+			PanoptimagePeerUnverifiedException {
 		super(param);
 		this.cachedir = cachedir;
 		// set root path
@@ -102,7 +103,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			// prepare request
 			String val = PanoptimageHelper.formatPath(root, currentPath);
 			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), null, param.getServer(),
-					Integer.parseInt(param.getPort()), val, null, null);
+					parsePort(param), val, null, null);
 			String asciiPath = uri.toASCIIString();
 			if (asciiPath.endsWith(PanoptimageHelper.SLASH)) {
 				asciiPath = asciiPath.substring(0, asciiPath.length() - 1);
@@ -115,7 +116,7 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 			while (result.hasNext()) {
 				// remove base path from Webdav answer
 				URL pathuri = new URL(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(),
-						Integer.parseInt(param.getPort()), result.next());
+						parsePort(param), result.next());
 				String path = pathuri.toString();
 				ret.add(PanoptimageHelper.decodeUrl(path.substring(len + 1)));
 			}
@@ -144,7 +145,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 					PanoptimageConstants.ONPROGRESS_STEPS);
 			// prepare request
 			String val = PanoptimageHelper.formatPath(root, currentPath, PanoptimageHelper.SLASH, location);
-			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
+			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), null, param.getServer(),
+					parsePort(param), val, null, null);
 			String path = uri.toASCIIString();
 			// return new ByteRepositoryContent(dav.get(path, false, plsn));
 			return new CacheRepositoryContent(dav.getAsFile(path, cachedir, plsn));
@@ -160,7 +162,8 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 		try {
 			String val = PanoptimageHelper.formatPath(root, currentPath, path);
 			// prepare request
-			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), param.getServer(), val, null);
+			URI uri = new URI(param.getProtocol().toLowerCase(Locale.FRANCE), null, param.getServer(),
+					parsePort(param), val, null, null);
 			return dav.head(uri.toASCIIString());
 		} catch (IOException e) {
 			return false;
@@ -186,5 +189,18 @@ public class WebdavRepositoryDao extends RepositoryLoaderDao<WebdavParam> {
 	@Override
 	public boolean showSplashWhileLoading() {
 		return false;
+	}
+
+	private int parsePort(WebdavParam param) {
+		String port = param.getPort();
+		try {
+			return Integer.parseInt(port);
+		} catch (NumberFormatException nbe) {
+			// try to find default port
+			if (WebdavProtocolIcon.HTTPS.toString().equals(param.getProtocol()))
+				return WebdavProtocolIcon.SECURED_PORT;
+			return WebdavProtocolIcon.STANDARD_PORT;
+		}
+
 	}
 }

@@ -98,6 +98,8 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			portField.setText(content.getPort());
 			baseField.setText(content.getBase());
 			pathField.setText(content.getPath());
+			// set name editable
+			setKeyEditable(false);
 		} else {
 			// reset fields
 			nameField.setText("");
@@ -107,6 +109,8 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 			portField.setText("");
 			baseField.setText("");
 			pathField.setText("");
+			// set name editable
+			setKeyEditable(true);
 		}
 	}
 
@@ -177,7 +181,7 @@ public class WebdavCreateFragment extends CreateFragment<WebdavParam> {
 		return WebdavParam.class;
 	}
 
-	@Override
+	@Override                                                                                                                                                                                                                                                            
 	public void setKeyEditable(boolean status) {
 		if (nameField != null) {
 			nameField.setClickable(status);
