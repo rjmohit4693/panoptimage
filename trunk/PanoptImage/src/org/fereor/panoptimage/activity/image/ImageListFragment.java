@@ -163,6 +163,8 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 				onOEM(oem);
 			}
 		}
+
+		// try something to revive memory
 		System.gc();
 		System.gc();
 	}
@@ -178,7 +180,7 @@ public class ImageListFragment extends Fragment implements RepositoryGetListener
 			}
 		});
 
-		// do something to revive memory
+		// try something to revive memory
 		System.gc();
 		System.gc();
 	}

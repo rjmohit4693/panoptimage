@@ -72,14 +72,11 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 			try {
 				setRepository(param);
 			} catch (PanoptesUnknownParamException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_nonetwork);
 			} catch (PanoptimageNoNetworkException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_nonetwork);
 			} catch (PanoptimagePeerUnverifiedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_peerunverified);
 			}
 		}
 		// lauch async task
@@ -99,10 +96,10 @@ public class CreateBrowserFragment extends Fragment implements OnItemClickListen
 		if (getActivity() != null) {
 			// Manage null value (Not Found)
 			if (rawdir == null) {
-				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound);
+				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound, repoBrowser.getformatedPath());
 				repoBrowser.cd(PanoptimageHelper.DDOT);
 			} else if (rawdir.contains(PanoptimageConstants.ERROR_FILE_NOT_FOUND)) {
-				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound);
+				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_filenotfound, repoBrowser.getformatedPath());
 				repoBrowser.cd(PanoptimageHelper.DDOT);
 			} else if (rawdir.contains(PanoptimageConstants.ERROR_PEER_UNVERIFIED)) {
 				PanoptimageMsg.showErrorMsg(getActivity(), R.string.error_peerunverified);

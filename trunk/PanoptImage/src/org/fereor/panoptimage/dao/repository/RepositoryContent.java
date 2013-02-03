@@ -46,7 +46,7 @@ public abstract class RepositoryContent {
 
 		// Compute optimization level as closer power of 2
 		if (height > reqHeight || width > reqWidth) {
-			if (width > height) {
+			if (width < height) {
 				inSampleSize = Math.ceil(Math.log((double) height / (double) reqHeight) / Math.log(2));
 			} else {
 				inSampleSize = Math.ceil(Math.log((double) width / (double) reqWidth) / Math.log(2));
