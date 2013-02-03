@@ -75,7 +75,7 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 			pathField.setText(content.getPath());
 			setKeyEditable(false);
 		} else {
-			File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+			File path = guessStorageDirectory();
 			nameField.setText("");
 			pathField.setText(path == null ? "" : path.getAbsolutePath());
 			setKeyEditable(true);
@@ -128,5 +128,27 @@ public class LocalCreateFragment extends CreateFragment<LocalParam> {
 			nameField.setFocusableInTouchMode(status);
 			nameField.setEnabled(status);
 		}
+	}
+
+	/**
+	 * Try to guess the external storage directory
+	 * @return
+	 */
+	private File guessStorageDirectory() {
+		File dir;
+		// try external storage
+		dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		if (dir.exists())
+			return dir;
+		// try default storage
+		dir = Environment.getExternalStorageDirectory();
+		if (dir.exists())
+			return dir;
+		// try data storage
+		dir = Environment.getDataDirectory();
+		if (dir.exists())
+			return dir;
+		// return nothing
+		return new File("/");		
 	}
 }
