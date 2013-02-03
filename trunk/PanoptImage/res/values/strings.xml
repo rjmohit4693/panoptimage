@@ -95,7 +95,7 @@
     <string name="error_wifionly">Scan available on WiFi only</string>
     <string name="error_outofmemory">Out of memory. Change the memory settings in configuration screen</string>
     <string name="error_noserver">Server not found</string>
-    <string name="error_peerunverified">Error : Untrusted certificate</string>
+    <string name="error_peerunverified">Untrusted certificate</string>
     <string name="error_okserver">Server reached</string>
     <string name="error_nopath">Path not found on server</string>
     <string name="error_okpath">Path found</string>
@@ -111,8 +111,8 @@
     <string name="about_source">http://code.google.com/p/panoptimage/</string>
 
     <!-- Tooltip messages -->
-    <string name="tooltip_home_create">Press here to create new links</string>
-    <string name="tooltip_home_back">Close application here</string>
+    <string name="tooltip_home_create">Press here to create shortcuts</string>
+    <string name="tooltip_home_back">Close application</string>
     <string name="tooltip_home_about">Licence information</string>
     <string name="tooltip_home_config">Press here to configure</string>
     <string name="tooltip_home_slide">Slide left or right to display shortcuts</string>
@@ -120,13 +120,13 @@
     <string name="tooltip_config_back">Close panel</string>
     <string name="tooltip_config_save">Save configuration changes</string>
     <string name="tooltip_create_back">Close panel</string>
-    <string name="tooltip_create_recycle">Delete selected link</string>
+    <string name="tooltip_create_recycle">Delete selected shortcut</string>
     <string name="tooltip_create_save">Save shortcut</string>
     <string name="tooltip_create_scan">Scan network</string>
     <string name="tooltip_create_browse">Browse repository</string>
     <string name="tooltip_about_back">Close panel</string>
     <string name="tooltip_image_back">Close panel</string>
-    <string name="tooltip_image_browse">Click here to browse directories</string>
+    <string name="tooltip_image_browse">Press here to browse directories</string>
     <string name="tooltip_image_rotate_clockwise">Rotate image clockwise</string>
     <string name="tooltip_image_rotate_counterclockwise">Rotate image counter-clockwise</string>
 
