@@ -1,243 +1,250 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/webdav"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="10dp" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/WebdavScrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/create_webdav_name"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webdav"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_name_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_name_value"
-        android:paddingBottom="10dp"
-        android:paddingRight="10dp"
-        android:text="@string/create_webdav_name"
-        android:textSize="@dimen/textsize" />
+        android:paddingBottom="10dp" >
 
-    <EditText
-        android:id="@+id/create_webdav_name_value"
-        android:layout_width="@dimen/create_edittext"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/webdav"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_name_hint"
-        android:textSize="@dimen/editsize" />
+        <TextView
+            android:id="@+id/create_webdav_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_name_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@+id/create_webdav_name_value"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_name"
+            android:textSize="@dimen/textsize" />
 
-    <TextView
-        android:id="@+id/create_webdav_protocol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_webdav_protocol_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_protocol_value"
-        android:paddingRight="10dp"
-        android:text="@string/create_webdav_protocol"
-        android:textSize="@dimen/textsize" />
+        <EditText
+            android:id="@+id/create_webdav_name_value"
+            android:layout_width="@dimen/create_edittext"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/webdav"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/ic_textview"
+            android:hint="@string/create_webdav_name_hint"
+            android:textSize="@dimen/editsize" />
 
-    <Spinner
-        android:id="@+id/create_webdav_protocol_value"
-        android:layout_width="@dimen/create_edittext"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_name_value"
-        android:layout_below="@+id/create_webdav_name_value"
-        android:background="@drawable/spinner_selector"
-        android:spinnerMode="dropdown"
-        android:textSize="@dimen/editsize" />
+        <TextView
+            android:id="@+id/create_webdav_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/create_webdav_protocol_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@+id/create_webdav_protocol_value"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_protocol"
+            android:textSize="@dimen/textsize" />
 
-    <TextView
-        android:id="@+id/create_webdav_trustall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_webdav_trustall_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_trustall_value"
-        android:paddingRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/create_webdav_trustall"
-        android:textSize="@dimen/textsize" />
+        <Spinner
+            android:id="@+id/create_webdav_protocol_value"
+            android:layout_width="@dimen/create_edittext"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_webdav_name_value"
+            android:layout_below="@+id/create_webdav_name_value"
+            android:background="@drawable/spinner_selector"
+            android:spinnerMode="dropdown"
+            android:textSize="@dimen/editsize" />
 
-    <CheckBox
-        android:id="@+id/create_webdav_trustall_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_protocol_value"
-        android:layout_below="@+id/create_webdav_protocol_value" />
+        <TextView
+            android:id="@+id/create_webdav_trustall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/create_webdav_trustall_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@+id/create_webdav_trustall_value"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_trustall"
+            android:textSize="@dimen/textsize" />
 
-    <TextView
-        android:id="@+id/create_webdav_ip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_ip_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_ip_value"
-        android:paddingRight="10dp"
-        android:text="@string/create_webdav_ip"
-        android:textSize="@dimen/textsize" />
+        <CheckBox
+            android:id="@+id/create_webdav_trustall_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_webdav_protocol_value"
+            android:layout_below="@+id/create_webdav_protocol_value" />
 
-    <EditText
-        android:id="@+id/create_webdav_ip_value"
-        android:layout_width="@dimen/create_edittext"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_trustall_value"
-        android:layout_below="@+id/create_webdav_trustall_value"
-        android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_ip_hint"
-        android:textSize="@dimen/editsize" />
+        <TextView
+            android:id="@+id/create_webdav_ip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_ip_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@+id/create_webdav_ip_value"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_ip"
+            android:textSize="@dimen/textsize" />
 
-    <Button
-        android:id="@+id/create_webdav_scan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_webdav_ip_value"
-        android:layout_gravity="center"
-        android:layout_marginBottom="5dp"
-        android:layout_toRightOf="@+id/create_webdav_ip_value"
-        android:background="@drawable/scan"
-        android:onClick="doScan" />
+        <EditText
+            android:id="@+id/create_webdav_ip_value"
+            android:layout_width="@dimen/create_edittext"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_webdav_trustall_value"
+            android:layout_below="@+id/create_webdav_trustall_value"
+            android:background="@drawable/ic_textview"
+            android:hint="@string/create_webdav_ip_hint"
+            android:textSize="@dimen/editsize" />
 
-    <TextView
-        android:id="@+id/tooltip_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_ip_value"
-        android:layout_toRightOf="@+id/create_webdav_scan"
-        android:gravity="left"
-        android:text="@string/tooltip_create_scan"
-        android:textSize="@dimen/tooltip_textsize"
-        android:visibility="invisible" />
+        <Button
+            android:id="@+id/create_webdav_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/create_webdav_ip_value"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/create_webdav_ip_value"
+            android:background="@drawable/scan"
+            android:onClick="doScan" />
 
-    <TextView
-        android:id="@+id/create_webdav_port"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_port_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_port_value"
-        android:paddingRight="10dp"
-        android:text="@string/create_webdav_port"
-        android:textSize="@dimen/textsize" />
+        <TextView
+            android:id="@+id/tooltip_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_ip_value"
+            android:layout_toRightOf="@+id/create_webdav_scan"
+            android:gravity="left"
+            android:text="@string/tooltip_create_scan"
+            android:textSize="@dimen/tooltip_textsize"
+            android:visibility="invisible" />
 
-    <EditText
-        android:id="@+id/create_webdav_port_value"
-        android:layout_width="@dimen/create_edittext"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_ip_value"
-        android:layout_below="@+id/create_webdav_ip_value"
-        android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_port_hint"
-        android:inputType="number"
-        android:textSize="@dimen/editsize" />
+        <TextView
+            android:id="@+id/create_webdav_port"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_port_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@+id/create_webdav_port_value"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_port"
+            android:textSize="@dimen/textsize" />
 
-    <TextView
-        android:id="@+id/create_webdav_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_user_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_user_value"
-        android:paddingRight="10dp"
-        android:text="@string/create_webdav_user"
-        android:textSize="@dimen/textsize" />
+        <EditText
+            android:id="@+id/create_webdav_port_value"
+            android:layout_width="@dimen/create_edittext"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_webdav_ip_value"
+            android:layout_below="@+id/create_webdav_ip_value"
+            android:background="@drawable/ic_textview"
+            android:hint="@string/create_webdav_port_hint"
+            android:inputType="number"
+            android:textSize="@dimen/editsize" />
 
-    <EditText
-        android:id="@+id/create_webdav_user_value"
-        android:layout_width="@dimen/create_edittext"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_port_value"
-        android:layout_below="@+id/create_webdav_port_value"
-        android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_user_hint"
-        android:inputType="number"
-        android:textSize="@dimen/editsize" />
+        <TextView
+            android:id="@+id/create_webdav_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_user_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@+id/create_webdav_user_value"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_user"
+            android:textSize="@dimen/textsize" />
 
-    <TextView
-        android:id="@+id/create_webdav_pwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_pwd_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_pwd_value"
-        android:paddingRight="10dp"
-        android:text="@string/create_webdav_pwd"
-        android:textSize="@dimen/textsize" />
+        <EditText
+            android:id="@+id/create_webdav_user_value"
+            android:layout_width="@dimen/create_edittext"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_webdav_port_value"
+            android:layout_below="@+id/create_webdav_port_value"
+            android:background="@drawable/ic_textview"
+            android:hint="@string/create_webdav_user_hint"
+            android:inputType="number"
+            android:textSize="@dimen/editsize" />
 
-    <EditText
-        android:id="@+id/create_webdav_pwd_value"
-        android:layout_width="@dimen/create_edittext"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_user_value"
-        android:layout_below="@+id/create_webdav_user_value"
-        android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_pwd_hint"
-        android:inputType="number"
-        android:textSize="@dimen/editsize" />
+        <TextView
+            android:id="@+id/create_webdav_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_pwd_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@+id/create_webdav_pwd_value"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_pwd"
+            android:textSize="@dimen/textsize" />
 
-    <TextView
-        android:id="@+id/create_webdav_base"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_base_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_base_value"
-        android:paddingRight="10dp"
-        android:text="@string/create_webdav_base"
-        android:textSize="@dimen/textsize" />
+        <EditText
+            android:id="@+id/create_webdav_pwd_value"
+            android:layout_width="@dimen/create_edittext"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_webdav_user_value"
+            android:layout_below="@+id/create_webdav_user_value"
+            android:background="@drawable/ic_textview"
+            android:hint="@string/create_webdav_pwd_hint"
+            android:inputType="number"
+            android:textSize="@dimen/editsize" />
 
-    <EditText
-        android:id="@+id/create_webdav_base_value"
-        android:layout_width="@dimen/create_edittext"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_pwd_value"
-        android:layout_below="@+id/create_webdav_pwd_value"
-        android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_base_hint"
-        android:textSize="@dimen/editsize" />
+        <TextView
+            android:id="@+id/create_webdav_base"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_base_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@+id/create_webdav_base_value"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_base"
+            android:textSize="@dimen/textsize" />
 
-    <TextView
-        android:id="@+id/create_webdav_path"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_path_value"
-        android:layout_gravity="right|center_vertical"
-        android:layout_toLeftOf="@+id/create_webdav_path_value"
-        android:paddingRight="10dp"
-        android:text="@string/create_webdav_path"
-        android:textSize="@dimen/textsize" />
+        <EditText
+            android:id="@+id/create_webdav_base_value"
+            android:layout_width="@dimen/create_edittext"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_webdav_pwd_value"
+            android:layout_below="@+id/create_webdav_pwd_value"
+            android:background="@drawable/ic_textview"
+            android:hint="@string/create_webdav_base_hint"
+            android:textSize="@dimen/editsize" />
 
-    <EditText
-        android:id="@+id/create_webdav_path_value"
-        android:layout_width="@dimen/create_edittext"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/create_webdav_base_value"
-        android:layout_below="@+id/create_webdav_base_value"
-        android:background="@drawable/ic_textview"
-        android:hint="@string/create_webdav_path_hint"
-        android:singleLine="true"
-        android:textSize="@dimen/editsize" />
+        <TextView
+            android:id="@+id/create_webdav_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_path_value"
+            android:layout_gravity="right|center_vertical"
+            android:layout_toLeftOf="@+id/create_webdav_path_value"
+            android:paddingRight="10dp"
+            android:text="@string/create_webdav_path"
+            android:textSize="@dimen/textsize" />
 
-    <Button
-        android:id="@+id/create_webdav_browse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_webdav_path_value"
-        android:layout_gravity="center"
-        android:layout_marginBottom="5dp"
-        android:layout_toRightOf="@+id/create_webdav_path_value"
-        android:background="@drawable/ellipsis"
-        android:onClick="doBrowse" />
+        <EditText
+            android:id="@+id/create_webdav_path_value"
+            android:layout_width="@dimen/create_edittext"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/create_webdav_base_value"
+            android:layout_below="@+id/create_webdav_base_value"
+            android:background="@drawable/ic_textview"
+            android:hint="@string/create_webdav_path_hint"
+            android:singleLine="true"
+            android:textSize="@dimen/editsize" />
 
-    <TextView
-        android:id="@+id/tooltip_browse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_webdav_path_value"
-        android:layout_toRightOf="@+id/create_webdav_browse"
-        android:gravity="left"
-        android:text="@string/tooltip_create_browse"
-        android:textSize="@dimen/tooltip_textsize"
-        android:visibility="invisible" />
+        <Button
+            android:id="@+id/create_webdav_browse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/create_webdav_path_value"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_toRightOf="@+id/create_webdav_path_value"
+            android:background="@drawable/ellipsis"
+            android:onClick="doBrowse" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tooltip_browse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/create_webdav_path_value"
+            android:layout_toRightOf="@+id/create_webdav_browse"
+            android:gravity="left"
+            android:text="@string/tooltip_create_browse"
+            android:textSize="@dimen/tooltip_textsize"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</ScrollView>
