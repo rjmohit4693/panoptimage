@@ -77,28 +77,6 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/param_memory_optim"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/param_showtuto"
-        android:layout_below="@+id/param_showtuto"
-        android:layout_marginTop="29dp"
-        android:text="@string/param_memory_optim"
-        android:textSize="@dimen/textsize"
-        android:visibility="invisible" />
-
-    <Spinner
-        android:id="@+id/param_memory_optim_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/param_memory_optim"
-        android:layout_alignBottom="@id/param_memory_optim"
-        android:layout_toRightOf="@id/param_memory_optim"
-        android:background="@drawable/spinner_selector"
-        android:spinnerMode="dropdown"
-        android:visibility="invisible" />
-
-    <TextView
         android:id="@+id/tooltip_back"
         android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
