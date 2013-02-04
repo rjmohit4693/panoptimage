@@ -103,11 +103,11 @@
     <!-- About messages -->
     <string name="about_title">A propos de Panoptimage</string>
     <string name="about1">Copyright &#169; 2012 arnaud.p.fereor</string>
-    <string name="about2">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</string>
-    <string name="about3">This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</string>
-    <string name="about4">To get a copy of the GNU public license, visit</string>
+    <string name="about2">Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les termes de la Licence Publique Générale GNU publiée par la Free Software Foundation (version 2 ou bien toute autre version ultérieure choisie par vous).</string>
+    <string name="about3">Ce programme est distribué car potentiellement utile, mais SANS AUCUNE GARANTIE, ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation dans un but spécifique. Reportez-vous à la Licence Publique Générale GNU pour plus de détails.</string>
+    <string name="about4">Pour obtenir une copie de la licence :</string>
     <string name="about_gpl">http://www.gnu.org/licenses/</string>
-    <string name="about12">To get the sources, visit</string>
+    <string name="about12">Pour obtenir les sources du programme :</string>
     <string name="about_source">http://code.google.com/p/panoptimage/</string>
 
     <!-- Tooltip messages -->
