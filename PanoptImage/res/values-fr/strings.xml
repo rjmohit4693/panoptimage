@@ -1,0 +1,133 @@
+<resources>
+
+    <!-- Application commons -->
+    <string name="app_name">PanoptImage</string>
+    <string name="message">Bienvenu à PanoptImage</string>
+    <string name="menu_settings">Settings</string>
+    <string name="loading">Patience&#8230;</string>
+    <string name="scanning">Scan en cours&#8230;</string>
+
+    <!-- Application titles -->
+    <string name="title_activity_home">PanoptImage</string>
+    <string name="title_activity_config">ConfigActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="title_activity_image">ImageActivity</string>
+    <string name="title_activity_zoom">ZoomActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+
+    <!-- Configuration activity -->
+    <string name="param_title">Paramètres</string>
+    <string name="param_message_saved">Modifications enregistrées</string>
+    <string name="param_message_notsaved">Modifications annulées</string>
+    <string name="param_proxy_ip">Adresse proxy</string>
+    <string name="param_proxy_ip_hint">Ex: 192.168.0.1</string>
+    <string name="param_proxy_port">Port proxy</string>
+    <string name="param_proxy_port_hint">Ex: 8080</string>
+    <string name="param_proxy_user">Utilisateur</string>
+    <string name="param_proxy_user_hint">Utilisateur</string>
+    <string name="param_proxy_pwd">Mot de passe</string>
+    <string name="param_proxy_pwd_hint">?????</string>
+    <string name="param_showtip">Afficher l'aide</string>
+    <string name="param_showtuto">Afficher le pas-à-pas</string>
+    <string name="param_memory_optim">Optimisation mémoire</string>
+    <string name="param_memory_auto">Auto</string>
+    <string name="param_memory_2">Niveau 2</string>
+    <string name="param_memory_3">Niveau 3</string>
+    <string name="param_memory_4">Niveau 4</string>
+    <string name="param_memory_5">Maximum</string>
+
+    <!-- Create activity -->
+    <string name="create_title">Editer les raccourcis</string>
+    <string name="create_new_default">Sélectionner&#8230;</string>
+    <string name="create_new_webdav">Nouveau lien WebDAV&#8230;</string>
+    <string name="create_new_local">Nouveau lien Local&#8230;</string>
+
+    <!-- Create Empty fragment -->
+    <string name="create_empty_text1">Choisissez un raccourcis dans la liste.</string>
+    <string name="create_empty_text2">Choisissez Nouveau lien&#8230; pour en créer un.</string>
+    <string name="create_message_saved">%s enregistré</string>
+    <string name="create_message_deleted">%s supprimé</string>
+    <string name="create_button_ok">OK</string>
+    <string name="create_button_cancel">Cancel</string>
+
+    <!-- Create Local fragment -->
+    <string name="create_local_name">Nom</string>
+    <string name="create_local_name_hint">Nom du raccourcis</string>
+    <string name="create_local_path">Répertoire local</string>
+    <string name="create_local_path_hint">Ex: /mnt/chemin</string>
+    <string name="create_local_save">Enregistrer</string>
+
+    <!-- Create Webdav fragment -->
+    <string name="create_webdav_name">Nom</string>
+    <string name="create_webdav_name_hint">Nom du raccourcis</string>
+    <string name="create_webdav_protocol">Protocole</string>
+    <string name="create_webdav_protocol_hint">Ex: http</string>
+    <string name="create_webdav_trustall">Approuver tous les certificats</string>
+    <string name="create_webdav_trustall_hint">Défaut: vrai</string>
+    <string name="create_webdav_ip">Serveur</string>
+    <string name="create_webdav_ip_hint">Ex: 192.168.0.1</string>
+    <string name="create_webdav_port">Port</string>
+    <string name="create_webdav_port_hint">Défaut: 80</string>
+    <string name="create_webdav_user">Utilisateur</string>
+    <string name="create_webdav_user_hint">utilisateur</string>
+    <string name="create_webdav_pwd">Mot de passe</string>
+    <string name="create_webdav_pwd_hint">?????</string>
+    <string name="create_webdav_base">URL relative</string>
+    <string name="create_webdav_base_hint">Ex: /WebDAV/Myroot</string>
+    <string name="create_webdav_path">Répertoire</string>
+    <string name="create_webdav_path_hint">Ex: /mypath</string>
+    <string name="create_webdav_save">Sauvegarder</string>
+    <string name="create_webdav_foundsites">%d sites découverts</string>
+
+    <!-- Error messages -->
+    <string name="error_header">Erreur : %s</string>
+    <string name="error_title">Erreur&#8230;</string>
+    <string name="error_load">Chargement des données impossible</string>
+    <string name="error_save">Sauvegarde des données impossible</string>
+    <string name="error_load_cfg">Chargement de la configuration impossible</string>
+    <string name="error_save_cfg">Sauvegarde de la configuration impossible</string>
+    <string name="error_unknown">Lien inconnu</string>
+    <string name="error_unknown_param">Paramètre inconnu : %s</string>
+    <string name="error_loading_file">Erreur d'accès au fichier : %s</string>
+    <string name="error_filenotfound">Répertoire introuvable : %s</string>
+    <string name="error_nonetwork">Réseau indisponible</string>
+    <string name="error_wifionly">Scan disponible en WiFi uniquement</string>
+    <string name="error_outofmemory">Problème de mémoire</string>
+    <string name="error_noserver">Serveur introuvable</string>
+    <string name="error_peerunverified">Certificat non approuvé</string>
+    <string name="error_okserver">Serveur découvert</string>
+    <string name="error_nopath">Répertoire introuvable sur le serveur</string>
+    <string name="error_okpath">Répertoire introuvable</string>
+
+    <!-- About messages -->
+    <string name="about_title">A propos de Panoptimage</string>
+    <string name="about1">Copyright &#169; 2012 arnaud.p.fereor</string>
+    <string name="about2">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</string>
+    <string name="about3">This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</string>
+    <string name="about4">To get a copy of the GNU public license, visit</string>
+    <string name="about_gpl">http://www.gnu.org/licenses/</string>
+    <string name="about12">To get the sources, visit</string>
+    <string name="about_source">http://code.google.com/p/panoptimage/</string>
+
+    <!-- Tooltip messages -->
+    <string name="tooltip_home_create">Appuyer ici pour créer un lien</string>
+    <string name="tooltip_home_back">Fermer l'application</string>
+    <string name="tooltip_home_about">Licence</string>
+    <string name="tooltip_home_config">Appuyer ici pour la configuration</string>
+    <string name="tooltip_home_slide">Faire défiler à droite ou à gauche pour afficher les liens</string>
+    <string name="tooltip_home_press">Appuyer pour afficher les images</string>
+    <string name="tooltip_config_back">Fermer</string>
+    <string name="tooltip_config_save">Sauvegarder les modifications</string>
+    <string name="tooltip_create_back">Fermer</string>
+    <string name="tooltip_create_recycle">Supprimer le lien sélectionné</string>
+    <string name="tooltip_create_save">Sauvegarder le lien</string>
+    <string name="tooltip_create_scan">Scan réseau</string>
+    <string name="tooltip_create_browse">Parcourir les répertoires</string>
+    <string name="tooltip_about_back">Fermer</string>
+    <string name="tooltip_image_back">Fermer</string>
+    <string name="tooltip_image_browse">Appuyer ici pour parcourir les répertoires</string>
+    <string name="tooltip_image_rotate_clockwise">Rotation en sens horaire</string>
+    <string name="tooltip_image_rotate_counterclockwise">Rotation en sens anti-horaire</string>
+
+</resources>
