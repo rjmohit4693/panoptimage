@@ -24,14 +24,12 @@ import org.fereor.panoptimage.dao.db.DatabaseHelper;
 import org.fereor.panoptimage.dao.db.DatabaseStatus;
 import org.fereor.panoptimage.model.Config;
 import org.fereor.panoptimage.util.PanoptimageConstants;
-import org.fereor.panoptimage.util.PanoptimageMemoryOptimEnum;
 import org.fereor.panoptimage.util.PanoptimageMsg;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.Spinner;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
@@ -47,8 +45,6 @@ public class ConfigActivity extends PanoptesActivity {
 		Log.d(PanoptimageConstants.TAGNAME, "ConfigActivity:onCreate");
 		// set Content view
 		setContentView(R.layout.activity_config);
-		// Fill memory optim options
-		populateSpinner();
 
 		try {
 			// update config data
@@ -102,19 +98,6 @@ public class ConfigActivity extends PanoptesActivity {
 	}
 
 	/**
-	 * Populate spinner
-	 */
-	private void populateSpinner() {
-		// Identify the spinner
-		Spinner memoptions = (Spinner) findViewById(R.id.param_memory_optim_value);
-		// populate the spinner with default values
-		MemoryOptimSpinnerAdapter adapter = new MemoryOptimSpinnerAdapter(this, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		// Apply the adapter to the spinner
-		memoptions.setAdapter(adapter);
-	}
-
-	/**
 	 * read content of config into screen fields
 	 */
 	private void readFields() {
@@ -126,9 +109,7 @@ public class ConfigActivity extends PanoptesActivity {
 		data.setShowtip(showtip.isChecked());
 		CheckBox showtuto = (CheckBox) findViewById(R.id.param_showtuto_value);
 		data.setShowtuto(showtuto.isChecked());
-		Spinner memoptims = (Spinner) findViewById(R.id.param_memory_optim_value);
-		PanoptimageMemoryOptimEnum optim = (PanoptimageMemoryOptimEnum) memoptims.getSelectedItem();
-		data.setMemoptim(optim.key());
+		data.setMemoptim(0);
 	}
 
 	/**
@@ -146,9 +127,6 @@ public class ConfigActivity extends PanoptesActivity {
 		showtip.setChecked(data.isShowtip());
 		CheckBox showtuto = (CheckBox) findViewById(R.id.param_showtuto_value);
 		showtuto.setChecked(data.isShowtuto());
-		// memory optimization
-		Spinner memoptims = (Spinner) findViewById(R.id.param_memory_optim_value);
-		memoptims.setSelection(PanoptimageMemoryOptimEnum.findPosition(data.getMemoptim()));
 	}
 
 	/**
