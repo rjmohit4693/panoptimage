@@ -1,127 +1,134 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/WebdavScrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/back"
-        android:onClick="doBack" />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/about_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/back"
-        android:layout_centerHorizontal="true"
-        android:text="@string/about_title"
-        android:textSize="@dimen/titlesize" />
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/back"
+            android:onClick="doBack" />
 
-    <TextView
-        android:id="@+id/about1"
-        android:layout_width="@dimen/about_textwidth"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about_title"
-        android:layout_marginLeft="@dimen/about_margin"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about1"
-        android:textSize="@dimen/textsize" />
+        <TextView
+            android:id="@+id/about_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/back"
+            android:layout_centerHorizontal="true"
+            android:text="@string/about_title"
+            android:textSize="@dimen/titlesize" />
 
-    <TextView
-        android:id="@+id/about2"
-        android:layout_width="@dimen/about_textwidth"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about1"
-        android:layout_marginLeft="@dimen/about_margin"
-        android:lines="4"
-        android:maxLines="4"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about2"
-        android:textSize="@dimen/textsize"
-        tools:context=".AboutActivity" />
+        <TextView
+            android:id="@+id/about1"
+            android:layout_width="@dimen/about_textwidth"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/about_title"
+            android:layout_below="@+id/about_title"
+            android:layout_marginLeft="@dimen/about_margin"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/about1"
+            android:textSize="@dimen/textsize" />
 
-    <TextView
-        android:id="@+id/about3"
-        android:layout_width="@dimen/about_textwidth"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about2"
-        android:layout_marginLeft="@dimen/about_margin"
-        android:lines="4"
-        android:maxLines="4"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about3"
-        android:textSize="@dimen/textsize"
-        tools:context=".AboutActivity" />
+        <TextView
+            android:id="@+id/about2"
+            android:layout_width="@dimen/about_textwidth"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/about_title"
+            android:layout_below="@+id/about1"
+            android:layout_marginLeft="@dimen/about_margin"
+            android:lines="4"
+            android:maxLines="4"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/about2"
+            android:textSize="@dimen/textsize"
+            tools:context=".AboutActivity" />
 
-    <TextView
-        android:id="@+id/about4"
-        android:layout_width="@dimen/about_textwidth"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about3"
-        android:layout_marginLeft="@dimen/about_margin"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about4"
-        android:textSize="@dimen/textsize"
-        tools:context=".AboutActivity" />
+        <TextView
+            android:id="@+id/about3"
+            android:layout_width="@dimen/about_textwidth"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/about_title"
+            android:layout_below="@+id/about2"
+            android:layout_marginLeft="@dimen/about_margin"
+            android:lines="4"
+            android:maxLines="4"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/about3"
+            android:textSize="@dimen/textsize"
+            tools:context=".AboutActivity" />
 
-    <TextView
-        android:id="@+id/about_gpl"
-        android:layout_width="@dimen/about_textwidth"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about4"
-        android:layout_marginLeft="@dimen/about_margin"
-        android:autoLink="web"
-        android:linksClickable="true"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about_gpl"
-        android:textSize="@dimen/textsize"
-        tools:context=".AboutActivity" />
+        <TextView
+            android:id="@+id/about4"
+            android:layout_width="@dimen/about_textwidth"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/about_title"
+            android:layout_below="@+id/about3"
+            android:layout_marginLeft="@dimen/about_margin"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/about4"
+            android:textSize="@dimen/textsize"
+            tools:context=".AboutActivity" />
 
-    <TextView
-        android:id="@+id/about12"
-        android:layout_width="@dimen/about_textwidth"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about_gpl"
-        android:layout_marginLeft="@dimen/about_margin"
-        android:linksClickable="true"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about12"
-        android:textSize="@dimen/textsize"
-        tools:context=".AboutActivity" />
+        <TextView
+            android:id="@+id/about_gpl"
+            android:layout_width="@dimen/about_textwidth"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/about_title"
+            android:layout_below="@+id/about4"
+            android:layout_marginLeft="@dimen/about_margin"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/about_gpl"
+            android:textSize="@dimen/textsize"
+            tools:context=".AboutActivity" />
 
-    <TextView
-        android:id="@+id/about_source"
-        android:layout_width="@dimen/about_textwidth"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/about_title"
-        android:layout_below="@+id/about12"
-        android:layout_marginLeft="@dimen/about_margin"
-        android:autoLink="web"
-        android:linksClickable="true"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/about_source"
-        android:textSize="@dimen/textsize"
-        tools:context=".AboutActivity" />
+        <TextView
+            android:id="@+id/about12"
+            android:layout_width="@dimen/about_textwidth"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/about_title"
+            android:layout_below="@+id/about_gpl"
+            android:layout_marginLeft="@dimen/about_margin"
+            android:linksClickable="true"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/about12"
+            android:textSize="@dimen/textsize"
+            tools:context=".AboutActivity" />
 
-    <TextView
-        android:id="@+id/tooltip_back"
-        android:layout_width="@dimen/tooltip_width"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/back"
-        android:layout_toLeftOf="@+id/back"
-        android:gravity="right"
-        android:text="@string/tooltip_about_back"
-        android:textSize="@dimen/textsize"
-        android:visibility="invisible" />
+        <TextView
+            android:id="@+id/about_source"
+            android:layout_width="@dimen/about_textwidth"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/about_title"
+            android:layout_below="@+id/about12"
+            android:layout_marginLeft="@dimen/about_margin"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:padding="@dimen/padding_medium"
+            android:text="@string/about_source"
+            android:textSize="@dimen/textsize"
+            tools:context=".AboutActivity" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tooltip_back"
+            android:layout_width="@dimen/tooltip_width"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/back"
+            android:layout_toLeftOf="@+id/back"
+            android:gravity="right"
+            android:text="@string/tooltip_about_back"
+            android:textSize="@dimen/textsize"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</ScrollView>
