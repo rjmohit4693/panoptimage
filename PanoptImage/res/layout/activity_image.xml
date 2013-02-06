@@ -51,7 +51,7 @@
 
     <TextView
         android:id="@+id/tooltip_back"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_below="@+id/back"
         android:layout_toLeftOf="@+id/back"
@@ -62,7 +62,7 @@
 
     <TextView
         android:id="@+id/tooltip_browse"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_below="@+id/browse"
         android:layout_toRightOf="@+id/browse"
@@ -73,7 +73,7 @@
 
     <TextView
         android:id="@+id/tooltip_rotate_clockwise"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_above="@+id/image_clockwise"
         android:layout_toRightOf="@+id/image_clockwise"
@@ -84,7 +84,7 @@
 
     <TextView
         android:id="@+id/tooltip_rotate_counterclockwise"
-        android:layout_width="250dp"
+        android:layout_width="@dimen/tooltip_width"
         android:layout_height="wrap_content"
         android:layout_above="@+id/image_counterclockwise"
         android:layout_toLeftOf="@+id/image_counterclockwise"
