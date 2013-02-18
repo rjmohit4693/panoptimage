@@ -1,0 +1,20 @@
+<resources>
+
+    <dimen name="titlesize">35sp</dimen>
+    <dimen name="textsize">25sp</dimen>
+    <dimen name="editsize">20sp</dimen>
+    <dimen name="spinnersize">20sp</dimen>
+    <dimen name="rowsize">25sp</dimen>
+    <dimen name="about_margin">-100sp</dimen>
+    <dimen name="about_textwidth">650dp</dimen>
+    <dimen name="tooltip_textsize">30sp</dimen>
+    <dimen name="tooltip_width">250sp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="image_browse">300dp</dimen>
+    <dimen name="image_home">150dp</dimen>
+    <dimen name="image_scan">50dp</dimen>
+    <dimen name="create_browse">400dp</dimen>
+    <dimen name="create_edittext">250dp</dimen>
+
+</resources>
